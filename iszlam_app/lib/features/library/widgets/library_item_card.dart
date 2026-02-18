@@ -8,6 +8,7 @@ import '../models/library_item.dart';
 import '../services/audio_service.dart';
 import '../../auth/services/auth_service.dart';
 import '../../admin_tools/screens/admin_upload_book_screen.dart';
+import '../../admin_tools/models/admin_models.dart';
 import '../../admin_tools/services/admin_repository.dart';
 import '../providers/library_filter_provider.dart';
 
@@ -101,16 +102,16 @@ class LibraryItemCard extends ConsumerWidget {
                                   context,
                                   MaterialPageRoute(
                                     builder: (_) => AdminUploadBookScreen(
-                                      book: {
-                                        'id': item.id,
-                                        'title': item.title,
-                                        'author': item.author,
-                                        'description': item.description,
-                                        'category_id': item.categoryId,
-                                        'cover_url': item.imageUrl,
-                                        'file_url': item.fileUrl,
-                                        'metadata': item.metadata,
-                                      },
+                                      book: AdminBook(
+                                        id: item.id,
+                                        title: item.title,
+                                        author: item.author,
+                                        description: item.description,
+                                        categoryId: item.categoryId,
+                                        coverUrl: item.imageUrl,
+                                        fileUrl: item.fileUrl,
+                                        metadata: null, // item.metadata is String?, but AdminBook expects Map or null
+                                      ),
                                     ),
                                   ),
                                 );

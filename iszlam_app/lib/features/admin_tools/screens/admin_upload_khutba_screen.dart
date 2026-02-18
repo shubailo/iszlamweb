@@ -6,6 +6,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
+import '../../../core/widgets/garden_input_decoration.dart';
+import '../models/admin_models.dart';
 import '../services/admin_repository.dart';
 
 class AdminUploadKhutbaScreen extends ConsumerStatefulWidget {
@@ -25,12 +28,21 @@ class _AdminUploadKhutbaScreenState extends ConsumerState<AdminUploadKhutbaScree
   
   DateTime _selectedDate = DateTime.now();
   String? _selectedCategoryId;
-  List<Map<String, dynamic>> _categories = [];
+  List<AdminCategory> _categories = [];
   
   Uint8List? _audioFileBytes;
   String? _audioFileName;
   
   bool _isLoading = false;
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _speakerController.dispose();
+    _descController.dispose();
+    _dateController.dispose();
+    super.dispose();
+  }
 
   @override
   void initState() {
@@ -46,11 +58,11 @@ class _AdminUploadKhutbaScreenState extends ConsumerState<AdminUploadKhutbaScree
         setState(() {
           _categories = cats;
           // Filter for audio or both
-          _categories = _categories.where((c) => c['type'] != 'book').toList();
+          _categories = cats.where((c) => c.type != 'book').toList();
         });
       }
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error loading categories: $e')));
+      if (mounted) context.showError('Error loading categories: $e');
     }
   }
 
@@ -86,7 +98,7 @@ class _AdminUploadKhutbaScreenState extends ConsumerState<AdminUploadKhutbaScree
   Future<void> _upload() async {
     if (!_formKey.currentState!.validate()) return;
     if (_audioFileBytes == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please select an audio file')));
+      context.showError('Please select an audio file');
       return;
     }
 
@@ -116,11 +128,11 @@ class _AdminUploadKhutbaScreenState extends ConsumerState<AdminUploadKhutbaScree
       );
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Khutba uploaded successfully!')));
+        context.showSuccess('Khutba uploaded successfully!');
         context.pop();
       }
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Upload failed: $e')));
+      if (mounted) context.showError('Upload failed: $e');
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -140,7 +152,7 @@ class _AdminUploadKhutbaScreenState extends ConsumerState<AdminUploadKhutbaScree
               // Title
               TextFormField(
                 controller: _titleController,
-                decoration: const InputDecoration(labelText: 'Title', border: OutlineInputBorder()),
+                decoration: GardenInputDecoration.standard(label: 'Title'),
                 validator: (v) => v!.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 16),
@@ -148,7 +160,7 @@ class _AdminUploadKhutbaScreenState extends ConsumerState<AdminUploadKhutbaScree
               // Speaker
               TextFormField(
                 controller: _speakerController,
-                decoration: const InputDecoration(labelText: 'Speaker', border: OutlineInputBorder()),
+                decoration: GardenInputDecoration.standard(label: 'Speaker'),
                 validator: (v) => v!.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 16),
@@ -158,18 +170,18 @@ class _AdminUploadKhutbaScreenState extends ConsumerState<AdminUploadKhutbaScree
                 controller: _dateController,
                 readOnly: true,
                 onTap: _pickDate,
-                decoration: const InputDecoration(labelText: 'Date', border: OutlineInputBorder(), suffixIcon: Icon(Icons.calendar_today)),
+                decoration: GardenInputDecoration.standard(label: 'Date', suffixIcon: const Icon(Icons.calendar_today)),
               ),
               const SizedBox(height: 16),
 
               // Category
               DropdownButtonFormField<String>(
                 initialValue: _selectedCategoryId,
-                decoration: const InputDecoration(labelText: 'Category (optional)', border: OutlineInputBorder()),
+                decoration: GardenInputDecoration.standard(label: 'Category (optional)'),
                 items: _categories.map((c) {
                   return DropdownMenuItem<String>(
-                    value: c['id'],
-                    child: Text(c['label_hu']),
+                    value: c.id,
+                    child: Text(c.labelHu),
                   );
                 }).toList(),
                 onChanged: (v) => setState(() => _selectedCategoryId = v),
@@ -180,7 +192,7 @@ class _AdminUploadKhutbaScreenState extends ConsumerState<AdminUploadKhutbaScree
               TextFormField(
                 controller: _descController,
                 maxLines: 3,
-                decoration: const InputDecoration(labelText: 'Description', border: OutlineInputBorder()),
+                decoration: GardenInputDecoration.standard(label: 'Description'),
               ),
               const SizedBox(height: 24),
 

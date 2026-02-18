@@ -79,6 +79,8 @@ class H {
   // Community / Feed
   static const String searchCommunityHint = 'Keresés közösségek között...';
   static const String searchMosquesHint = 'Keresés mecsetek, események között...';
+  static const String communityFeed = 'Közösségi Hírek';
+  static const String selectMosque = 'Válassz Mecsetet';
   static const String noAnnouncements = 'Még nincs közlemény.';
   static const String listenAudio = 'Hanganyag meghallgatása';
   static const String communityIftar = 'Közösségi Iftár';
@@ -93,5 +95,6 @@ class H {
 
   static const String locationFull = 'Budapest, Magyarország';
   static const String dailyGuidance = 'NAPI ÚTMUTATÁS';
+  static const String missedPrayer = 'Pótlás';
   static const String errorGeneric = 'Hiba történt';
 }

@@ -131,11 +131,11 @@ class LibrarySidebar extends ConsumerWidget {
                   data: (categories) {
                     return Column(
                       children: categories.asMap().entries.map((entry) {
-                        final catData = entry.value;
+                        final catModel = entry.value;
                         final category = LibraryCategory(
-                          id: catData['id'],
-                          label: catData['label_hu'],
-                          slug: catData['slug'],
+                          id: catModel.id,
+                          label: catModel.labelHu,
+                          slug: catModel.slug ?? '',
                         );
                         final count = allItems.where((i) => i.categoryId == category.id).length;
                         

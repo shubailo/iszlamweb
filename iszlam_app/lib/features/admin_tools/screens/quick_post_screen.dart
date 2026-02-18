@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../services/voice_transcription_service.dart';
 import '../../community/providers/mosque_provider.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
 
 class QuickPostScreen extends ConsumerStatefulWidget {
   const QuickPostScreen({super.key});
@@ -17,6 +18,13 @@ class _QuickPostScreenState extends ConsumerState<QuickPostScreen> {
   final _contentController = TextEditingController();
   bool _isRecording = false;
   bool _isProcessing = false;
+
+  @override
+  void dispose() {
+    _titleController.dispose();
+    _contentController.dispose();
+    super.dispose();
+  }
 
   void _toggleRecording() async {
     if (_isRecording) {
@@ -37,7 +45,7 @@ class _QuickPostScreenState extends ConsumerState<QuickPostScreen> {
             _titleController.text = "Voice Update";
         }
       } catch (e) {
-        if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+        if (mounted) context.showError('Error: $e');
       } finally {
          if (mounted) setState(() => _isProcessing = false);
       }
@@ -51,7 +59,7 @@ class _QuickPostScreenState extends ConsumerState<QuickPostScreen> {
   Future<void> _submitPost() async {
     final mosqueId = ref.read(selectedMosqueIdProvider);
     if (mosqueId == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('No mosque selected!')));
+      context.showError('No mosque selected!');
       return;
     }
 
@@ -64,11 +72,11 @@ class _QuickPostScreenState extends ConsumerState<QuickPostScreen> {
         // 'user_id': ... (get from auth)
       });
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Posted!')));
+        context.showSuccess('Posted!');
         context.pop();
       }
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error: $e')));
+      if (mounted) context.showError('Error: $e');
     } finally {
       if (mounted) setState(() => _isProcessing = false);
     }

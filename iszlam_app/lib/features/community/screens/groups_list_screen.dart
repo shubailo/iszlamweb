@@ -93,7 +93,7 @@ class GroupCard extends StatelessWidget {
                 const Spacer(),
                 FilledButton.tonal(
                   onPressed: () {
-                    // TODO: Join Logic
+                    // STUB: Join Logic
                   },
                   child: const Text('Join'),
                 ),

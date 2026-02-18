@@ -34,7 +34,7 @@ class QuickToolsRow extends StatelessWidget {
           ),
           _ToolItem(
             icon: Icons.history, // Missed prayers
-            label: 'Pótlás', // TODO: Add key for 'Missed' if needed, or mapping? keeping hardcoded for now or add to H? 'Pótlás' is 'Replacement' or 'Make up'.
+            label: H.missedPrayer,
             onTap: () => context.go('/missed'),
           ),
         ],

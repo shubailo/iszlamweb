@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/widgets/garden_error_view.dart';
 import '../../auth/services/auth_service.dart';
 import '../providers/asmaul_husna_provider.dart';
 import '../widgets/edit_asma_dialog.dart';
@@ -47,7 +48,7 @@ class AsmaulHusnaScreen extends ConsumerWidget {
           },
         ),
         loading: () => const Center(child: CircularProgressIndicator(color: GardenPalette.leafyGreen)),
-        error: (e, _) => Center(child: Text('Hiba: $e', style: GoogleFonts.outfit(color: GardenPalette.errorRed))),
+        error: (e, _) => GardenErrorView(message: 'Hiba: $e'),
       ),
     );
   }

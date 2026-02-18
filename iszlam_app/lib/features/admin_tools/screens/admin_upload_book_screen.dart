@@ -5,10 +5,13 @@ import 'package:file_picker/file_picker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
+import '../../../core/widgets/garden_input_decoration.dart';
+import '../models/admin_models.dart';
 import '../services/admin_repository.dart';
 
 class AdminUploadBookScreen extends ConsumerStatefulWidget {
-  final Map<String, dynamic>? book;
+  final AdminBook? book;
   const AdminUploadBookScreen({super.key, this.book});
 
   @override
@@ -24,7 +27,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
   final _pagesController = TextEditingController();
   
   String? _selectedCategoryId;
-  List<Map<String, dynamic>> _categories = [];
+  List<AdminCategory> _categories = [];
   
   Uint8List? _bookFileBytes;
   String? _bookFileName;
@@ -35,15 +38,24 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
   bool _isLoading = false;
 
   @override
+  void dispose() {
+    _titleController.dispose();
+    _authorController.dispose();
+    _descController.dispose();
+    _pagesController.dispose();
+    super.dispose();
+  }
+
+  @override
   void initState() {
     super.initState();
     if (widget.book != null) {
-      _titleController.text = widget.book!['title'] ?? '';
-      _authorController.text = widget.book!['author'] ?? '';
-      _descController.text = widget.book!['description'] ?? '';
-      _selectedCategoryId = widget.book!['category_id'];
+      _titleController.text = widget.book!.title;
+      _authorController.text = widget.book!.author;
+      _descController.text = widget.book!.description ?? '';
+      _selectedCategoryId = widget.book!.categoryId;
       
-      final metadata = widget.book!['metadata'] as Map<String, dynamic>?;
+      final metadata = widget.book!.metadata as Map<String, dynamic>?;
       if (metadata != null) {
         _pagesController.text = metadata['pages']?.toString() ?? '';
       }
@@ -58,11 +70,11 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
         setState(() {
           _categories = cats;
           // Filter for books or both
-          _categories = _categories.where((c) => c['type'] != 'audio').toList();
+          _categories = cats.where((c) => c.type != 'audio').toList();
         });
       }
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Error loading categories: $e')));
+      if (mounted) context.showError('Error loading categories: $e');
     }
   }
 
@@ -98,7 +110,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
   Future<void> _save() async {
     if (!_formKey.currentState!.validate()) return;
     if (widget.book == null && _bookFileBytes == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please select a book file')));
+      context.showError('Please select a book file');
       return;
     }
 
@@ -109,7 +121,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
       final repo = ref.read(adminRepositoryProvider);
       final timestamp = DateTime.now().millisecondsSinceEpoch;
 
-      String? bookUrl = widget.book?['file_url'];
+      String? bookUrl = widget.book?.fileUrl;
       if (_bookFileBytes != null) {
         final safeBookName = '${timestamp}_${_bookFileName!.replaceAll(RegExp(r'[^a-zA-Z0-9\.]'), '_')}';
         bookUrl = await repo.uploadFile(
@@ -120,7 +132,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
         );
       }
 
-      String? coverUrl = widget.book?['cover_url'];
+      String? coverUrl = widget.book?.coverUrl;
       if (_coverFileBytes != null) {
         final safeCoverName = '${timestamp}_${_coverFileName!.replaceAll(RegExp(r'[^a-zA-Z0-9\.]'), '_')}';
         coverUrl = await repo.uploadFile(
@@ -140,12 +152,12 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
         'cover_url': coverUrl,
         'metadata': {
           'pages': _pagesController.text,
-          'format': _bookFileName != null ? _bookFileName!.split('.').last : (widget.book?['metadata']?['format'] ?? 'pdf'),
+          'format': _bookFileName != null ? _bookFileName!.split('.').last : ((widget.book?.metadata as Map<String, dynamic>?)?['format'] ?? 'pdf'),
         },
       };
 
       if (widget.book != null) {
-        await repo.updateBook(widget.book!['id'], bookData);
+        await repo.updateBook(widget.book!.id, bookData);
       } else {
         await repo.createBook(
           title: bookData['title'] as String,
@@ -159,12 +171,12 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
       }
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(widget.book != null ? 'Book updated!' : 'Book uploaded!')));
+        context.showSuccess(widget.book != null ? 'Book updated!' : 'Book uploaded!');
         ref.invalidate(adminBooksProvider);
         context.pop();
       }
     } catch (e) {
-      if (mounted) ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Operation failed: $e')));
+      if (mounted) context.showError('Operation failed: $e');
     } finally {
       if (mounted) setState(() => _isLoading = false);
     }
@@ -195,12 +207,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
               TextFormField(
                 controller: _titleController,
                 style: GoogleFonts.outfit(color: GardenPalette.nearBlack),
-                decoration: InputDecoration(
-                  labelText: 'Title',
-                  labelStyle: TextStyle(color: GardenPalette.charcoal),
-                  border: const OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: GardenPalette.lightGrey)),
-                ),
+                decoration: GardenInputDecoration.standard(label: 'Title'),
                 validator: (v) => v!.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 16),
@@ -209,12 +216,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
               TextFormField(
                 controller: _authorController,
                 style: GoogleFonts.outfit(color: GardenPalette.nearBlack),
-                decoration: InputDecoration(
-                  labelText: 'Author',
-                  labelStyle: TextStyle(color: GardenPalette.charcoal),
-                  border: const OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: GardenPalette.lightGrey)),
-                ),
+                decoration: GardenInputDecoration.standard(label: 'Author'),
                 validator: (v) => v!.isEmpty ? 'Required' : null,
               ),
               const SizedBox(height: 16),
@@ -223,16 +225,11 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
               DropdownButtonFormField<String>(
                 initialValue: _selectedCategoryId,
                 style: GoogleFonts.outfit(color: GardenPalette.nearBlack),
-                decoration: InputDecoration(
-                  labelText: 'Category',
-                  labelStyle: TextStyle(color: GardenPalette.charcoal),
-                  border: const OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: GardenPalette.lightGrey)),
-                ),
+                decoration: GardenInputDecoration.standard(label: 'Category'),
                 items: _categories.map((c) {
                   return DropdownMenuItem<String>(
-                    value: c['id'],
-                    child: Text(c['label_hu'], style: GoogleFonts.outfit(color: GardenPalette.nearBlack)),
+                    value: c.id,
+                    child: Text(c.labelHu, style: GoogleFonts.outfit(color: GardenPalette.nearBlack)),
                   );
                 }).toList(),
                 onChanged: (v) => setState(() => _selectedCategoryId = v),
@@ -245,12 +242,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
                 controller: _descController,
                 maxLines: 3,
                 style: GoogleFonts.outfit(color: GardenPalette.nearBlack),
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                  labelStyle: TextStyle(color: GardenPalette.charcoal),
-                  border: const OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: GardenPalette.lightGrey)),
-                ),
+                decoration: GardenInputDecoration.standard(label: 'Description'),
               ),
               const SizedBox(height: 16),
 
@@ -258,12 +250,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
               TextFormField(
                 controller: _pagesController,
                 style: GoogleFonts.outfit(color: GardenPalette.nearBlack),
-                decoration: InputDecoration(
-                  labelText: 'Pages (optional)',
-                  labelStyle: TextStyle(color: GardenPalette.charcoal),
-                  border: const OutlineInputBorder(),
-                  enabledBorder: OutlineInputBorder(borderSide: BorderSide(color: GardenPalette.lightGrey)),
-                ),
+                decoration: GardenInputDecoration.standard(label: 'Pages (optional)'),
                 keyboardType: TextInputType.number,
               ),
               const SizedBox(height: 24),

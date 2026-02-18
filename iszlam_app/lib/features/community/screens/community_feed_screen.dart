@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
+import '../../../core/localization/hungarian_strings.dart';
 import '../providers/mosque_provider.dart';
 import '../providers/event_provider.dart';
 import '../models/announcement.dart';
@@ -22,7 +24,7 @@ class CommunityFeedScreen extends ConsumerWidget {
 
           if (selectedMosqueId == null) {
             return Scaffold(
-              appBar: AppBar(title: const Text('Select Your Mosque')),
+              appBar: AppBar(title: const Text(H.selectMosque)),
               body: mosqueListAsync.when(
                 data: (mosques) => ListView.builder(
                   itemCount: mosques.length,
@@ -47,7 +49,7 @@ class CommunityFeedScreen extends ConsumerWidget {
 
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Community Feed'),
+              title: const Text(H.communityFeed),
               actions: [
                 IconButton(
                   icon: const Icon(Icons.event),
@@ -90,7 +92,7 @@ class CommunityFeedScreen extends ConsumerWidget {
             body: announcementsAsync.when(
               data: (announcements) {
                 if (announcements.isEmpty) {
-                  return const Center(child: Text('No announcements yet.'));
+                  return const Center(child: Text(H.noAnnouncements));
                 }
                 return ListView.builder(
                   itemCount: announcements.length,
@@ -167,7 +169,7 @@ class AnnouncementCard extends StatelessWidget {
                     Icon(Icons.play_circle_fill, color: Theme.of(context).primaryColor),
                     const SizedBox(width: 8),
                     Text(
-                      'Listen to Audio Announcement',
+                      H.listenAudio,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontWeight: FontWeight.bold,
@@ -179,7 +181,7 @@ class AnnouncementCard extends StatelessWidget {
             ],
             const SizedBox(height: 12),
             Text(
-              announcement.createdAt.toString().split(' ')[0], // TODO: Format nicely
+              DateFormat('yyyy. MMM. dd.').format(announcement.createdAt),
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                 color: Colors.grey,
               ),

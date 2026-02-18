@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/widgets/garden_error_view.dart';
 import '../providers/quran_provider.dart';
 import '../models/ayah.dart';
 import '../widgets/bismillah_header.dart';
@@ -54,10 +55,7 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
         loading: () => const Center(
           child: CircularProgressIndicator(color: GardenPalette.leafyGreen),
         ),
-        error: (e, _) => Center(
-          child: Text('Hiba: $e',
-              style: const TextStyle(color: GardenPalette.errorRed)),
-        ),
+        error: (e, _) => GardenErrorView(message: 'Hiba: $e'),
         data: (ayahs) => _buildAyahList(ayahs),
       ),
     );

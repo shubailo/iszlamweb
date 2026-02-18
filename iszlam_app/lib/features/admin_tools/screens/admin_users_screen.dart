@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
+import '../../../core/widgets/garden_error_view.dart';
 import '../services/admin_repository.dart';
+import '../models/admin_models.dart';
 
 class AdminUsersScreen extends ConsumerWidget {
   const AdminUsersScreen({super.key});
@@ -36,8 +39,8 @@ class AdminUsersScreen extends ConsumerWidget {
           padding: const EdgeInsets.all(16),
           itemCount: users.length,
           itemBuilder: (context, index) {
-            final user = users[index];
-            final isAdmin = user['is_admin'] == true;
+            final AdminUser user = users[index];
+            final isAdmin = user.isAdmin;
             
             return Card(
               margin: const EdgeInsets.only(bottom: 12),
@@ -46,12 +49,12 @@ class AdminUsersScreen extends ConsumerWidget {
                 leading: CircleAvatar(
                   backgroundColor: GardenPalette.leafyGreen.withAlpha(30),
                   child: Text(
-                    (user['full_name'] as String?)?.characters.first.toUpperCase() ?? '?',
+                    user.initial,
                     style: GoogleFonts.outfit(color: GardenPalette.leafyGreen, fontWeight: FontWeight.bold),
                   ),
                 ),
                 title: Text(
-                  user['full_name'] ?? 'Névtelen felhasználó',
+                  user.displayName,
                   style: GoogleFonts.outfit(fontWeight: FontWeight.w600),
                 ),
                 subtitle: Text(
@@ -65,12 +68,10 @@ class AdminUsersScreen extends ConsumerWidget {
                   value: isAdmin,
                   activeThumbColor: GardenPalette.leafyGreen,
                   onChanged: (value) async {
-                    await ref.read(adminRepositoryProvider).toggleAdminStatus(user['id'], value);
+                    await ref.read(adminRepositoryProvider).toggleAdminStatus(user.id, value);
                     ref.invalidate(usersProvider);
                     if (context.mounted) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('${user['full_name']} mostantól ${value ? 'Admin' : 'Felhasználó'}')),
-                      );
+                      context.showSuccess('${user.displayName} mostantól ${value ? 'Admin' : 'Felhasználó'}');
                     }
                   },
                 ),
@@ -79,7 +80,7 @@ class AdminUsersScreen extends ConsumerWidget {
           },
         ),
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (e, _) => Center(child: Text('Hiba: $e')),
+        error: (e, _) => GardenErrorView(message: 'Hiba: $e'),
       ),
     );
   }

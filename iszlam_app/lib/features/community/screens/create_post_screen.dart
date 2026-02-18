@@ -9,6 +9,7 @@ import '../models/community_post.dart';
 import '../services/community_service.dart';
 import '../providers/community_provider.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
 import 'package:iszlamweb_app/features/auth/services/auth_service.dart';
 
 class CreatePostScreen extends ConsumerStatefulWidget {
@@ -137,7 +138,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> with Single
       // Upload image if needed (Mock for now or implement Supabase storage)
       String? imageUrl;
       if (_currentPostType == CommunityPostType.image && _selectedFile != null) {
-        // TODO: Implement actual Supabase Storage upload
+        // STUB: Implement actual Supabase Storage upload
         // imageUrl = await ref.read(communityServiceProvider).uploadImage(_selectedFile!);
       }
 
@@ -168,9 +169,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> with Single
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error creating post: $e')),
-        );
+        context.showError('Error creating post: $e');
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);

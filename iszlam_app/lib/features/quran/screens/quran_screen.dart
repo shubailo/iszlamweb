@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/widgets/garden_error_view.dart';
 import '../providers/quran_provider.dart';
 import '../widgets/surah_tile.dart';
 import '../../worship/widgets/worship_sidebar.dart';
@@ -50,10 +51,7 @@ class _QuranScreenState extends ConsumerState<QuranScreen> {
               ),
             ),
             error: (e, _) => SliverFillRemaining(
-              child: Center(
-                child: Text('Hiba: $e',
-                    style: const TextStyle(color: GardenPalette.errorRed)),
-              ),
+              child: GardenErrorView(message: 'Hiba: $e'),
             ),
             data: (surahs) {
               final filtered = _searchQuery.isEmpty

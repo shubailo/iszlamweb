@@ -46,7 +46,7 @@ class EventCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
-          // TODO: Open detail view
+          // STUB: Open detail view
         },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

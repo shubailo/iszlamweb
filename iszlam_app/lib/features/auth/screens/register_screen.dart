@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import '../services/auth_service.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});
@@ -15,6 +16,13 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
   final _passwordController = TextEditingController();
   bool _isLoading = false;
 
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
   Future<void> _attemptSignUp() async {
     setState(() => _isLoading = true);
     try {
@@ -23,16 +31,12 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
             _passwordController.text.trim(),
           );
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Check your email for confirmation!')),
-        );
+        context.showSuccess('Check your email for confirmation!');
         context.pop(); // Go back to login
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Registration Failed: $e')),
-        );
+        context.showError('Registration Failed: $e');
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);

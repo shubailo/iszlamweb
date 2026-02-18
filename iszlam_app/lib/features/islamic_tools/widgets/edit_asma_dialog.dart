@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
 import '../models/asmaul_husna.dart';
 import '../../admin_tools/services/admin_repository.dart';
 import '../providers/asmaul_husna_provider.dart';
@@ -76,9 +77,7 @@ class _EditAsmaDialogState extends ConsumerState<EditAsmaDialog> {
       if (mounted) Navigator.pop(context);
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Hiba: $e'), backgroundColor: GardenPalette.errorRed),
-        );
+        context.showError('Hiba: $e');
       }
     } finally {
       if (mounted) setState(() => _isLoading = false);

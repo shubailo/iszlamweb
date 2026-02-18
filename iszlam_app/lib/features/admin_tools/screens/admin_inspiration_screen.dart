@@ -3,9 +3,13 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
+import '../../../core/widgets/garden_input_decoration.dart';
 import '../../home/models/daily_content.dart';
 import '../../home/providers/home_providers.dart';
 import '../services/admin_repository.dart';
+import '../models/admin_models.dart';
+import '../../../core/widgets/garden_error_view.dart';
 
 class AdminInspirationScreen extends ConsumerStatefulWidget {
   const AdminInspirationScreen({super.key});
@@ -46,9 +50,7 @@ class _AdminInspirationScreenState extends ConsumerState<AdminInspirationScreen>
       });
 
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Inspiráció sikeresen hozzáadva!')),
-        );
+        context.showSuccess('Inspiráció sikeresen hozzáadva!');
         _titleController.clear();
         _bodyController.clear();
         _sourceController.clear();
@@ -56,9 +58,7 @@ class _AdminInspirationScreenState extends ConsumerState<AdminInspirationScreen>
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Hiba: $e'), backgroundColor: GardenPalette.errorRed),
-        );
+        context.showError('Hiba: $e');
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);
@@ -117,7 +117,7 @@ class _AdminInspirationScreenState extends ConsumerState<AdminInspirationScreen>
                             child: TextFormField(
                               controller: _titleController,
                               style: GoogleFonts.outfit(color: GardenPalette.nearBlack),
-                              decoration: InputDecoration(labelText: 'Cím/Hivatkozás', labelStyle: TextStyle(color: GardenPalette.darkGrey)),
+                              decoration: GardenInputDecoration.standard(label: 'Cím/Hivatkozás'),
                               validator: (v) => v == null || v.isEmpty ? 'Keresünk egy címet' : null,
                             ),
                           ),
@@ -127,13 +127,13 @@ class _AdminInspirationScreenState extends ConsumerState<AdminInspirationScreen>
                         controller: _bodyController,
                         maxLines: 3,
                         style: GoogleFonts.outfit(color: GardenPalette.nearBlack),
-                        decoration: InputDecoration(labelText: 'Szöveg', labelStyle: TextStyle(color: GardenPalette.darkGrey)),
+                        decoration: GardenInputDecoration.standard(label: 'Szöveg'),
                         validator: (v) => v == null || v.isEmpty ? 'A tartalom nem lehet üres' : null,
                       ),
                       TextFormField(
                         controller: _sourceController,
                         style: GoogleFonts.outfit(color: GardenPalette.nearBlack),
-                        decoration: InputDecoration(labelText: 'Forrás', labelStyle: TextStyle(color: GardenPalette.darkGrey)),
+                        decoration: GardenInputDecoration.standard(label: 'Forrás'),
                         validator: (v) => v == null || v.isEmpty ? 'Ki mondta?' : null,
                       ),
                       const SizedBox(height: 16),
@@ -162,14 +162,14 @@ class _AdminInspirationScreenState extends ConsumerState<AdminInspirationScreen>
                 itemCount: items.length,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 itemBuilder: (context, index) {
-                  final item = items[index];
-                  final isActive = item['is_active'] == true;
+                  final AdminInspiration item = items[index];
+                  final isActive = item.isActive;
                   return Card(
                     color: GardenPalette.white.withValues(alpha: 0.5),
                     margin: const EdgeInsets.only(bottom: 8),
                     child: ListTile(
-                      title: Text(item['title'], style: GoogleFonts.outfit(color: GardenPalette.nearBlack, fontWeight: FontWeight.bold)),
-                      subtitle: Text(item['body'], maxLines: 2, overflow: TextOverflow.ellipsis, style: GoogleFonts.outfit(color: GardenPalette.darkGrey)),
+                      title: Text(item.title, style: GoogleFonts.outfit(color: GardenPalette.nearBlack, fontWeight: FontWeight.bold)),
+                      subtitle: Text(item.body, maxLines: 2, overflow: TextOverflow.ellipsis, style: GoogleFonts.outfit(color: GardenPalette.darkGrey)),
                       trailing: Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
@@ -177,17 +177,17 @@ class _AdminInspirationScreenState extends ConsumerState<AdminInspirationScreen>
                             const Icon(Icons.check_circle, color: GardenPalette.leafyGreen),
                           IconButton(
                             icon: const Icon(Icons.delete_outline, color: GardenPalette.errorRed),
-                            onPressed: () => _delete(item['id']),
+                            onPressed: () => _delete(item.id),
                           ),
                         ],
                       ),
-                      onTap: () => _toggleActive(item['id'], !isActive),
+                      onTap: () => _toggleActive(item.id, !isActive),
                     ),
                   );
                 },
               ),
               loading: () => const Center(child: CircularProgressIndicator()),
-              error: (e, _) => Center(child: Text('Hiba: $e', style: GoogleFonts.outfit(color: GardenPalette.nearBlack))),
+              error: (e, _) => GardenErrorView(message: 'Hiba: $e'),
             ),
           ),
         ],

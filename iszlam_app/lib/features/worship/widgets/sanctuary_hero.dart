@@ -156,7 +156,7 @@ class SanctuaryHero extends StatelessWidget {
               ] else ...[
                 // Future/Past Date View
                 Text(
-                  'KIVÁLASZTOTT DÁTUM', // TODO: Add to H
+                  H.selectedDate,
                   style: GoogleFonts.outfit(
                     fontSize: 11,
                     fontWeight: FontWeight.w900,

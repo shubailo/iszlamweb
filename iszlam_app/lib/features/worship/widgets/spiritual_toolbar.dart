@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
 
 class SpiritualToolbar extends StatelessWidget {
   const SpiritualToolbar({super.key});
@@ -31,7 +32,7 @@ class SpiritualToolbar extends StatelessWidget {
             label: 'Qibla',
             icon: Icons.explore,
             onTap: () {
-               ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Kibla irány hamarosan!')));
+               context.showSuccess('Kibla irány hamarosan!');
             },
           ),
           const SizedBox(width: 14),

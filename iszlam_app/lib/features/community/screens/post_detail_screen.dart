@@ -116,7 +116,7 @@ class _CommentTreeItem extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
-                          // TODO: Reply logic
+                          // STUB: Reply logic
                         },
                         style: TextButton.styleFrom(
                           minimumSize: Size.zero,
@@ -152,6 +152,12 @@ class _CommentInput extends StatefulWidget {
 
 class _CommentInputState extends State<_CommentInput> {
   final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

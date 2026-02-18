@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:uuid/uuid.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../../core/extensions/snackbar_helpers.dart';
 import '../models/mosque.dart';
 import '../services/community_service.dart';
 import '../providers/mosque_provider.dart';
@@ -57,9 +58,7 @@ class _CreateCommunityDialogState extends ConsumerState<CreateCommunityDialog> {
       }
     } catch (e) {
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        context.showError('Error: $e');
       }
     } finally {
       if (mounted) setState(() => _isSubmitting = false);

@@ -123,7 +123,7 @@ class MoreScreen extends ConsumerWidget {
                       subtitle: 'Fiók beállítása',
                       color: GardenPalette.leafyGreen,
                       onTap: () {
-                        // TODO: Profile screen
+                        // STUB: Profile screen
                       },
                     ),
                   // Admin Tools
@@ -158,7 +158,7 @@ class MoreScreen extends ConsumerWidget {
                     subtitle: 'Értesítések, nyelv, téma',
                     color: GardenPalette.darkGrey,
                     onTap: () {
-                      // TODO: Settings screen
+                      // STUB: Settings screen
                     },
                   ),
                   _MoreTile(
@@ -167,7 +167,7 @@ class MoreScreen extends ConsumerWidget {
                     subtitle: 'Iszlam.com · Verzió 1.0',
                     color: GardenPalette.darkGrey,
                     onTap: () {
-                      // TODO: About screen
+                      // STUB: About screen
                     },
                   ),
                   if (isLoggedIn)

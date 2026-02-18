@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import '../models/admin_models.dart';
 final adminRepositoryProvider = Provider((ref) => AdminRepository());
 
 final adminBooksProvider = FutureProvider((ref) async {
@@ -90,19 +91,19 @@ class AdminRepository {
   
   // --- Fetch Data ---
   
-  Future<List<Map<String, dynamic>>> getBooks() async {
+  Future<List<AdminBook>> getBooks() async {
     final data = await _supabase.from('books').select().order('title');
-    return List<Map<String, dynamic>>.from(data);
+    return data.map((e) => AdminBook.fromJson(e)).toList();
   }
 
-  Future<List<Map<String, dynamic>>> getKhutbas() async {
+  Future<List<AdminKhutba>> getKhutbas() async {
     final data = await _supabase.from('khutbas').select().order('date', ascending: false);
-    return List<Map<String, dynamic>>.from(data);
+    return data.map((e) => AdminKhutba.fromJson(e)).toList();
   }
 
-  Future<List<Map<String, dynamic>>> getCategories() async {
+  Future<List<AdminCategory>> getCategories() async {
     final data = await _supabase.from('library_categories').select().order('label_hu');
-    return List<Map<String, dynamic>>.from(data);
+    return data.map((e) => AdminCategory.fromJson(e)).toList();
   }
 
   // --- Updates ---
@@ -135,9 +136,9 @@ class AdminRepository {
 
   // --- Users ---
 
-  Future<List<Map<String, dynamic>>> getUsers() async {
+  Future<List<AdminUser>> getUsers() async {
     final data = await _supabase.from('profiles').select().order('full_name');
-    return List<Map<String, dynamic>>.from(data);
+    return data.map((e) => AdminUser.fromJson(e)).toList();
   }
 
   Future<void> toggleAdminStatus(String userId, bool isAdmin) async {
@@ -146,9 +147,9 @@ class AdminRepository {
 
   // --- Inspiration ---
 
-  Future<List<Map<String, dynamic>>> getInspirations() async {
+  Future<List<AdminInspiration>> getInspirations() async {
     final data = await _supabase.from('daily_inspiration').select().order('created_at', ascending: false);
-    return List<Map<String, dynamic>>.from(data);
+    return data.map((e) => AdminInspiration.fromJson(e)).toList();
   }
 
   Future<void> createInspiration(Map<String, dynamic> data) async {
