@@ -1,0 +1,596 @@
+[
+    {
+        "number": 1,
+        "arabic": "الرَّحْمَنُ",
+        "transliteration": "Ar-Rahmán",
+        "meaning": "A Könyörületes"
+    },
+    {
+        "number": 2,
+        "arabic": "الرَّحِيمُ",
+        "transliteration": "Ar-Rahím",
+        "meaning": "Az Irgalmas"
+    },
+    {
+        "number": 3,
+        "arabic": "الْمَلِكُ",
+        "transliteration": "Al-Malik",
+        "meaning": "A Király, az Uralkodó"
+    },
+    {
+        "number": 4,
+        "arabic": "الْقُدُّوسُ",
+        "transliteration": "Al-Quddúsz",
+        "meaning": "A Szent"
+    },
+    {
+        "number": 5,
+        "arabic": "السَّلاَمُ",
+        "transliteration": "Asz-Szalám",
+        "meaning": "A Békesség"
+    },
+    {
+        "number": 6,
+        "arabic": "الْمُؤْمِنُ",
+        "transliteration": "Al-Mu'min",
+        "meaning": "A Hit Oltalmazója"
+    },
+    {
+        "number": 7,
+        "arabic": "الْمُهَيْمِنُ",
+        "transliteration": "Al-Muhajmin",
+        "meaning": "Az Őrző"
+    },
+    {
+        "number": 8,
+        "arabic": "الْعَزِيزُ",
+        "transliteration": "Al-Azíz",
+        "meaning": "A Mindenható"
+    },
+    {
+        "number": 9,
+        "arabic": "الْجَبَّارُ",
+        "transliteration": "Al-Dzsabbár",
+        "meaning": "A Kényszerítő"
+    },
+    {
+        "number": 10,
+        "arabic": "الْمُتَكَبِّرُ",
+        "transliteration": "Al-Mutakabbir",
+        "meaning": "A Fenséges"
+    },
+    {
+        "number": 11,
+        "arabic": "الْخَالِقُ",
+        "transliteration": "Al-Kháliq",
+        "meaning": "A Teremtő"
+    },
+    {
+        "number": 12,
+        "arabic": "الْبَارِئُ",
+        "transliteration": "Al-Bári",
+        "meaning": "A Formáló"
+    },
+    {
+        "number": 13,
+        "arabic": "الْمُصَوِّرُ",
+        "transliteration": "Al-Muszavvir",
+        "meaning": "Az Alakítój"
+    },
+    {
+        "number": 14,
+        "arabic": "الْغَفَّارُ",
+        "transliteration": "Al-Ghaffár",
+        "meaning": "A Nagy Megbocsátó"
+    },
+    {
+        "number": 15,
+        "arabic": "الْقَهَّارُ",
+        "transliteration": "Al-Qahhár",
+        "meaning": "Az Ellenállhatatlan"
+    },
+    {
+        "number": 16,
+        "arabic": "الْوَهَّابُ",
+        "transliteration": "Al-Vahháb",
+        "meaning": "Az Adományozó"
+    },
+    {
+        "number": 17,
+        "arabic": "الرَّزَّاقُ",
+        "transliteration": "Ar-Razzáq",
+        "meaning": "Az Ellátó"
+    },
+    {
+        "number": 18,
+        "arabic": "الْفَتَّاحُ",
+        "transliteration": "Al-Fattáh",
+        "meaning": "A Megnyitó"
+    },
+    {
+        "number": 19,
+        "arabic": "اَلْعَلِيْمُ",
+        "transliteration": "Al-Alím",
+        "meaning": "A Mindentudó"
+    },
+    {
+        "number": 20,
+        "arabic": "الْقَابِضُ",
+        "transliteration": "Al-Qábid",
+        "meaning": "Az Összehúzó"
+    },
+    {
+        "number": 21,
+        "arabic": "الْبَاسِطُ",
+        "transliteration": "Al-Bászit",
+        "meaning": "A Kiterjesztő"
+    },
+    {
+        "number": 22,
+        "arabic": "الْخَافِضُ",
+        "transliteration": "Al-Kháfid",
+        "meaning": "A Megalázó"
+    },
+    {
+        "number": 23,
+        "arabic": "الرَّافِعُ",
+        "transliteration": "Ar-Ráfi",
+        "meaning": "A Felemelő"
+    },
+    {
+        "number": 24,
+        "arabic": "الْمُعِزُّ",
+        "transliteration": "Al-Muizz",
+        "meaning": "A Megbecsülést Adó"
+    },
+    {
+        "number": 25,
+        "arabic": "المُذِلُّ",
+        "transliteration": "Al-Muzill",
+        "meaning": "A Megalázást Adó"
+    },
+    {
+        "number": 26,
+        "arabic": "السَّمِيعُ",
+        "transliteration": "Asz-Szamí",
+        "meaning": "A Mindent Halló"
+    },
+    {
+        "number": 27,
+        "arabic": "الْبَصِيرُ",
+        "transliteration": "Al-Baszír",
+        "meaning": "A Mindent Látó"
+    },
+    {
+        "number": 28,
+        "arabic": "الْحَكَمُ",
+        "transliteration": "Al-Hakam",
+        "meaning": "A Bíró"
+    },
+    {
+        "number": 29,
+        "arabic": "الْعَدْلُ",
+        "transliteration": "Al-Adl",
+        "meaning": "Az Igazságos"
+    },
+    {
+        "number": 30,
+        "arabic": "اللَّطِيفُ",
+        "transliteration": "Al-Latíf",
+        "meaning": "A Kifinomult"
+    },
+    {
+        "number": 31,
+        "arabic": "الْخَبِيرُ",
+        "transliteration": "Al-Khabír",
+        "meaning": "A Mindent Ismerő"
+    },
+    {
+        "number": 32,
+        "arabic": "الْحَلِيمُ",
+        "transliteration": "Al-Halím",
+        "meaning": "A Türelmes"
+    },
+    {
+        "number": 33,
+        "arabic": "الْعَظِيمُ",
+        "transliteration": "Al-Azím",
+        "meaning": "A Hatalmas"
+    },
+    {
+        "number": 34,
+        "arabic": "الْغَفُورُ",
+        "transliteration": "Al-Ghafúr",
+        "meaning": "A Megbocsátó"
+    },
+    {
+        "number": 35,
+        "arabic": "الشَّكُورُ",
+        "transliteration": "Ash-Sakúr",
+        "meaning": "A Hálás"
+    },
+    {
+        "number": 36,
+        "arabic": "الْعَلِيُّ",
+        "transliteration": "Al-Alijj",
+        "meaning": "A Magasságos"
+    },
+    {
+        "number": 37,
+        "arabic": "الْكَبِيرُ",
+        "transliteration": "Al-Kabír",
+        "meaning": "A Nagy"
+    },
+    {
+        "number": 38,
+        "arabic": "الْحَفِيظُ",
+        "transliteration": "Al-Hafíz",
+        "meaning": "A Megőrző"
+    },
+    {
+        "number": 39,
+        "arabic": "المُقيِت",
+        "transliteration": "Al-Muqít",
+        "meaning": "A Fenntartó"
+    },
+    {
+        "number": 40,
+        "arabic": "الْحسِيبُ",
+        "transliteration": "Al-Haszíb",
+        "meaning": "A Számontartó"
+    },
+    {
+        "number": 41,
+        "arabic": "الْجَلِيلُ",
+        "transliteration": "Al-Dzsalíl",
+        "meaning": "A Fenséges"
+    },
+    {
+        "number": 42,
+        "arabic": "الْكَرِيمُ",
+        "transliteration": "Al-Karím",
+        "meaning": "A Nagylelkű"
+    },
+    {
+        "number": 43,
+        "arabic": "الرَّقِيبُ",
+        "transliteration": "Ar-Raqíb",
+        "meaning": "Az Őrködő"
+    },
+    {
+        "number": 44,
+        "arabic": "الْمُجِيبُ",
+        "transliteration": "Al-Mudzsíb",
+        "meaning": "A Meghallgató"
+    },
+    {
+        "number": 45,
+        "arabic": "الْوَاسِعُ",
+        "transliteration": "Al-Vászi",
+        "meaning": "A Mindent Átfogó"
+    },
+    {
+        "number": 46,
+        "arabic": "الْحَكِيمُ",
+        "transliteration": "Al-Hakím",
+        "meaning": "A Bölcs"
+    },
+    {
+        "number": 47,
+        "arabic": "الْوَدُودُ",
+        "transliteration": "Al-Vadúd",
+        "meaning": "A Szerető"
+    },
+    {
+        "number": 48,
+        "arabic": "الْمَجِيدُ",
+        "transliteration": "Al-Madzsíd",
+        "meaning": "A Dicsőséges"
+    },
+    {
+        "number": 49,
+        "arabic": "الْبَاعِثُ",
+        "transliteration": "Al-Bá'isz",
+        "meaning": "A Feltámasztó"
+    },
+    {
+        "number": 50,
+        "arabic": "الشَّهِيدُ",
+        "transliteration": "Ash-Shahíd",
+        "meaning": "A Tanú"
+    },
+    {
+        "number": 51,
+        "arabic": "الْحَقُّ",
+        "transliteration": "Al-Haqq",
+        "meaning": "Az Igazság"
+    },
+    {
+        "number": 52,
+        "arabic": "الْوَكِيلُ",
+        "transliteration": "Al-Vakíl",
+        "meaning": "A Gondviselő"
+    },
+    {
+        "number": 53,
+        "arabic": "الْقَوِيُّ",
+        "transliteration": "Al-Qavijj",
+        "meaning": "Az Erős"
+    },
+    {
+        "number": 54,
+        "arabic": "الْمَتِينُ",
+        "transliteration": "Al-Matín",
+        "meaning": "A Szilárd"
+    },
+    {
+        "number": 55,
+        "arabic": "الْوَلِيُّ",
+        "transliteration": "Al-Valijj",
+        "meaning": "A Barát, a Védnök"
+    },
+    {
+        "number": 56,
+        "arabic": "الْحَمِيدُ",
+        "transliteration": "Al-Hamíd",
+        "meaning": "A Dicséretre Méltó"
+    },
+    {
+        "number": 57,
+        "arabic": "الْمُحْصِي",
+        "transliteration": "Al-Muhszí",
+        "meaning": "A Számlálást Végző"
+    },
+    {
+        "number": 58,
+        "arabic": "الْمُبْدِئُ",
+        "transliteration": "Al-Mubdi",
+        "meaning": "A Kezdeményező"
+    },
+    {
+        "number": 59,
+        "arabic": "الْمُعِيدُ",
+        "transliteration": "Al-Muíd",
+        "meaning": "A Visszaállító"
+    },
+    {
+        "number": 60,
+        "arabic": "الْمُحْيِي",
+        "transliteration": "Al-Muhjí",
+        "meaning": "Az Életet Adó"
+    },
+    {
+        "number": 61,
+        "arabic": "اَلْمُمِيتُ",
+        "transliteration": "Al-Mumít",
+        "meaning": "A Halált Okozó"
+    },
+    {
+        "number": 62,
+        "arabic": "الْحَيُّ",
+        "transliteration": "Al-Hajj",
+        "meaning": "Az Élő"
+    },
+    {
+        "number": 63,
+        "arabic": "الْقَيُّومُ",
+        "transliteration": "Al-Qajjúm",
+        "meaning": "Az Örök Létező"
+    },
+    {
+        "number": 64,
+        "arabic": "الْوَاجِدُ",
+        "transliteration": "Al-Vádzsid",
+        "meaning": "A Megtaláló"
+    },
+    {
+        "number": 65,
+        "arabic": "الْمَاجِدُ",
+        "transliteration": "Al-Mádzsid",
+        "meaning": "A Nemes"
+    },
+    {
+        "number": 66,
+        "arabic": "الْواحِدُ",
+        "transliteration": "Al-Váhid",
+        "meaning": "Az Egyetlen"
+    },
+    {
+        "number": 67,
+        "arabic": "اَلاَحَدُ",
+        "transliteration": "Al-Ahad",
+        "meaning": "Az Egyedüli"
+    },
+    {
+        "number": 68,
+        "arabic": "الصَّمَدُ",
+        "transliteration": "Asz-Szamad",
+        "meaning": "Az Örökkévaló"
+    },
+    {
+        "number": 69,
+        "arabic": "الْقَادِرُ",
+        "transliteration": "Al-Qádir",
+        "meaning": "A Képes"
+    },
+    {
+        "number": 70,
+        "arabic": "الْمُقْتَدِرُ",
+        "transliteration": "Al-Muqtadir",
+        "meaning": "A Mindenre Képes"
+    },
+    {
+        "number": 71,
+        "arabic": "الْمُقَدِّمُ",
+        "transliteration": "Al-Muqaddim",
+        "meaning": "Az Előrehozó"
+    },
+    {
+        "number": 72,
+        "arabic": "الْمُؤَخِّرُ",
+        "transliteration": "Al-Mu'akhkhir",
+        "meaning": "A Hátravető"
+    },
+    {
+        "number": 73,
+        "arabic": "الأوَّلُ",
+        "transliteration": "Al-Avval",
+        "meaning": "Az Első"
+    },
+    {
+        "number": 74,
+        "arabic": "الآخِرُ",
+        "transliteration": "Al-Ákhir",
+        "meaning": "Az Utolsó"
+    },
+    {
+        "number": 75,
+        "arabic": "الظَّاهِرُ",
+        "transliteration": "Az-Záhir",
+        "meaning": "A Nyilvánvaló"
+    },
+    {
+        "number": 76,
+        "arabic": "الْبَاطِنُ",
+        "transliteration": "Al-Bátin",
+        "meaning": "A Rejtett"
+    },
+    {
+        "number": 77,
+        "arabic": "الْوَالِي",
+        "transliteration": "Al-Váli",
+        "meaning": "A Kormányzó"
+    },
+    {
+        "number": 78,
+        "arabic": "الْمُتَعَالِي",
+        "transliteration": "Al-Muta'áli",
+        "meaning": "A Magasságos"
+    },
+    {
+        "number": 79,
+        "arabic": "الْبَرُّ",
+        "transliteration": "Al-Barr",
+        "meaning": "A Jóságos"
+    },
+    {
+        "number": 80,
+        "arabic": "التَّوَّابُ",
+        "transliteration": "At-Tavváb",
+        "meaning": "A Bűnbánat Elfogadója"
+    },
+    {
+        "number": 81,
+        "arabic": "الْمُنْتَقِمُ",
+        "transliteration": "Al-Muntaqim",
+        "meaning": "A Megtorlást Végző"
+    },
+    {
+        "number": 82,
+        "arabic": "العَفُوُّ",
+        "transliteration": "Al-Afuvv",
+        "meaning": "A Megbocsátó"
+    },
+    {
+        "number": 83,
+        "arabic": "الرَّؤُوفُ",
+        "transliteration": "Ar-Ra'úf",
+        "meaning": "A Könyörülő"
+    },
+    {
+        "number": 84,
+        "arabic": "مَالِكُ الْمُلْكِ",
+        "transliteration": "Málik ul-Mulk",
+        "meaning": "A Királyság Ura"
+    },
+    {
+        "number": 85,
+        "arabic": "ذُوالْجَلاَلِ وَالإكْرَامِ",
+        "transliteration": "Zul-Dzsaláli val-Ikrám",
+        "meaning": "A Fenség és Nemesség Ura"
+    },
+    {
+        "number": 86,
+        "arabic": "الْمُقْسِطُ",
+        "transliteration": "Al-Muqszit",
+        "meaning": "A Méltányos"
+    },
+    {
+        "number": 87,
+        "arabic": "الْجَامِعُ",
+        "transliteration": "Al-Dzsámi",
+        "meaning": "Az Összegyűjtő"
+    },
+    {
+        "number": 88,
+        "arabic": "الْغَنِيُّ",
+        "transliteration": "Al-Ghaní",
+        "meaning": "A Gazdag"
+    },
+    {
+        "number": 89,
+        "arabic": "الْمُغْنِي",
+        "transliteration": "Al-Mughní",
+        "meaning": "A Gazdagítő"
+    },
+    {
+        "number": 90,
+        "arabic": "اَلْمَانِعُ",
+        "transliteration": "Al-Máni",
+        "meaning": "A Meggátló"
+    },
+    {
+        "number": 91,
+        "arabic": "الضَّارَّ",
+        "transliteration": "Ad-Dárr",
+        "meaning": "A Szenvedést Okozó"
+    },
+    {
+        "number": 92,
+        "arabic": "النَّافِعُ",
+        "transliteration": "An-Náfi",
+        "meaning": "A Hasznot Adó"
+    },
+    {
+        "number": 93,
+        "arabic": "النُّورُ",
+        "transliteration": "An-Núr",
+        "meaning": "A Fény"
+    },
+    {
+        "number": 94,
+        "arabic": "الْهَادِي",
+        "transliteration": "Al-Hádi",
+        "meaning": "A Vezető"
+    },
+    {
+        "number": 95,
+        "arabic": "الْبَدِيعُ",
+        "transliteration": "Al-Badí",
+        "meaning": "Az Eredetiség"
+    },
+    {
+        "number": 96,
+        "arabic": "اَلْبَاقِي",
+        "transliteration": "Al-Báqi",
+        "meaning": "Az Örökkévaló"
+    },
+    {
+        "number": 97,
+        "arabic": "الْوَارِثُ",
+        "transliteration": "Al-Várisz",
+        "meaning": "Az Örökös"
+    },
+    {
+        "number": 98,
+        "arabic": "الرَّشِيدُ",
+        "transliteration": "Ar-Rasíd",
+        "meaning": "A Helyes Útra Vezető"
+    },
+    {
+        "number": 99,
+        "arabic": "الصَّبُورُ",
+        "transliteration": "Asz-Szabúr",
+        "meaning": "A Türelmes"
+    }
+]
