@@ -20,9 +20,9 @@ class _TasbihDialogState extends State<TasbihDialog> {
         padding: const EdgeInsets.all(32),
         width: 300,
         decoration: BoxDecoration(
-          color: GardenPalette.midnightForest,
+          color: GardenPalette.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: GardenPalette.gildedGold.withAlpha(80)),
+          border: Border.all(color: GardenPalette.leafyGreen.withAlpha(80)),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withAlpha(60),
@@ -40,7 +40,7 @@ class _TasbihDialogState extends State<TasbihDialog> {
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 18,
                   fontWeight: FontWeight.w900,
-                  color: GardenPalette.gildedGold,
+                  color: GardenPalette.leafyGreen,
                   letterSpacing: 2,
                 ),
               ),
@@ -51,13 +51,13 @@ class _TasbihDialogState extends State<TasbihDialog> {
                   width: 140,
                   height: 140,
                   decoration: BoxDecoration(
-                    color: GardenPalette.velvetNavy,
+                    color: GardenPalette.offWhite,
                     border: Border.all(
-                        color: GardenPalette.gildedGold.withAlpha(50)),
+                        color: GardenPalette.leafyGreen.withAlpha(50)),
                     shape: BoxShape.circle,
                     boxShadow: [
                       BoxShadow(
-                          color: GardenPalette.gildedGold.withAlpha(15),
+                          color: GardenPalette.leafyGreen.withAlpha(15),
                           blurRadius: 30)
                     ],
                   ),
@@ -80,7 +80,7 @@ class _TasbihDialogState extends State<TasbihDialog> {
                     onPressed: () => Navigator.pop(context),
                     child: Text('BEZÁRÁS',
                         style: GoogleFonts.outfit(
-                            color: GardenPalette.mutedSilver,
+                            color: GardenPalette.darkGrey,
                             fontSize: 11,
                             fontWeight: FontWeight.bold)),
                   ),
@@ -88,7 +88,7 @@ class _TasbihDialogState extends State<TasbihDialog> {
                     onPressed: () => setState(() => count = 0),
                     child: Text('VISSZAÁLLÍTÁS',
                         style: GoogleFonts.outfit(
-                            color: GardenPalette.gildedGold,
+                            color: GardenPalette.leafyGreen,
                             fontSize: 11,
                             fontWeight: FontWeight.bold)),
                   ),

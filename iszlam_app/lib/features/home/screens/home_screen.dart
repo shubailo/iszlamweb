@@ -6,7 +6,7 @@ import '../../../core/theme/garden_palette.dart';
 import '../widgets/daily_wisdom_hero.dart';
 import '../widgets/bento_grid.dart';
 import '../widgets/trending_section.dart';
-import '../../auth/auth_service.dart';
+import '../../auth/services/auth_service.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -49,7 +49,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
     final authState = ref.watch(authStreamProvider);
 
     return Scaffold(
-      backgroundColor: GardenPalette.ivory,
+      backgroundColor: GardenPalette.nearBlack,
       body: Stack(
         children: [
           // 1. Dynamic Hero Background Layer
@@ -64,9 +64,9 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      GardenPalette.midnightForest,
+                      GardenPalette.white,
                       Color(0xFF063A2E),
-                      GardenPalette.ivory,
+                      GardenPalette.nearBlack,
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -92,7 +92,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                 // 2. Main Content Wrapper
                 Container(
                   width: double.infinity,
-                  color: GardenPalette.ivory,
+                  color: GardenPalette.nearBlack,
                   child: Column(
                     children: [
                        const SizedBox(height: 48),
@@ -101,7 +101,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                          data: (_) => const BentoGrid(),
                          loading: () => const SizedBox(
                            height: 200,
-                           child: Center(child: CircularProgressIndicator(color: GardenPalette.midnightForest)),
+                           child: Center(child: CircularProgressIndicator(color: GardenPalette.white)),
                          ),
                          error: (e, s) => const Center(child: Text(H.errorGeneric)),
                        )

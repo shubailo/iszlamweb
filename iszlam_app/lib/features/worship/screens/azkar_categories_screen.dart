@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
-import '../../auth/auth_service.dart';
+import '../../auth/services/auth_service.dart';
 import '../models/dua.dart';
 import '../providers/duas_provider.dart';
 import '../widgets/edit_dua_category_dialog.dart';

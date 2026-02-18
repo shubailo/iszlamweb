@@ -26,7 +26,7 @@ class VoteButtons extends ConsumerWidget {
           data: (vote) => IconButton(
             icon: Icon(
               Icons.arrow_upward_rounded,
-              color: vote?.voteValue == 1 ? GardenPalette.emeraldTeal : GardenPalette.darkGrey,
+              color: vote?.voteValue == 1 ? GardenPalette.leafyGreen : GardenPalette.darkGrey,
             ),
             onPressed: () => ref.read(communityServiceProvider).votePost(postId, 1),
             visualDensity: VisualDensity.compact,
@@ -51,7 +51,7 @@ class VoteButtons extends ConsumerWidget {
           data: (vote) => IconButton(
             icon: Icon(
               Icons.arrow_downward_rounded,
-              color: vote?.voteValue == -1 ? GardenPalette.warningRed : GardenPalette.darkGrey,
+              color: vote?.voteValue == -1 ? GardenPalette.errorRed : GardenPalette.darkGrey,
             ),
             onPressed: () => ref.read(communityServiceProvider).votePost(postId, -1),
             visualDensity: VisualDensity.compact,

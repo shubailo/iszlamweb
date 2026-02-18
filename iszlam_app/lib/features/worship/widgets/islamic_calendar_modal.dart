@@ -60,7 +60,7 @@ class _IslamicCalendarModalState extends ConsumerState<IslamicCalendarModal> {
                       fontSize: 14,
                       fontWeight: FontWeight.w900,
                       letterSpacing: 2,
-                      color: GardenPalette.midnightForest),
+                      color: GardenPalette.white),
                 ),
                 if (!isSameDay(selectedDate, DateTime.now()))
                   TextButton.icon(
@@ -69,10 +69,10 @@ class _IslamicCalendarModalState extends ConsumerState<IslamicCalendarModal> {
                       ref.read(selectedDateProvider.notifier).update(now);
                       setState(() => _focusedDay = now);
                     },
-                    icon: Icon(Icons.today, size: 16, color: GardenPalette.emeraldTeal),
-                    label: Text('Ma', style: GoogleFonts.outfit(fontWeight: FontWeight.bold, color: GardenPalette.emeraldTeal)),
+                    icon: Icon(Icons.today, size: 16, color: GardenPalette.leafyGreen),
+                    label: Text('Ma', style: GoogleFonts.outfit(fontWeight: FontWeight.bold, color: GardenPalette.leafyGreen)),
                     style: TextButton.styleFrom(
-                      backgroundColor: GardenPalette.emeraldTeal.withAlpha(20),
+                      backgroundColor: GardenPalette.leafyGreen.withAlpha(20),
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     ),
                   ),
@@ -97,23 +97,23 @@ class _IslamicCalendarModalState extends ConsumerState<IslamicCalendarModal> {
               },
               calendarStyle: CalendarStyle(
                 todayDecoration: BoxDecoration(
-                  color: GardenPalette.emeraldTeal.withAlpha(50),
+                  color: GardenPalette.leafyGreen.withAlpha(50),
                   shape: BoxShape.circle,
                 ),
-                todayTextStyle: TextStyle(color: GardenPalette.midnightForest, fontWeight: FontWeight.bold),
+                todayTextStyle: TextStyle(color: GardenPalette.white, fontWeight: FontWeight.bold),
                 selectedDecoration: BoxDecoration(
-                  color: GardenPalette.midnightForest,
+                  color: GardenPalette.white,
                   shape: BoxShape.circle,
                 ),
-                selectedTextStyle: const TextStyle(color: GardenPalette.ivory, fontWeight: FontWeight.bold),
+                selectedTextStyle: const TextStyle(color: GardenPalette.nearBlack, fontWeight: FontWeight.bold),
                 cellMargin: const EdgeInsets.all(2),
               ),
               headerStyle: HeaderStyle(
                 titleCentered: true,
                 formatButtonVisible: false,
                 titleTextStyle: GoogleFonts.playfairDisplay(fontSize: 18, fontWeight: FontWeight.bold),
-                leftChevronIcon: Icon(Icons.chevron_left, color: GardenPalette.gildedGold),
-                rightChevronIcon: Icon(Icons.chevron_right, color: GardenPalette.gildedGold),
+                leftChevronIcon: Icon(Icons.chevron_left, color: GardenPalette.leafyGreen),
+                rightChevronIcon: Icon(Icons.chevron_right, color: GardenPalette.leafyGreen),
               ),
               calendarBuilders: CalendarBuilders(
                 // Custom cell builder to show Hijri day below Gregorian
@@ -139,12 +139,12 @@ class _IslamicCalendarModalState extends ConsumerState<IslamicCalendarModal> {
                     children: [
                       Text(
                         DateFormat('yyyy. MMMM d. (EEEE)', 'hu').format(selectedDate),
-                        style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 16, color: GardenPalette.midnightForest),
+                        style: GoogleFonts.outfit(fontWeight: FontWeight.bold, fontSize: 16, color: GardenPalette.white),
                       ),
                       const SizedBox(height: 4),
                       Text(
                         _hijriDateString(selectedDate),
-                        style: GoogleFonts.playfairDisplay(fontSize: 14, color: GardenPalette.gildedGold, fontWeight: FontWeight.w600),
+                        style: GoogleFonts.playfairDisplay(fontSize: 14, color: GardenPalette.leafyGreen, fontWeight: FontWeight.w600),
                       ),
                     ],
                   ),
@@ -152,8 +152,8 @@ class _IslamicCalendarModalState extends ConsumerState<IslamicCalendarModal> {
                 ElevatedButton(
                   onPressed: () => Navigator.pop(context),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: GardenPalette.midnightForest,
-                    foregroundColor: GardenPalette.ivory,
+                    backgroundColor: GardenPalette.white,
+                    foregroundColor: GardenPalette.nearBlack,
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                   child: const Text('KIVÁLASZT'),
@@ -172,7 +172,7 @@ class _IslamicCalendarModalState extends ConsumerState<IslamicCalendarModal> {
     return Container(
       margin: const EdgeInsets.all(2),
       decoration: BoxDecoration(
-        color: isSelected ? GardenPalette.midnightForest : (isToday ? GardenPalette.emeraldTeal.withAlpha(40) : null),
+        color: isSelected ? GardenPalette.white : (isToday ? GardenPalette.leafyGreen.withAlpha(40) : null),
         shape: BoxShape.rectangle,
         borderRadius: BorderRadius.circular(8),
       ),
@@ -183,14 +183,14 @@ class _IslamicCalendarModalState extends ConsumerState<IslamicCalendarModal> {
             '${day.day}',
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: isSelected ? GardenPalette.ivory : Colors.black87,
+              color: isSelected ? GardenPalette.nearBlack : Colors.black87,
             ),
           ),
           Text(
             '${hijriDate.hDay}',
             style: GoogleFonts.playfairDisplay(
               fontSize: 10,
-              color: isSelected ? GardenPalette.ivory.withAlpha(180) : GardenPalette.gildedGold,
+              color: isSelected ? GardenPalette.nearBlack.withAlpha(180) : GardenPalette.leafyGreen,
             ),
           ),
         ],

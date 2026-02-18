@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
-import '../../auth/auth_service.dart';
+import '../../auth/services/auth_service.dart';
 import '../providers/asmaul_husna_provider.dart';
 import '../widgets/edit_asma_dialog.dart';
-import '../../../shared/models/asmaul_husna.dart';
+import '../models/asmaul_husna.dart';
 import '../../worship/widgets/worship_sidebar.dart';
 
 class AsmaulHusnaScreen extends ConsumerWidget {

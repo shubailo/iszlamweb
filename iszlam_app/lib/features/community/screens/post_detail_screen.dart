@@ -125,7 +125,7 @@ class _CommentTreeItem extends StatelessWidget {
                         ),
                         child: Text(
                           'Reply',
-                          style: GoogleFonts.outfit(fontSize: 11, color: GardenPalette.emeraldTeal, fontWeight: FontWeight.bold),
+                          style: GoogleFonts.outfit(fontSize: 11, color: GardenPalette.leafyGreen, fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -185,7 +185,7 @@ class _CommentInputState extends State<_CommentInput> {
           ),
           Consumer(
             builder: (context, ref, _) => IconButton(
-              icon: const Icon(Icons.send, color: GardenPalette.emeraldTeal),
+              icon: const Icon(Icons.send, color: GardenPalette.leafyGreen),
               onPressed: () async {
                 if (_controller.text.trim().isNotEmpty) {
                   await ref.read(communityServiceProvider).addComment(

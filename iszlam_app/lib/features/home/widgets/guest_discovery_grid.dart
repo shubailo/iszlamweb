@@ -27,7 +27,7 @@ class GuestDiscoveryGrid extends ConsumerWidget {
               fontSize: 11,
               fontWeight: FontWeight.w900,
               letterSpacing: 2,
-              color: GardenPalette.midnightForest.withAlpha(150),
+              color: GardenPalette.white.withAlpha(150),
             ),
           ),
           const SizedBox(height: 32),
@@ -94,13 +94,13 @@ class _DiscoveryTileState extends State<_DiscoveryTile> {
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
                 color: _isHovered 
-                    ? GardenPalette.midnightForest.withAlpha(50) 
-                    : GardenPalette.midnightForest.withAlpha(20), 
+                    ? GardenPalette.white.withAlpha(50) 
+                    : GardenPalette.white.withAlpha(20), 
                 width: 1,
               ),
               boxShadow: [
                 BoxShadow(
-                  color: GardenPalette.midnightForest.withAlpha(_isHovered ? 15 : 5),
+                  color: GardenPalette.white.withAlpha(_isHovered ? 15 : 5),
                   blurRadius: _isHovered ? 30 : 20,
                   offset: const Offset(0, 4),
                 ),
@@ -112,10 +112,10 @@ class _DiscoveryTileState extends State<_DiscoveryTile> {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: GardenPalette.midnightForest.withAlpha(10),
+                    color: GardenPalette.white.withAlpha(10),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(widget.icon, color: GardenPalette.midnightForest, size: 24),
+                  child: Icon(widget.icon, color: GardenPalette.white, size: 24),
                 ),
                 const SizedBox(height: 16),
                 Text(
@@ -124,11 +124,11 @@ class _DiscoveryTileState extends State<_DiscoveryTile> {
                   style: GoogleFonts.playfairDisplay(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: GardenPalette.midnightForest,
+                    color: GardenPalette.white,
                   ),
                 ),
                 const SizedBox(height: 8),
-                const Icon(Icons.arrow_forward, color: GardenPalette.midnightForest, size: 16),
+                const Icon(Icons.arrow_forward, color: GardenPalette.white, size: 16),
               ],
             ),
           ),

@@ -21,11 +21,11 @@ class DiscoverFeed extends ConsumerWidget {
     // In a real app these would likely come from other providers
     final events = [
       (H.communityIftar, 'Pénteken este', Icons.restaurant,
-          GardenPalette.gildedGold),
+          GardenPalette.leafyGreen),
       (H.weeklyQuranCircle, 'Szerdánként', Icons.menu_book,
-          GardenPalette.royalNavy),
+          GardenPalette.lightGrey),
       (H.youthProgram, 'Szombat 10:00', Icons.sports_soccer,
-          GardenPalette.vibrantEmerald),
+          GardenPalette.lightGreen),
     ];
 
     return SliverList(
@@ -67,12 +67,12 @@ class DiscoverFeed extends ConsumerWidget {
                               width: 32,
                               height: 32,
                               decoration: BoxDecoration(
-                                color: GardenPalette.emeraldTeal
+                                color: GardenPalette.leafyGreen
                                     .withValues(alpha: 0.12),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Icon(Icons.mosque,
-                                  color: GardenPalette.emeraldTeal, size: 16),
+                                  color: GardenPalette.leafyGreen, size: 16),
                             ),
                             const SizedBox(width: 10),
                             Expanded(
@@ -110,7 +110,7 @@ class DiscoverFeed extends ConsumerWidget {
             height: 110,
             child: Center(
                 child: CircularProgressIndicator(
-                    color: GardenPalette.emeraldTeal)),
+                    color: GardenPalette.leafyGreen)),
           ),
           error: (e, _) => const SizedBox.shrink(),
         ),
@@ -182,11 +182,11 @@ class DiscoverFeed extends ConsumerWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         color:
-                            GardenPalette.gildedGold.withValues(alpha: 0.12),
+                            GardenPalette.leafyGreen.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(Icons.auto_stories,
-                          color: GardenPalette.gildedGold, size: 18),
+                          color: GardenPalette.leafyGreen, size: 18),
                     ),
                     const SizedBox(width: 14),
                     Expanded(
@@ -201,7 +201,7 @@ class DiscoverFeed extends ConsumerWidget {
                           Text(H.publication,
                               style: GoogleFonts.outfit(
                                   fontSize: 11,
-                                  color: GardenPalette.ivory
+                                  color: GardenPalette.nearBlack
                                       .withValues(alpha: 0.35))),
                         ],
                       ),
@@ -217,11 +217,11 @@ class DiscoverFeed extends ConsumerWidget {
                       height: 40,
                       decoration: BoxDecoration(
                         color:
-                            GardenPalette.emeraldTeal.withValues(alpha: 0.12),
+                            GardenPalette.leafyGreen.withValues(alpha: 0.12),
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: const Icon(Icons.menu_book,
-                          color: GardenPalette.emeraldTeal, size: 18),
+                          color: GardenPalette.leafyGreen, size: 18),
                     ),
                     const SizedBox(width: 14),
                     Expanded(

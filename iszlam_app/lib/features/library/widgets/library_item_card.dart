@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
 import '../models/library_item.dart';
 import '../services/audio_service.dart';
-import '../../auth/auth_service.dart';
+import '../../auth/services/auth_service.dart';
 import '../../admin_tools/screens/admin_upload_book_screen.dart';
 import '../../admin_tools/services/admin_repository.dart';
 import '../providers/library_filter_provider.dart';
@@ -141,7 +141,7 @@ class LibraryItemCard extends ConsumerWidget {
                     style: GoogleFonts.outfit(
                       fontSize: 10,
                       fontWeight: FontWeight.bold,
-                      color: item.type == LibraryItemType.audio ? GardenPalette.gildedGold : GardenPalette.emeraldTeal,
+                      color: item.type == LibraryItemType.audio ? GardenPalette.leafyGreen : GardenPalette.leafyGreen,
                       letterSpacing: 1.2,
                     ),
                   ),
@@ -153,7 +153,7 @@ class LibraryItemCard extends ConsumerWidget {
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 14,
                       fontWeight: FontWeight.bold,
-                      color: GardenPalette.midnightForest,
+                      color: GardenPalette.white,
                       height: 1.2,
                     ),
                   ),
@@ -164,7 +164,7 @@ class LibraryItemCard extends ConsumerWidget {
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.outfit(
                       fontSize: 12,
-                      color: GardenPalette.midnightForest.withAlpha(150),
+                      color: GardenPalette.white.withAlpha(150),
                     ),
                   ),
                 ],
@@ -242,11 +242,11 @@ class _PlaceholderCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: type == LibraryItemType.audio ? GardenPalette.midnightForest : GardenPalette.emeraldTeal.withAlpha(50),
+      color: type == LibraryItemType.audio ? GardenPalette.white : GardenPalette.leafyGreen.withAlpha(50),
       child: Center(
         child: Icon(
           type == LibraryItemType.audio ? Icons.mic : Icons.menu_book, 
-          color: type == LibraryItemType.audio ? Colors.white : GardenPalette.emeraldTeal,
+          color: type == LibraryItemType.audio ? Colors.white : GardenPalette.leafyGreen,
           size: 32
         ),
       ),

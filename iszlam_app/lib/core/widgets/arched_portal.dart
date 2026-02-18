@@ -24,7 +24,7 @@ class ArchedPortal extends StatelessWidget {
       decoration: showBorder
           ? BoxDecoration(
               border: Border.all(
-                color: GardenPalette.gildedGold.withAlpha(100),
+                color: GardenPalette.leafyGreen.withAlpha(100),
                 width: 1,
               ),
             )
@@ -33,11 +33,10 @@ class ArchedPortal extends StatelessWidget {
         clipper: ArchClipper(),
         child: Stack(
           children: [
-            // Background Depth
             Positioned.fill(
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: GardenPalette.deepDepthGradient,
+              child: DecoratedBox(
+                decoration: const BoxDecoration(
+                  gradient: GardenPalette.greenGradient,
                 ),
               ),
             ),
@@ -58,10 +57,10 @@ class ArchedPortal extends StatelessWidget {
 class ArchClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
-    var path = Path();
-    double w = size.width;
-    double h = size.height;
-    double r = w / 2;
+    final path = Path();
+    final w = size.width;
+    final h = size.height;
+    final r = w / 2;
 
     path.moveTo(0, h);
     path.lineTo(0, r);
@@ -98,7 +97,7 @@ class GildedFlourish extends StatelessWidget {
         .animate(onPlay: (controller) => controller.repeat())
         .shimmer(
           duration: 3.seconds,
-          color: GardenPalette.shimmerGold.withAlpha(150),
+          color: GardenPalette.paleGreen.withAlpha(150),
           angle: 45,
         ); // Subtle presence
   }

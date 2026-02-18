@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import '../theme/garden_palette.dart';
 
-/// Reusable dark glassmorphic card used throughout the app.
+/// Reusable card with subtle border.
 class GardenCard extends StatelessWidget {
   final Widget child;
   final VoidCallback? onTap;
@@ -24,7 +24,7 @@ class GardenCard extends StatelessWidget {
         margin: margin,
         padding: padding,
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: GardenPalette.white,
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
             color: GardenPalette.lightGrey,

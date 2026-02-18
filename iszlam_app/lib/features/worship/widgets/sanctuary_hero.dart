@@ -129,17 +129,17 @@ class SanctuaryHero extends StatelessWidget {
                   padding:
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                   decoration: BoxDecoration(
-                    color: GardenPalette.emeraldTeal.withAlpha(30),
+                    color: GardenPalette.leafyGreen.withAlpha(30),
                     borderRadius: BorderRadius.circular(12),
                     border: Border.all(
-                      color: GardenPalette.emeraldTeal.withAlpha(50),
+                      color: GardenPalette.leafyGreen.withAlpha(50),
                     ),
                   ),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Icon(Icons.timer_outlined,
-                          size: 20, color: GardenPalette.emeraldTeal),
+                          size: 20, color: GardenPalette.leafyGreen),
                       const SizedBox(width: 10),
                       Text(
                         _formatCountdown(countdown),

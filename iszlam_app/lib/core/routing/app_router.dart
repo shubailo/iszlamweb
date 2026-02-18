@@ -3,22 +3,22 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../layout/responsive_navigation_shell.dart';
-import '../../features/auth/login_screen.dart';
-import '../../features/auth/register_screen.dart';
+import '../../features/auth/screens/login_screen.dart';
+import '../../features/auth/screens/register_screen.dart';
 import '../../features/community/screens/my_community_screen.dart';
 import '../../features/worship/screens/prayer_home_screen.dart';
 import '../../features/worship/screens/worship_screen_wrapper.dart';
 import '../../features/library/screens/library_screen.dart';
 import '../../features/more/screens/more_screen.dart';
-import '../../features/tools/screens/qibla_screen.dart';
-import '../../features/tools/screens/tasbih_screen.dart';
-import '../../features/tools/screens/asmaul_husna_screen.dart';
+import '../../features/islamic_tools/screens/qibla_screen.dart';
+import '../../features/islamic_tools/screens/tasbih_screen.dart';
+import '../../features/islamic_tools/screens/asmaul_husna_screen.dart';
 import '../../features/onboarding/screens/onboarding_screen.dart';
 import '../../features/quran/screens/quran_screen.dart';
 import '../../features/quran/screens/surah_detail_screen.dart';
 import '../../features/admin_tools/screens/admin_users_screen.dart';
 import '../../features/admin_tools/screens/admin_inspiration_screen.dart';
-import '../../features/auth/auth_service.dart';
+import '../../features/auth/services/auth_service.dart';
 
 // Provider to determine if user has seen onboarding
 // This should be overridden in main.dart with the value from SharedPreferences

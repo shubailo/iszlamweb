@@ -9,7 +9,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/supabase_constants.dart';
 import 'core/routing/app_router.dart';
-import 'features/auth/auth_service.dart';
+import 'features/auth/services/auth_service.dart';
 import 'features/library/services/library_service.dart';
 
 void main() async {

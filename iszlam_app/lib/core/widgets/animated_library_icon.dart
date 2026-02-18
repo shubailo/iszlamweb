@@ -109,11 +109,6 @@ class _LibraryIconPainter extends CustomPainter {
     final selectedPath = parseSvgPathData(pathSelected);
     final anglePath = parseSvgPathData(pathAngle);
 
-    // Simple Opacity/Crossfade for morph effect if path_morph is not available
-    // or if the paths have different segment counts (Mihon paths are complex)
-    // Actually, for a TRUE morph we'd need segments to match.
-    // I will draw both with interpolated opacity for a smooth enough transition 
-    // that looks like a morph at high speed.
     
     if (progress < 1.0) {
       canvas.drawPath(unselectedPath, paint..color = color.withAlpha(((1.0 - progress) * 255).toInt()));

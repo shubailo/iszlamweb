@@ -10,7 +10,7 @@ import '../widgets/library_item_card.dart';
 import '../widgets/library_sidebar.dart';
 import '../widgets/persistent_audio_player.dart';
 import '../widgets/admin_add_card.dart';
-import '../../auth/auth_service.dart';
+import '../../auth/services/auth_service.dart';
 
 class LibraryScreen extends ConsumerWidget {
   const LibraryScreen({super.key});

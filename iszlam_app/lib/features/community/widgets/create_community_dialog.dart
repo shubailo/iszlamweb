@@ -163,7 +163,7 @@ class _CreateCommunityDialogState extends ConsumerState<CreateCommunityDialog> {
                     ElevatedButton(
                       onPressed: _isSubmitting ? null : _submit,
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: GardenPalette.emeraldTeal,
+                        backgroundColor: GardenPalette.leafyGreen,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
                       ),

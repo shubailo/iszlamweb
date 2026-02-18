@@ -37,7 +37,7 @@ class DailyInspirationCard extends StatelessWidget {
             Row(
               children: [
                 Icon(Icons.auto_stories,
-                    size: 16, color: GardenPalette.gildedGold),
+                    size: 16, color: GardenPalette.leafyGreen),
                 const SizedBox(width: 8),
                 Text(
                   H.dailyGuidance,
@@ -45,7 +45,7 @@ class DailyInspirationCard extends StatelessWidget {
                     fontSize: 10,
                     fontWeight: FontWeight.w900,
                     letterSpacing: 2,
-                    color: GardenPalette.gildedGold,
+                    color: GardenPalette.leafyGreen,
                   ),
                 ),
               ],

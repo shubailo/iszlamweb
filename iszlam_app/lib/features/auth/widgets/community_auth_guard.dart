@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../auth/auth_service.dart'; // For authStreamProvider
+import '../services/auth_service.dart'; // For authStreamProvider
 
 class CommunityAuthGuard extends ConsumerWidget {
   final Widget child;

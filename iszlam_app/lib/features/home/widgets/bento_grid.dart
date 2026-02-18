@@ -14,9 +14,6 @@ class BentoGrid extends ConsumerWidget {
     final news = ref.watch(mockNewsProvider);
     final events = ref.watch(mockEventsProvider);
 
-    // Combine for display or keep separate? 
-    // Requirements: "Friss hírek" and "Friss események" sections.
-    // Let's do a Section-based layout.
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -39,7 +36,7 @@ class BentoGrid extends ConsumerWidget {
   Widget _buildSectionHeader(BuildContext context, String title, IconData icon) {
     return Row(
       children: [
-        Icon(icon, size: 18, color: GardenPalette.gildedGold),
+        Icon(icon, size: 18, color: GardenPalette.leafyGreen),
         const SizedBox(width: 8),
         Text(
           title,
@@ -47,7 +44,7 @@ class BentoGrid extends ConsumerWidget {
             fontSize: 12,
             fontWeight: FontWeight.w900,
             letterSpacing: 2,
-            color: GardenPalette.midnightForest.withAlpha(200),
+            color: GardenPalette.white.withAlpha(200),
           ),
         ),
         const Spacer(),
@@ -56,7 +53,7 @@ class BentoGrid extends ConsumerWidget {
           style: GoogleFonts.outfit(
             fontSize: 10,
             fontWeight: FontWeight.bold,
-            color: GardenPalette.emeraldTeal,
+            color: GardenPalette.leafyGreen,
             letterSpacing: 1,
           ),
         ),
@@ -65,8 +62,6 @@ class BentoGrid extends ConsumerWidget {
   }
 
   Widget _buildNewsGrid(BuildContext context, List<dynamic> items) {
-    // Using StaggeredGrid for that "Bento" feel
-    // 2 columns on mobile, maybe 3 on tablet?
     return StaggeredGrid.count(
       crossAxisCount: 2,
       mainAxisSpacing: 16,
@@ -75,8 +70,7 @@ class BentoGrid extends ConsumerWidget {
         final index = entry.key;
         final item = entry.value;
         
-        // First item is Large (full width), others vary
-        final isLarge = index == 0;
+        final isLarge = index == 0; // First item spans full width
         
         return StaggeredGridTile.fit(
           crossAxisCellCount: isLarge ? 2 : 1,

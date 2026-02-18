@@ -65,16 +65,16 @@ class _ToolItem extends StatelessWidget {
           Container(
             padding: const EdgeInsets.all(12),
             decoration: BoxDecoration(
-              color: GardenPalette.ivory.withAlpha(30),
+              color: GardenPalette.nearBlack.withAlpha(30),
               shape: BoxShape.circle,
             ),
-            child: Icon(icon, color: GardenPalette.ivory, size: 28),
+            child: Icon(icon, color: GardenPalette.nearBlack, size: 28),
           ),
           const SizedBox(height: 8),
           Text(
             label,
             style: GoogleFonts.outfit(
-              color: GardenPalette.ivory,
+              color: GardenPalette.nearBlack,
               fontSize: 12,
               fontWeight: FontWeight.w600,
             ),

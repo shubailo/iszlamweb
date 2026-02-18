@@ -5,8 +5,12 @@ import 'garden_palette.dart';
 class AppTheme {
   AppTheme._();
 
-  // Compatibility getter
-  static const Color primaryGold = GardenPalette.leafyGreen;
+  // Dark theme semantic colors
+  static const _darkSurface = Color(0xFF112222);
+  static const _darkSurfaceHigh = Color(0xFF1A2A2A);
+  static const _darkOnSurface = Color(0xFFF5F5F0);
+  static const _darkMutedText = Color(0xFFC0C0C0);
+
 
   static TextStyle get headlineMedium => GoogleFonts.playfairDisplay(
         fontSize: 28,
@@ -162,9 +166,9 @@ class AppTheme {
         onPrimary: GardenPalette.midnightGreen,
         secondary: GardenPalette.leafyGreen,
         onSecondary: GardenPalette.white,
-        surface: Color(0xFF112222),
-        onSurface: Color(0xFFF5F5F0),
-        surfaceContainerHigh: Color(0xFF1A2A2A),
+        surface: _darkSurface,
+        onSurface: _darkOnSurface,
+        surfaceContainerHigh: _darkSurfaceHigh,
         error: GardenPalette.errorRed,
         onError: GardenPalette.white,
       ),
@@ -173,7 +177,7 @@ class AppTheme {
         displayLarge: GoogleFonts.playfairDisplay(
           fontSize: 42,
           fontWeight: FontWeight.w900,
-          color: const Color(0xFFF5F5F0),
+          color: _darkOnSurface,
           letterSpacing: -1.5,
         ),
         displayMedium: GoogleFonts.playfairDisplay(
@@ -184,17 +188,17 @@ class AppTheme {
         titleLarge: GoogleFonts.outfit(
           fontSize: 24,
           fontWeight: FontWeight.w600,
-          color: const Color(0xFFF5F5F0),
+          color: _darkOnSurface,
           letterSpacing: 0.5,
         ),
         bodyLarge: GoogleFonts.outfit(
           fontSize: 17,
-          color: const Color(0xFFF5F5F0),
+          color: _darkOnSurface,
           height: 1.6,
         ),
         bodyMedium: GoogleFonts.outfit(
           fontSize: 15,
-          color: const Color(0xFFC0C0C0),
+          color: _darkMutedText,
         ),
       ),
 
@@ -210,7 +214,7 @@ class AppTheme {
       ),
 
       cardTheme: CardThemeData(
-        color: const Color(0xFF112222),
+        color: _darkSurface,
         elevation: 8,
         shadowColor: Colors.black.withAlpha(100),
         shape: RoundedRectangleBorder(
@@ -220,7 +224,7 @@ class AppTheme {
       ),
 
       navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: const Color(0xFF112222),
+        backgroundColor: _darkSurface,
         indicatorColor: GardenPalette.gold.withAlpha(40),
         iconTheme: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.selected)) {
@@ -245,7 +249,4 @@ class AppTheme {
       ),
     );
   }
-
-  // Legacy alias for old code that references darkGardenTheme
-  static ThemeData get darkGardenTheme => darkTheme;
 }

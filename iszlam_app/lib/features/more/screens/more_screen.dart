@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
 import '../../../core/theme/garden_palette.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import '../../auth/auth_service.dart';
+import '../../auth/services/auth_service.dart';
 import '../../worship/widgets/worship_sidebar.dart';
 
 class MoreScreen extends ConsumerWidget {
@@ -17,7 +17,7 @@ class MoreScreen extends ConsumerWidget {
     final isDesktop = MediaQuery.of(context).size.width > 800;
 
     return Scaffold(
-      backgroundColor: GardenPalette.obsidian,
+      backgroundColor: GardenPalette.lightGrey,
       drawer: !isDesktop ? const WorshipSidebar() : null,
       body: CustomScrollView(
         slivers: [
@@ -26,7 +26,7 @@ class MoreScreen extends ConsumerWidget {
             child: Container(
               width: double.infinity,
               decoration: const BoxDecoration(
-                gradient: GardenPalette.deepDepthGradient,
+                gradient: GardenPalette.greenGradient,
               ),
               child: SafeArea(
                 bottom: false,
@@ -51,7 +51,7 @@ class MoreScreen extends ConsumerWidget {
                             width: 56,
                             height: 56,
                             decoration: BoxDecoration(
-                              gradient: GardenPalette.vibrantEmeraldGradient,
+                              gradient: GardenPalette.subtleGreenGradient,
                               borderRadius: BorderRadius.circular(16),
                             ),
                             child: Icon(
@@ -113,7 +113,7 @@ class MoreScreen extends ConsumerWidget {
                       icon: Icons.login,
                       title: 'Bejelentkezés',
                       subtitle: 'Csatlakozz a közösséghez',
-                      color: GardenPalette.emeraldTeal,
+                      color: GardenPalette.leafyGreen,
                       onTap: () => context.push('/login'),
                     ),
                   if (isLoggedIn)
@@ -121,7 +121,7 @@ class MoreScreen extends ConsumerWidget {
                       icon: Icons.person,
                       title: 'Profil',
                       subtitle: 'Fiók beállítása',
-                      color: GardenPalette.emeraldTeal,
+                      color: GardenPalette.leafyGreen,
                       onTap: () {
                         // TODO: Profile screen
                       },
@@ -136,14 +136,14 @@ class MoreScreen extends ConsumerWidget {
                                       icon: Icons.people,
                                       title: 'Felhasználók kezelése',
                                       subtitle: 'Adminisztrátori rangok kezelése',
-                                      color: GardenPalette.gildedGold,
+                                      color: GardenPalette.leafyGreen,
                                       onTap: () => context.push('/admin/users'),
                                     ),
                                     _MoreTile(
                                       icon: Icons.lightbulb_outline,
                                       title: 'Napi inspiráció',
                                       subtitle: 'Hadísz és Korán idézetek kezelése',
-                                      color: GardenPalette.emeraldTeal,
+                                      color: GardenPalette.leafyGreen,
                                       onTap: () => context.push('/admin/inspiration'),
                                     ),
                                   ],
@@ -156,7 +156,7 @@ class MoreScreen extends ConsumerWidget {
                     icon: Icons.settings,
                     title: 'Beállítások',
                     subtitle: 'Értesítések, nyelv, téma',
-                    color: GardenPalette.mutedSilver,
+                    color: GardenPalette.darkGrey,
                     onTap: () {
                       // TODO: Settings screen
                     },
@@ -165,7 +165,7 @@ class MoreScreen extends ConsumerWidget {
                     icon: Icons.info_outline,
                     title: 'Rólunk',
                     subtitle: 'Iszlam.com · Verzió 1.0',
-                    color: GardenPalette.mutedSilver,
+                    color: GardenPalette.darkGrey,
                     onTap: () {
                       // TODO: About screen
                     },
@@ -175,7 +175,7 @@ class MoreScreen extends ConsumerWidget {
                       icon: Icons.logout,
                       title: 'Kijelentkezés',
                       subtitle: '',
-                      color: GardenPalette.warningRed,
+                      color: GardenPalette.errorRed,
                       onTap: () async {
                         await Supabase.instance.client.auth.signOut();
                       },
@@ -200,7 +200,7 @@ class MoreScreen extends ConsumerWidget {
           fontSize: 11,
           fontWeight: FontWeight.w900,
           letterSpacing: 2,
-          color: GardenPalette.gildedGold.withValues(alpha: 0.6),
+          color: GardenPalette.leafyGreen.withValues(alpha: 0.6),
         ),
       ),
     );
@@ -230,10 +230,10 @@ class _MoreTile extends StatelessWidget {
         margin: const EdgeInsets.only(bottom: 8),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         decoration: BoxDecoration(
-          color: GardenPalette.midnightForest.withValues(alpha: 0.5),
+          color: GardenPalette.white.withValues(alpha: 0.5),
           borderRadius: BorderRadius.circular(14),
           border: Border.all(
-            color: GardenPalette.emeraldTeal.withValues(alpha: 0.08),
+            color: GardenPalette.leafyGreen.withValues(alpha: 0.08),
           ),
         ),
         child: Row(
@@ -257,7 +257,7 @@ class _MoreTile extends StatelessWidget {
                     style: GoogleFonts.outfit(
                       fontWeight: FontWeight.w600,
                       fontSize: 15,
-                      color: GardenPalette.ivory,
+                      color: GardenPalette.nearBlack,
                     ),
                   ),
                   if (subtitle.isNotEmpty) ...[

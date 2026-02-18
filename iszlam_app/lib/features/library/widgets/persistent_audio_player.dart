@@ -19,7 +19,7 @@ class PersistentAudioPlayer extends ConsumerWidget {
       height: 64,
       margin: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: GardenPalette.midnightForest, // Dark theme for player
+        color: GardenPalette.white, // Dark theme for player
         borderRadius: BorderRadius.circular(12),
         boxShadow: [
           BoxShadow(
@@ -44,14 +44,14 @@ class PersistentAudioPlayer extends ConsumerWidget {
                   height: 64, 
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) => Container(
-                    width: 64, height: 64, color: GardenPalette.emeraldTeal,
+                    width: 64, height: 64, color: GardenPalette.leafyGreen,
                     child: const Icon(Icons.music_note, color: Colors.white),
                   ),
                 )
               : Container(
                   width: 64, 
                   height: 64, 
-                  color: GardenPalette.emeraldTeal,
+                  color: GardenPalette.leafyGreen,
                    child: const Icon(Icons.music_note, color: Colors.white),
                 ),
           ),

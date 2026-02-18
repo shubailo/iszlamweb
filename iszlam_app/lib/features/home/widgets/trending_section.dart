@@ -25,7 +25,7 @@ class TrendingSection extends StatelessWidget {
                   fontSize: 11,
                   fontWeight: FontWeight.w900,
                   letterSpacing: 2,
-                  color: GardenPalette.midnightForest.withAlpha(150),
+                  color: GardenPalette.white.withAlpha(150),
                 ),
               ),
               TextButton(
@@ -35,7 +35,7 @@ class TrendingSection extends StatelessWidget {
                   style: GoogleFonts.outfit(
                     fontSize: 12,
                     fontWeight: FontWeight.bold,
-                    color: GardenPalette.midnightForest,
+                    color: GardenPalette.white,
                   ),
                 ),
               ),
@@ -72,7 +72,7 @@ class TrendingSection extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
           border: Border.all(
-              color: GardenPalette.midnightForest.withAlpha(20), width: 1),
+              color: GardenPalette.white.withAlpha(20), width: 1),
           boxShadow: [
             BoxShadow(
               color: Colors.black.withAlpha(5),
@@ -89,18 +89,18 @@ class TrendingSection extends StatelessWidget {
               width: 54,
               height: 54,
               decoration: BoxDecoration(
-                color: GardenPalette.midnightForest.withAlpha(10),
+                color: GardenPalette.white.withAlpha(10),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: const Icon(Icons.article_outlined,
-                  color: GardenPalette.midnightForest, size: 20),
+                  color: GardenPalette.white, size: 20),
             ),
             title: Text(
               title,
               style: GoogleFonts.playfairDisplay(
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
-                color: GardenPalette.midnightForest,
+                color: GardenPalette.white,
               ),
             ),
             subtitle: Padding(
@@ -110,7 +110,7 @@ class TrendingSection extends StatelessWidget {
                 maxLines: 2,
                 overflow: TextOverflow.ellipsis,
                 style: GoogleFonts.outfit(
-                  color: GardenPalette.midnightForest.withAlpha(150),
+                  color: GardenPalette.white.withAlpha(150),
                   fontSize: 13,
                   height: 1.4,
                 ),

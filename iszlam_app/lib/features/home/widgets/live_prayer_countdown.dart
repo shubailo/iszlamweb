@@ -48,7 +48,7 @@ class _LivePrayerCountdownState extends ConsumerState<LivePrayerCountdown> {
         Text(
           'KÖVETKEZŐ IMA: ${state.nextPrayerName}'.toUpperCase(),
           style: GoogleFonts.outfit(
-            color: GardenPalette.gildedGold.withAlpha(200),
+            color: GardenPalette.leafyGreen.withAlpha(200),
             fontSize: 11,
             fontWeight: FontWeight.w900,
             letterSpacing: 2.0,

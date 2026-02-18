@@ -15,10 +15,7 @@ class JamatCalculator {
         
         final now = DateTime.now();
         // Create a time for today at the fixed hour/minute
-        var fixedDateTime = DateTime(now.year, now.month, now.day, hour, minute);
-        
-        // If fixed time is earlier than Adhan (edge case), it probably means it's set for tomorrow? 
-        // Or maybe just a data error. For now, we assume it's for the current day.
+        final fixedDateTime = DateTime(now.year, now.month, now.day, hour, minute);
         return fixedDateTime;
         
       case JamatType.offset:
@@ -26,8 +23,6 @@ class JamatCalculator {
         return adhanTime.add(Duration(minutes: rule.offsetMinutes!));
         
       case JamatType.dynamic:
-        // Placeholder for complex logic (e.g. "Maghrib + 5 unless...").
-        // For now, treat as +10 mins default
         return adhanTime.add(const Duration(minutes: 10));
     }
   }

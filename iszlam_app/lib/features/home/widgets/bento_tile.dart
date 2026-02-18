@@ -43,13 +43,13 @@ class _BentoTileState extends State<BentoTile> {
             borderRadius: BorderRadius.circular(16),
             border: Border.all(
               color: _isHovered 
-                  ? GardenPalette.emeraldTeal.withAlpha(100) 
-                  : GardenPalette.midnightForest.withAlpha(20),
+                  ? GardenPalette.leafyGreen.withAlpha(100) 
+                  : GardenPalette.white.withAlpha(20),
               width: _isHovered ? 1.5 : 1,
             ),
             boxShadow: [
               BoxShadow(
-                color: GardenPalette.midnightForest.withAlpha(_isHovered ? 20 : 5),
+                color: GardenPalette.white.withAlpha(_isHovered ? 20 : 5),
                 blurRadius: _isHovered ? 20 : 10,
                 offset: const Offset(0, 4),
               ),
@@ -70,8 +70,8 @@ class _BentoTileState extends State<BentoTile> {
                       height: 120,
                       decoration: BoxDecoration(
                         color: (widget.item.category == 'event' 
-                            ? GardenPalette.gildedGold 
-                            : GardenPalette.emeraldTeal).withAlpha(15),
+                            ? GardenPalette.leafyGreen 
+                            : GardenPalette.leafyGreen).withAlpha(15),
                         borderRadius: BorderRadius.circular(20),
                       ),
                     ),
@@ -91,8 +91,8 @@ class _BentoTileState extends State<BentoTile> {
                             padding: const EdgeInsets.all(8),
                             decoration: BoxDecoration(
                               color: (widget.item.category == 'event' 
-                                  ? GardenPalette.gildedGold 
-                                  : GardenPalette.emeraldTeal).withAlpha(20),
+                                  ? GardenPalette.leafyGreen 
+                                  : GardenPalette.leafyGreen).withAlpha(20),
                               shape: BoxShape.circle,
                             ),
                             child: Icon(
@@ -101,8 +101,8 @@ class _BentoTileState extends State<BentoTile> {
                                   : Icons.newspaper, 
                               size: 16,
                               color: widget.item.category == 'event' 
-                                  ? GardenPalette.gildedGold 
-                                  : GardenPalette.emeraldTeal,
+                                  ? GardenPalette.leafyGreen 
+                                  : GardenPalette.leafyGreen,
                             ),
                           ),
                           const SizedBox(width: 8),
@@ -112,7 +112,7 @@ class _BentoTileState extends State<BentoTile> {
                               fontSize: 10,
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.5,
-                              color: GardenPalette.midnightForest.withAlpha(150),
+                              color: GardenPalette.white.withAlpha(150),
                             ),
                           ),
                         ],
@@ -129,7 +129,7 @@ class _BentoTileState extends State<BentoTile> {
                           fontSize: widget.isLarge ? 22 : 18,
                           fontWeight: FontWeight.bold,
                           height: 1.2,
-                          color: GardenPalette.midnightForest,
+                          color: GardenPalette.white,
                         ),
                       ),
 
@@ -144,7 +144,7 @@ class _BentoTileState extends State<BentoTile> {
                               Container(
                                 width: 40, 
                                 height: 2, 
-                                color: GardenPalette.emeraldTeal.withAlpha(50)
+                                color: GardenPalette.leafyGreen.withAlpha(50)
                               ),
                               const SizedBox(height: 12),
                               Text(
@@ -152,21 +152,21 @@ class _BentoTileState extends State<BentoTile> {
                                 style: GoogleFonts.outfit(
                                   fontSize: 14,
                                   height: 1.4,
-                                  color: GardenPalette.midnightForest.withAlpha(200),
+                                  color: GardenPalette.white.withAlpha(200),
                                 ),
                               ),
                               if (widget.item.date != null) ...[
                                 const SizedBox(height: 12),
                                 Row(
                                   children: [
-                                    const Icon(Icons.access_time, size: 14, color: GardenPalette.mutedSilver),
+                                    const Icon(Icons.access_time, size: 14, color: GardenPalette.darkGrey),
                                     const SizedBox(width: 4),
                                     Text(
                                       '${widget.item.date!.month}/${widget.item.date!.day}', // Simple date format
                                       style: GoogleFonts.outfit(
                                         fontSize: 12,
                                         fontWeight: FontWeight.w600,
-                                        color: GardenPalette.mutedSilver,
+                                        color: GardenPalette.darkGrey,
                                       ),
                                     ),
                                   ],
@@ -186,7 +186,7 @@ class _BentoTileState extends State<BentoTile> {
                         const SizedBox(height: 12),
                         const Icon(
                           Icons.keyboard_arrow_down, 
-                          color: GardenPalette.mutedSilver, 
+                          color: GardenPalette.darkGrey, 
                           size: 20
                         ).animate().fadeIn(delay: 200.ms),
                       ],

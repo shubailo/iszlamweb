@@ -12,7 +12,7 @@ import '../providers/event_provider.dart';
 import '../providers/community_provider.dart';
 import '../screens/post_detail_screen.dart';
 import 'community_post_card.dart';
-import 'package:iszlamweb_app/features/auth/auth_service.dart';
+import 'package:iszlamweb_app/features/auth/services/auth_service.dart';
 import 'create_post_bar.dart';
 
 class MosqueFeed extends ConsumerWidget {
@@ -68,7 +68,7 @@ class MosqueFeed extends ConsumerWidget {
                             '${e.startTime.month}/${e.startTime.day} · ${e.startTime.hour}:${e.startTime.minute.toString().padLeft(2, '0')}',
                             style: GoogleFonts.outfit(
                               fontSize: 11,
-                              color: GardenPalette.gildedGold,
+                              color: GardenPalette.leafyGreen,
                             ),
                           ),
                         ],
@@ -83,7 +83,7 @@ class MosqueFeed extends ConsumerWidget {
             height: 90,
             child: Center(
                 child: CircularProgressIndicator(
-                    color: GardenPalette.emeraldTeal)),
+                    color: GardenPalette.leafyGreen)),
           ),
           error: (e, _) => const SizedBox.shrink(),
         ),
@@ -126,13 +126,13 @@ class MosqueFeed extends ConsumerWidget {
           loading: () => const SizedBox(
             height: 200,
             child: Center(
-              child: CircularProgressIndicator(color: GardenPalette.emeraldTeal),
+              child: CircularProgressIndicator(color: GardenPalette.leafyGreen),
             ),
           ),
           error: (e, _) => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Center(
-              child: Text('Error: $e', style: const TextStyle(color: GardenPalette.warningRed)),
+              child: Text('Error: $e', style: const TextStyle(color: GardenPalette.errorRed)),
             ),
           ),
         ),

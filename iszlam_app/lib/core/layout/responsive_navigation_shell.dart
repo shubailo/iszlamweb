@@ -4,8 +4,8 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../features/library/widgets/persistent_audio_player.dart';
 import '../localization/hungarian_strings.dart';
 import '../theme/garden_palette.dart';
-import '../../shared/widgets/animated_library_icon.dart';
-import '../../shared/widgets/animated_more_icon.dart';
+import '../widgets/animated_library_icon.dart';
+import '../widgets/animated_more_icon.dart';
 import 'top_navigation_bar.dart';
 
 class ResponsiveNavigationShell extends StatelessWidget {
@@ -29,7 +29,7 @@ class ResponsiveNavigationShell extends StatelessWidget {
     final isDesktop = width > 800;
 
     return Scaffold(
-      backgroundColor: GardenPalette.obsidian,
+      backgroundColor: GardenPalette.lightGrey,
       body: Column(
         children: [
           if (isDesktop)
@@ -109,32 +109,15 @@ class _BottomBar extends StatelessWidget {
               final isActive = i == currentIndex;
               final item = _items[i];
               
-              Widget icon;
-              if (i == 2) {
-                icon = AnimatedLibraryIcon(
-                  isSelected: isActive,
-                  size: 24,
-                  color: isActive 
-                      ? theme.colorScheme.primary 
-                      : theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                );
-              } else if (i == 3) {
-                icon = AnimatedMoreIcon(
-                  isSelected: isActive,
-                  size: 24,
-                  color: isActive 
-                      ? theme.colorScheme.primary 
-                      : theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                );
-              } else {
-                icon = Icon(
-                  isActive ? item.$2 : item.$1,
-                  size: 24,
-                  color: isActive 
-                      ? theme.colorScheme.primary 
-                      : theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
-                );
-              }
+              final iconColor = isActive 
+                  ? theme.colorScheme.primary 
+                  : theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.7);
+
+              final icon = switch (i) {
+                2 => AnimatedLibraryIcon(isSelected: isActive, size: 24, color: iconColor),
+                3 => AnimatedMoreIcon(isSelected: isActive, size: 24, color: iconColor),
+                _ => Icon(isActive ? item.$2 : item.$1, size: 24, color: iconColor),
+              };
 
               return Expanded(
                 child: InkWell(

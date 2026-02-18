@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/garden_palette.dart';
 
-/// Reusable section header with gold label text.
+/// Reusable section header with uppercase label.
 class GardenSectionHeader extends StatelessWidget {
   final String label;
   final IconData? icon;
@@ -24,7 +24,7 @@ class GardenSectionHeader extends StatelessWidget {
       child: Row(
         children: [
           if (icon != null) ...[
-            Icon(icon, size: 18, color: GardenPalette.emeraldTeal),
+            Icon(icon, size: 18, color: GardenPalette.leafyGreen),
             const SizedBox(width: 8),
           ],
           Text(
@@ -45,7 +45,7 @@ class GardenSectionHeader extends StatelessWidget {
                 style: GoogleFonts.outfit(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: GardenPalette.emeraldTeal,
+                  color: GardenPalette.leafyGreen,
                 ),
               ),
             ),

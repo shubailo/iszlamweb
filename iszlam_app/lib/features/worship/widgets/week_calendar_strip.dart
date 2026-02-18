@@ -50,7 +50,7 @@ class _WeekCalendarStripState extends ConsumerState<WeekCalendarStrip> {
           child: Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.chevron_left, color: GardenPalette.ivory, size: 22),
+                icon: const Icon(Icons.chevron_left, color: GardenPalette.nearBlack, size: 22),
                 onPressed: () => _pageController.previousPage(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
@@ -66,7 +66,7 @@ class _WeekCalendarStripState extends ConsumerState<WeekCalendarStrip> {
                       style: GoogleFonts.playfairDisplay(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
-                        color: GardenPalette.ivory,
+                        color: GardenPalette.nearBlack,
                       ),
                     ),
                     const SizedBox(height: 2),
@@ -74,14 +74,14 @@ class _WeekCalendarStripState extends ConsumerState<WeekCalendarStrip> {
                       hijriStr,
                       style: GoogleFonts.outfit(
                         fontSize: 12,
-                        color: GardenPalette.gildedGold.withValues(alpha: 0.8),
+                        color: GardenPalette.leafyGreen.withValues(alpha: 0.8),
                       ),
                     ),
                   ],
                 ),
               ),
               IconButton(
-                icon: const Icon(Icons.chevron_right, color: GardenPalette.ivory, size: 22),
+                icon: const Icon(Icons.chevron_right, color: GardenPalette.nearBlack, size: 22),
                 onPressed: () => _pageController.nextPage(
                   duration: const Duration(milliseconds: 300),
                   curve: Curves.easeOut,
@@ -102,10 +102,10 @@ class _WeekCalendarStripState extends ConsumerState<WeekCalendarStrip> {
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                   decoration: BoxDecoration(
-                    border: Border.all(color: GardenPalette.gildedGold.withValues(alpha: 0.4)),
+                    border: Border.all(color: GardenPalette.leafyGreen.withValues(alpha: 0.4)),
                     borderRadius: BorderRadius.circular(6),
                   ),
-                  child: Icon(Icons.today, color: GardenPalette.gildedGold, size: 18),
+                  child: Icon(Icons.today, color: GardenPalette.leafyGreen, size: 18),
                 ),
               ),
             ],
@@ -157,11 +157,11 @@ class _WeekCalendarStripState extends ConsumerState<WeekCalendarStrip> {
             padding: const EdgeInsets.symmetric(vertical: 6),
             decoration: BoxDecoration(
               color: isSelected
-                  ? GardenPalette.gildedGold
+                  ? GardenPalette.leafyGreen
                   : Colors.transparent,
               borderRadius: BorderRadius.circular(12),
               border: isToday && !isSelected
-                  ? Border.all(color: GardenPalette.gildedGold.withValues(alpha: 0.5))
+                  ? Border.all(color: GardenPalette.leafyGreen.withValues(alpha: 0.5))
                   : null,
             ),
             child: Column(
@@ -173,8 +173,8 @@ class _WeekCalendarStripState extends ConsumerState<WeekCalendarStrip> {
                     fontSize: 11,
                     fontWeight: FontWeight.w600,
                     color: isSelected
-                        ? GardenPalette.obsidian
-                        : (isFriday ? GardenPalette.gildedGold : GardenPalette.mutedSilver),
+                        ? GardenPalette.lightGrey
+                        : (isFriday ? GardenPalette.leafyGreen : GardenPalette.darkGrey),
                   ),
                 ),
                 const SizedBox(height: 4),
@@ -184,8 +184,8 @@ class _WeekCalendarStripState extends ConsumerState<WeekCalendarStrip> {
                     fontSize: 16,
                     fontWeight: isSelected ? FontWeight.w800 : FontWeight.w500,
                     color: isSelected
-                        ? GardenPalette.obsidian
-                        : GardenPalette.ivory,
+                        ? GardenPalette.lightGrey
+                        : GardenPalette.nearBlack,
                   ),
                 ),
               ],

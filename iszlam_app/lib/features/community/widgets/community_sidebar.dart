@@ -6,7 +6,7 @@ import '../../../core/theme/garden_palette.dart';
 import 'package:iszlamweb_app/features/community/models/mosque.dart';
 import '../providers/mosque_provider.dart';
 import '../providers/group_provider.dart';
-import 'package:iszlamweb_app/features/auth/auth_service.dart';
+import 'package:iszlamweb_app/features/auth/services/auth_service.dart';
 import 'create_community_dialog.dart';
 import 'create_group_dialog.dart';
 
@@ -81,7 +81,7 @@ class CommunitySidebar extends ConsumerWidget {
                           if (isAdmin)
                             IconButton(
                               icon: const Icon(Icons.add_circle_outline, size: 16),
-                              color: GardenPalette.emeraldTeal,
+                              color: GardenPalette.leafyGreen,
                               padding: EdgeInsets.zero,
                               constraints: const BoxConstraints(),
                               onPressed: () {
@@ -155,7 +155,7 @@ class CommunitySidebar extends ConsumerWidget {
                             if (isAdmin)
                               IconButton(
                                 icon: const Icon(Icons.add_circle_outline, size: 16),
-                                color: GardenPalette.emeraldTeal,
+                                color: GardenPalette.leafyGreen,
                                 padding: EdgeInsets.zero,
                                 constraints: const BoxConstraints(),
                                 onPressed: () {
@@ -210,7 +210,7 @@ class CommunitySidebar extends ConsumerWidget {
                     padding: const EdgeInsets.symmetric(
                         vertical: 12, horizontal: 16),
                     decoration: BoxDecoration(
-                      gradient: GardenPalette.vibrantEmeraldGradient,
+                      gradient: GardenPalette.subtleGreenGradient,
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Row(

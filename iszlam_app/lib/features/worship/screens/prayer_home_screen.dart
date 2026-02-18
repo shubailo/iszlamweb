@@ -49,7 +49,7 @@ class PrayerHomeScreen extends ConsumerWidget {
     final isToday = _isSameDay(selectedDate, DateTime.now());
 
     return Scaffold(
-      backgroundColor: GardenPalette.midnightForest,
+      backgroundColor: GardenPalette.white,
       body: CustomScrollView(
         physics: const BouncingScrollPhysics(),
         slivers: [
@@ -68,7 +68,7 @@ class PrayerHomeScreen extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24),
               child: Divider(
-                color: GardenPalette.emeraldTeal.withValues(alpha: 0.15),
+                color: GardenPalette.leafyGreen.withValues(alpha: 0.15),
                 height: 1,
               ),
             ),
@@ -129,7 +129,7 @@ class PrayerHomeScreen extends ConsumerWidget {
       return Container(
         padding: const EdgeInsets.fromLTRB(24, 60, 24, 16),
         decoration: const BoxDecoration(
-          gradient: GardenPalette.deepDepthGradient,
+          gradient: GardenPalette.greenGradient,
         ),
         child: Center(
           child: Text(
@@ -174,7 +174,7 @@ class PrayerHomeScreen extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 56, 24, 16),
       decoration: const BoxDecoration(
-        gradient: GardenPalette.deepDepthGradient,
+        gradient: GardenPalette.greenGradient,
       ),
       child: Column(
         children: [
@@ -247,7 +247,7 @@ class PrayerHomeScreen extends ConsumerWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.mosque, color: GardenPalette.gildedGold, size: 18),
+              const Icon(Icons.mosque, color: GardenPalette.leafyGreen, size: 18),
               const SizedBox(width: 10),
               Text(
                 'PÉNTEKI IMA',
@@ -268,16 +268,16 @@ class PrayerHomeScreen extends ConsumerWidget {
             children: jummahTimes.map((t) => Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               decoration: BoxDecoration(
-                color: GardenPalette.gildedGold.withAlpha(20),
+                color: GardenPalette.leafyGreen.withAlpha(20),
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: GardenPalette.gildedGold.withAlpha(60)),
+                border: Border.all(color: GardenPalette.leafyGreen.withAlpha(60)),
               ),
               child: Text(
                 t,
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.bold,
                   fontSize: 14,
-                  color: GardenPalette.gildedGold,
+                  color: GardenPalette.leafyGreen,
                 ),
               ),
             )).toList(),

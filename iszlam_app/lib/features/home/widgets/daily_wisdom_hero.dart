@@ -35,12 +35,12 @@ class DailyWisdomHero extends ConsumerWidget {
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                   const Icon(Icons.calendar_month, color: GardenPalette.ivory, size: 14),
+                   const Icon(Icons.calendar_month, color: GardenPalette.nearBlack, size: 14),
                    const SizedBox(width: 8),
                    Text(
                      hijriString, 
                      style: GoogleFonts.outfit(
-                       color: GardenPalette.ivory,
+                       color: GardenPalette.nearBlack,
                        fontSize: 11,
                        fontWeight: FontWeight.w900,
                        letterSpacing: 1.2,

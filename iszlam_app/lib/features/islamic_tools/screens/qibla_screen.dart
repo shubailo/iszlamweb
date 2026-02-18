@@ -178,7 +178,7 @@ class QiblahCompassWidget extends StatelessWidget {
         final qiblahDirection = snapshot.data;
         if (qiblahDirection == null) return const SizedBox();
 
-        var angle = ((qiblahDirection.qiblah) * (pi / 180) * -1);
+        final angle = ((qiblahDirection.qiblah) * (pi / 180) * -1);
         
         return _CompassVisualization(angle: angle);
       },

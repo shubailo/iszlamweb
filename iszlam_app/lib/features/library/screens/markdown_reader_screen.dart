@@ -52,9 +52,9 @@ class _MarkdownReaderScreenState extends State<MarkdownReaderScreen> {
     });
   }
 
-  Color get _backgroundColor => _isDarkMode ? const Color(0xFF1E1E1E) : GardenPalette.ivory;
+  Color get _backgroundColor => _isDarkMode ? const Color(0xFF1E1E1E) : GardenPalette.nearBlack;
   Color get _textColor => _isDarkMode ? const Color(0xFFE0E0E0) : Colors.black87;
-  Color get _headingColor => _isDarkMode ? const Color(0xFFFFFFFF) : GardenPalette.midnightForest;
+  Color get _headingColor => _isDarkMode ? const Color(0xFFFFFFFF) : GardenPalette.white;
 
   @override
   Widget build(BuildContext context) {
@@ -124,9 +124,9 @@ class _MarkdownReaderScreenState extends State<MarkdownReaderScreen> {
                   color: _textColor.withAlpha(180),
                 ),
                 blockquoteDecoration: BoxDecoration(
-                  color: _isDarkMode ? Colors.white.withAlpha(10) : GardenPalette.emeraldTeal.withAlpha(20),
+                  color: _isDarkMode ? Colors.white.withAlpha(10) : GardenPalette.leafyGreen.withAlpha(20),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border(left: BorderSide(color: GardenPalette.emeraldTeal, width: 4)),
+                  border: Border(left: BorderSide(color: GardenPalette.leafyGreen, width: 4)),
                 ),
               ),
             ),

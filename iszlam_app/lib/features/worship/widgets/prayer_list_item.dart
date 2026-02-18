@@ -37,11 +37,11 @@ class PrayerListItem extends ConsumerWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
       decoration: BoxDecoration(
         color: isNext
-            ? GardenPalette.gildedGold.withValues(alpha: 0.12)
+            ? GardenPalette.leafyGreen.withValues(alpha: 0.12)
             : Colors.transparent,
         borderRadius: BorderRadius.circular(12),
         border: isNext
-            ? Border.all(color: GardenPalette.gildedGold.withValues(alpha: 0.3))
+            ? Border.all(color: GardenPalette.leafyGreen.withValues(alpha: 0.3))
             : null,
       ),
       child: Material(
@@ -64,10 +64,10 @@ class PrayerListItem extends ConsumerWidget {
                       fontSize: isNext ? 16 : 14,
                       fontWeight: isNext ? FontWeight.w800 : FontWeight.w500,
                       color: isNext
-                          ? GardenPalette.gildedGold
+                          ? GardenPalette.leafyGreen
                           : (isPast
-                              ? GardenPalette.mutedSilver.withValues(alpha: 0.5)
-                              : GardenPalette.ivory.withValues(alpha: 0.8)),
+                              ? GardenPalette.darkGrey.withValues(alpha: 0.5)
+                              : GardenPalette.nearBlack.withValues(alpha: 0.8)),
                     ),
                   ),
                 ),
@@ -82,10 +82,10 @@ class PrayerListItem extends ConsumerWidget {
                           fontSize: isNext ? 28 : 22,
                           fontWeight: FontWeight.bold,
                           color: isNext
-                              ? GardenPalette.gildedGold
+                              ? GardenPalette.leafyGreen
                               : (isPast
-                                  ? GardenPalette.mutedSilver.withValues(alpha: 0.4)
-                                  : GardenPalette.ivory),
+                                  ? GardenPalette.darkGrey.withValues(alpha: 0.4)
+                                  : GardenPalette.nearBlack),
                           decoration: isCompleted ? TextDecoration.lineThrough : null,
                         ),
                       ),
@@ -97,8 +97,8 @@ class PrayerListItem extends ConsumerWidget {
                             fontSize: 13,
                             fontWeight: FontWeight.w700,
                             color: isNext
-                                ? GardenPalette.gildedGold.withValues(alpha: 0.7)
-                                : GardenPalette.mutedSilver.withValues(alpha: 0.5),
+                                ? GardenPalette.leafyGreen.withValues(alpha: 0.7)
+                                : GardenPalette.darkGrey.withValues(alpha: 0.5),
                           ),
                         ),
                       ],
@@ -114,16 +114,16 @@ class PrayerListItem extends ConsumerWidget {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: isCompleted
-                          ? GardenPalette.gildedGold.withValues(alpha: 0.15)
-                          : GardenPalette.midnightForest.withValues(alpha: 0.5),
+                          ? GardenPalette.leafyGreen.withValues(alpha: 0.15)
+                          : GardenPalette.white.withValues(alpha: 0.5),
                     ),
                     child: Icon(
                       isCompleted
                           ? Icons.check_circle
                           : Icons.notifications_none,
                       color: isCompleted
-                          ? GardenPalette.gildedGold
-                          : GardenPalette.mutedSilver.withValues(alpha: 0.4),
+                          ? GardenPalette.leafyGreen
+                          : GardenPalette.darkGrey.withValues(alpha: 0.4),
                       size: 18,
                     ),
                   )

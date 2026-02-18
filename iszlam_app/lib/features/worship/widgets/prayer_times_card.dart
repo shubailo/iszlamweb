@@ -40,7 +40,7 @@ class PrayerTimesCard extends ConsumerWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(20),
           border: Border.all(
-            color: GardenPalette.midnightForest.withAlpha(12),
+            color: GardenPalette.white.withAlpha(12),
           ),
         ),
         child: Column(
@@ -50,7 +50,7 @@ class PrayerTimesCard extends ConsumerWidget {
               child: Row(
                 children: [
                   Icon(Icons.mosque,
-                      size: 18, color: GardenPalette.emeraldTeal),
+                      size: 18, color: GardenPalette.leafyGreen),
                   const SizedBox(width: 8),
                   Text(
                     'IMAIDŐK - ${DateFormat('MM.dd.').format(ref.read(selectedDateProvider))}',
@@ -69,7 +69,7 @@ class PrayerTimesCard extends ConsumerWidget {
                       style: GoogleFonts.outfit(
                         fontSize: 12,
                         fontWeight: FontWeight.w600,
-                        color: GardenPalette.emeraldTeal,
+                        color: GardenPalette.leafyGreen,
                       ),
                     ),
                   ),
@@ -84,7 +84,7 @@ class PrayerTimesCard extends ConsumerWidget {
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                 decoration: BoxDecoration(
                   color: isNext
-                      ? GardenPalette.emeraldTeal.withAlpha(8)
+                      ? GardenPalette.leafyGreen.withAlpha(8)
                       : Colors.transparent,
                 ),
                 child: Row(
@@ -95,7 +95,7 @@ class PrayerTimesCard extends ConsumerWidget {
                         height: 6,
                         margin: const EdgeInsets.only(right: 10),
                         decoration: BoxDecoration(
-                          color: GardenPalette.emeraldTeal,
+                          color: GardenPalette.leafyGreen,
                           shape: BoxShape.circle,
                         ),
                       ),
@@ -107,7 +107,7 @@ class PrayerTimesCard extends ConsumerWidget {
                         fontWeight:
                             isNext ? FontWeight.w700 : FontWeight.w500,
                         color: isNext
-                            ? GardenPalette.emeraldTeal
+                            ? GardenPalette.leafyGreen
                             : GardenPalette.nearBlack,
                       ),
                     ),
@@ -119,7 +119,7 @@ class PrayerTimesCard extends ConsumerWidget {
                         fontWeight:
                             isNext ? FontWeight.w700 : FontWeight.w500,
                         color: isNext
-                            ? GardenPalette.emeraldTeal
+                            ? GardenPalette.leafyGreen
                             : GardenPalette.nearBlack.withAlpha(150),
                         letterSpacing: 1,
                       ),

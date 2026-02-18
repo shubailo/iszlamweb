@@ -8,7 +8,7 @@ import '../models/library_item.dart';
 import '../providers/library_filter_provider.dart';
 import '../services/audio_service.dart';
 import '../screens/markdown_reader_screen.dart';
-import '../../auth/auth_service.dart';
+import '../../auth/services/auth_service.dart';
 import '../../admin_tools/services/admin_repository.dart';
 
 class LibrarySidebar extends ConsumerWidget {

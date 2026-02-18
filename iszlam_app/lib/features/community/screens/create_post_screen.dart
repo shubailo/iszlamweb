@@ -9,7 +9,7 @@ import '../models/community_post.dart';
 import '../services/community_service.dart';
 import '../providers/community_provider.dart';
 import '../../../core/theme/garden_palette.dart';
-import 'package:iszlamweb_app/features/auth/auth_service.dart';
+import 'package:iszlamweb_app/features/auth/services/auth_service.dart';
 
 class CreatePostScreen extends ConsumerStatefulWidget {
   final String mosqueId;
@@ -190,7 +190,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> with Single
           controller: _tabController,
           labelColor: GardenPalette.nearBlack,
           unselectedLabelColor: GardenPalette.grey,
-          indicatorColor: GardenPalette.emeraldTeal,
+          indicatorColor: GardenPalette.leafyGreen,
           tabs: const [
             Tab(text: 'Post', icon: Icon(Icons.description_outlined)),
             Tab(text: 'Image', icon: Icon(Icons.image_outlined)),
@@ -204,7 +204,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> with Single
             child: Text(
               'POST',
               style: GoogleFonts.outfit(
-                color: _isValid ? GardenPalette.emeraldTeal : GardenPalette.grey,
+                color: _isValid ? GardenPalette.leafyGreen : GardenPalette.grey,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -311,13 +311,13 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> with Single
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.cloud_upload_outlined, size: 48, color: GardenPalette.emeraldTeal),
+                  Icon(Icons.cloud_upload_outlined, size: 48, color: GardenPalette.leafyGreen),
                   const SizedBox(height: 12),
                   Text(
                     'Upload Image',
                     style: GoogleFonts.outfit(
                       fontSize: 16,
-                      color: GardenPalette.emeraldTeal,
+                      color: GardenPalette.leafyGreen,
                       fontWeight: FontWeight.w600,
                     ),
                   ),
@@ -417,7 +417,7 @@ class _CreatePostScreenState extends ConsumerState<CreatePostScreen> with Single
               icon: const Icon(Icons.add),
               label: const Text('Add Option'),
               style: OutlinedButton.styleFrom(
-                foregroundColor: GardenPalette.emeraldTeal,
+                foregroundColor: GardenPalette.leafyGreen,
               ),
             ),
         ],

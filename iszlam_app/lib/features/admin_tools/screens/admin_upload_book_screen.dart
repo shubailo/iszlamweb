@@ -101,10 +101,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please select a book file')));
       return;
     }
-    if (widget.book == null && _bookFileBytes == null) {
-      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Please select a book file')));
-      return;
-    }
+
 
     setState(() => _isLoading = true);
 

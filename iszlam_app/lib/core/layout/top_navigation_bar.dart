@@ -3,8 +3,8 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../theme/garden_palette.dart';
 import '../localization/hungarian_strings.dart';
-import '../../shared/widgets/animated_library_icon.dart';
-import '../../shared/widgets/animated_more_icon.dart';
+import '../widgets/animated_library_icon.dart';
+import '../widgets/animated_more_icon.dart';
 
 class TopNavigationBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -24,10 +24,10 @@ class TopNavigationBar extends StatelessWidget {
       height: 70,
       padding: const EdgeInsets.symmetric(horizontal: 32),
       decoration: BoxDecoration(
-        color: GardenPalette.midnightForest,
+        color: GardenPalette.white,
         border: Border(
           bottom: BorderSide(
-            color: GardenPalette.emeraldTeal.withValues(alpha: 0.12),
+            color: GardenPalette.leafyGreen.withValues(alpha: 0.12),
           ),
         ),
       ),
@@ -37,7 +37,7 @@ class TopNavigationBar extends StatelessWidget {
           Text(
             'Iszlam.com',
             style: GoogleFonts.playfairDisplay(
-              color: GardenPalette.gildedGold,
+              color: GardenPalette.leafyGreen,
               fontSize: 24,
               fontWeight: FontWeight.bold,
             ),
@@ -66,8 +66,8 @@ class TopNavigationBar extends StatelessWidget {
               isSelected: navigationShell.currentIndex == 2,
               size: 20,
               color: navigationShell.currentIndex == 2
-                  ? GardenPalette.emeraldTeal
-                  : GardenPalette.ivory.withValues(alpha: 0.5),
+                  ? GardenPalette.leafyGreen
+                  : GardenPalette.nearBlack.withValues(alpha: 0.5),
             ),
             onTap: () => _goBranch(2),
           ),
@@ -80,8 +80,8 @@ class TopNavigationBar extends StatelessWidget {
               isSelected: navigationShell.currentIndex == 3,
               size: 20,
               color: navigationShell.currentIndex == 3
-                  ? GardenPalette.emeraldTeal
-                  : GardenPalette.ivory.withValues(alpha: 0.5),
+                  ? GardenPalette.leafyGreen
+                  : GardenPalette.nearBlack.withValues(alpha: 0.5),
             ),
             onTap: () => _goBranch(3),
           ),
@@ -115,7 +115,7 @@ class _NavButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
           color: isSelected
-              ? GardenPalette.emeraldTeal.withValues(alpha: 0.12)
+              ? GardenPalette.leafyGreen.withValues(alpha: 0.12)
               : Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
@@ -125,16 +125,16 @@ class _NavButton extends StatelessWidget {
               icon,
               size: 18,
               color: isSelected
-                  ? GardenPalette.emeraldTeal
-                  : GardenPalette.ivory.withValues(alpha: 0.5),
+                  ? GardenPalette.leafyGreen
+                  : GardenPalette.nearBlack.withValues(alpha: 0.5),
             ),
             const SizedBox(width: 8),
             Text(
               label,
               style: GoogleFonts.outfit(
                 color: isSelected
-                    ? GardenPalette.emeraldTeal
-                    : GardenPalette.ivory.withValues(alpha: 0.5),
+                    ? GardenPalette.leafyGreen
+                    : GardenPalette.nearBlack.withValues(alpha: 0.5),
                 fontWeight: isSelected ? FontWeight.w700 : FontWeight.w500,
                 fontSize: 15,
               ),

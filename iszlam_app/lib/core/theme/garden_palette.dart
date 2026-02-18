@@ -42,26 +42,4 @@ class GardenPalette {
     end: Alignment.bottomRight,
   );
 
-  // ═══════════════════════════════════════════════════════
-  // LEGACY ALIASES — kept so 30+ files don't need renaming.
-  // These map to LIGHT theme values.
-  // TODO: Migrate widgets to Theme.of(context), then remove.
-  // ═══════════════════════════════════════════════════════
-  static const Color midnightForest = white;        // Background
-  static const Color velvetNavy = offWhite;          // Surface / Card
-  static const Color obsidian = lightGrey;           // Subtle depth
-  static const Color emeraldTeal = leafyGreen;       // Primary accent
-  static const Color vibrantEmerald = lightGreen;    // Secondary accent
-  static const Color gildedGold = leafyGreen;        // Was gold, now green (monochrome)
-  static const Color shimmerGold = paleGreen;         // Was gold shimmer
-  static const Color royalNavy = lightGrey;           // Dividers
-  static const Color ivory = nearBlack;               // Primary text
-  static const Color mutedSilver = darkGrey;          // Secondary text
-  static const Color warningRed = errorRed;
-  static const Color glassWhite = Color(0x08000000);  // Subtle overlay
-  static const Color glassText = nearBlack;           // Overlay text
-
-  static const LinearGradient deepDepthGradient = greenGradient;
-  static const LinearGradient vibrantEmeraldGradient = subtleGreenGradient;
-  static const LinearGradient goldShimmerGradient = subtleGreenGradient;
 }

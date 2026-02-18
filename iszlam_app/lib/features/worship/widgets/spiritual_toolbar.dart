@@ -65,8 +65,8 @@ class _ToolCard extends StatelessWidget {
       width: 90,
       margin: const EdgeInsets.symmetric(vertical: 4),
       decoration: BoxDecoration(
-        color: GardenPalette.velvetNavy,
-        border: Border.all(color: GardenPalette.royalNavy.withAlpha(100), width: 0.5),
+        color: GardenPalette.offWhite,
+        border: Border.all(color: GardenPalette.lightGrey.withAlpha(100), width: 0.5),
       ),
       child: Material(
         color: Colors.transparent,
@@ -75,14 +75,14 @@ class _ToolCard extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(icon, color: GardenPalette.gildedGold, size: 28),
+              Icon(icon, color: GardenPalette.leafyGreen, size: 28),
               const SizedBox(height: 10),
               Text(
                 label.toUpperCase(), 
                 style: GoogleFonts.outfit(
                   fontWeight: FontWeight.bold, 
                   fontSize: 11, 
-                  color: GardenPalette.ivory,
+                  color: GardenPalette.nearBlack,
                   letterSpacing: 1,
                 ),
               ),
@@ -111,8 +111,8 @@ class _SimpleTasbihDialogState extends State<_SimpleTasbihDialog> {
         padding: const EdgeInsets.all(32),
         width: 300,
         decoration: BoxDecoration(
-          color: GardenPalette.midnightForest,
-          border: Border.all(color: GardenPalette.gildedGold.withAlpha(100)),
+          color: GardenPalette.white,
+          border: Border.all(color: GardenPalette.leafyGreen.withAlpha(100)),
         ),
         child: Material(
           color: Colors.transparent,
@@ -124,7 +124,7 @@ class _SimpleTasbihDialogState extends State<_SimpleTasbihDialog> {
                 style: GoogleFonts.playfairDisplay(
                   fontSize: 18, 
                   fontWeight: FontWeight.w900, 
-                  color: GardenPalette.gildedGold,
+                  color: GardenPalette.leafyGreen,
                   letterSpacing: 2,
                 ),
               ),
@@ -135,11 +135,11 @@ class _SimpleTasbihDialogState extends State<_SimpleTasbihDialog> {
                   width: 140,
                   height: 140,
                   decoration: BoxDecoration(
-                    color: GardenPalette.velvetNavy,
-                    border: Border.all(color: GardenPalette.gildedGold.withAlpha(60)),
+                    color: GardenPalette.offWhite,
+                    border: Border.all(color: GardenPalette.leafyGreen.withAlpha(60)),
                     shape: BoxShape.circle,
                     boxShadow: [
-                      BoxShadow(color: GardenPalette.gildedGold.withAlpha(20), blurRadius: 30)
+                      BoxShadow(color: GardenPalette.leafyGreen.withAlpha(20), blurRadius: 30)
                     ]
                   ),
                   alignment: Alignment.center,
@@ -147,7 +147,7 @@ class _SimpleTasbihDialogState extends State<_SimpleTasbihDialog> {
                     '$count',
                     style: GoogleFonts.playfairDisplay(
                       fontSize: 54, 
-                      color: GardenPalette.ivory, 
+                      color: GardenPalette.nearBlack, 
                       fontWeight: FontWeight.w900,
                     ),
                   ),
@@ -159,11 +159,11 @@ class _SimpleTasbihDialogState extends State<_SimpleTasbihDialog> {
                 children: [
                   TextButton(
                     onPressed: () => Navigator.pop(context),
-                    child: Text('BEZÁRÁS', style: GoogleFonts.outfit(color: GardenPalette.mutedSilver, fontSize: 11, fontWeight: FontWeight.bold)),
+                    child: Text('BEZÁRÁS', style: GoogleFonts.outfit(color: GardenPalette.darkGrey, fontSize: 11, fontWeight: FontWeight.bold)),
                   ),
                   TextButton(
                     onPressed: () => setState(() => count = 0),
-                    child: Text('VISSZAÁLLÍTÁS', style: GoogleFonts.outfit(color: GardenPalette.gildedGold, fontSize: 11, fontWeight: FontWeight.bold)),
+                    child: Text('VISSZAÁLLÍTÁS', style: GoogleFonts.outfit(color: GardenPalette.leafyGreen, fontSize: 11, fontWeight: FontWeight.bold)),
                   ),
                 ],
               )

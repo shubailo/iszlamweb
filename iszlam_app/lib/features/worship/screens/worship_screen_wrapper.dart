@@ -4,12 +4,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../core/theme/garden_palette.dart';
 import '../providers/worship_view_provider.dart';
 import '../widgets/worship_sidebar.dart';
-import '../../tools/screens/asmaul_husna_screen.dart';
-import '../../tools/screens/tasbih_screen.dart';
+import '../../islamic_tools/screens/asmaul_husna_screen.dart';
+import '../../islamic_tools/screens/tasbih_screen.dart';
 import 'sanctuary_screen.dart';
 import 'azkar_categories_screen.dart';
 import '../../quran/screens/quran_screen.dart';
-import '../../tools/screens/qibla_screen.dart';
+import '../../islamic_tools/screens/qibla_screen.dart';
 
 /// Wrapper that provides the Reddit-style layout for the Worship tab.
 /// Desktop: Sidebar + Content side by side.

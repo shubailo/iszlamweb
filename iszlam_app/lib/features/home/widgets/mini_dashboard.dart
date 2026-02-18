@@ -25,7 +25,7 @@ class MiniDashboard extends ConsumerWidget {
               fontSize: 11,
               fontWeight: FontWeight.w900,
               letterSpacing: 3,
-              color: GardenPalette.gildedGold.withAlpha(200),
+              color: GardenPalette.leafyGreen.withAlpha(200),
             ),
           ),
           const SizedBox(height: 16),
@@ -48,9 +48,9 @@ class MiniDashboard extends ConsumerWidget {
             },
             loading: () => const SizedBox(
               height: 140,
-              child: Center(child: CircularProgressIndicator(color: GardenPalette.gildedGold)),
+              child: Center(child: CircularProgressIndicator(color: GardenPalette.leafyGreen)),
             ),
-            error: (e, s) => const Text('Hiba történt a betöltéskor.', style: TextStyle(color: GardenPalette.ivory)),
+            error: (e, s) => const Text('Hiba történt a betöltéskor.', style: TextStyle(color: GardenPalette.nearBlack)),
           ),
         ],
       ),
@@ -62,8 +62,8 @@ class MiniDashboard extends ConsumerWidget {
       width: 220,
       margin: const EdgeInsets.only(right: 16),
       decoration: BoxDecoration(
-        color: GardenPalette.velvetNavy,
-        border: Border.all(color: GardenPalette.royalNavy.withAlpha(100), width: 0.5),
+        color: GardenPalette.offWhite,
+        border: Border.all(color: GardenPalette.lightGrey.withAlpha(100), width: 0.5),
       ),
       child: InkWell(
         onTap: () => context.go('/library'),
@@ -78,10 +78,10 @@ class MiniDashboard extends ConsumerWidget {
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: GardenPalette.gildedGold.withAlpha(15),
-                      border: Border.all(color: GardenPalette.gildedGold.withAlpha(30)),
+                      color: GardenPalette.leafyGreen.withAlpha(15),
+                      border: Border.all(color: GardenPalette.leafyGreen.withAlpha(30)),
                     ),
-                    child: const Icon(Icons.menu_book, size: 18, color: GardenPalette.gildedGold),
+                    child: const Icon(Icons.menu_book, size: 18, color: GardenPalette.leafyGreen),
                   ),
                   const SizedBox(width: 14),
                   Expanded(
@@ -95,7 +95,7 @@ class MiniDashboard extends ConsumerWidget {
                           style: GoogleFonts.playfairDisplay(
                             fontSize: 15,
                             fontWeight: FontWeight.bold,
-                            color: GardenPalette.ivory,
+                            color: GardenPalette.nearBlack,
                           ),
                         ),
                         const SizedBox(height: 4),
@@ -103,7 +103,7 @@ class MiniDashboard extends ConsumerWidget {
                           '${(progress.progress * 100).toInt()}% kész',
                           style: GoogleFonts.outfit(
                             fontSize: 12,
-                            color: GardenPalette.mutedSilver,
+                            color: GardenPalette.darkGrey,
                           ),
                         ),
                       ],
@@ -123,7 +123,7 @@ class MiniDashboard extends ConsumerWidget {
                         style: GoogleFonts.outfit(
                           fontSize: 9,
                           fontWeight: FontWeight.w900,
-                          color: GardenPalette.gildedGold,
+                          color: GardenPalette.leafyGreen,
                           letterSpacing: 1,
                         ),
                       ),
@@ -132,8 +132,8 @@ class MiniDashboard extends ConsumerWidget {
                   const SizedBox(height: 6),
                   LinearProgressIndicator(
                     value: progress.progress,
-                    backgroundColor: GardenPalette.royalNavy.withAlpha(40),
-                    valueColor: const AlwaysStoppedAnimation<Color>(GardenPalette.gildedGold),
+                    backgroundColor: GardenPalette.lightGrey.withAlpha(40),
+                    valueColor: const AlwaysStoppedAnimation<Color>(GardenPalette.leafyGreen),
                     minHeight: 2,
                   ),
                 ],
@@ -150,19 +150,19 @@ class MiniDashboard extends ConsumerWidget {
       width: double.infinity,
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: GardenPalette.velvetNavy,
-        border: Border.all(color: GardenPalette.royalNavy.withAlpha(80), width: 0.5),
+        color: GardenPalette.offWhite,
+        border: Border.all(color: GardenPalette.lightGrey.withAlpha(80), width: 0.5),
       ),
       child: Row(
         children: [
-          const Icon(Icons.library_books_outlined, color: GardenPalette.gildedGold, size: 28),
+          const Icon(Icons.library_books_outlined, color: GardenPalette.leafyGreen, size: 28),
           const SizedBox(width: 16),
           Expanded(
             child: Text(
               'Nincs folyamatban lévő olvasásod.',
               style: GoogleFonts.outfit(
                 fontSize: 14,
-                color: GardenPalette.mutedSilver,
+                color: GardenPalette.darkGrey,
               ),
             ),
           ),

@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../../../shared/models/asmaul_husna.dart';
+import '../models/asmaul_husna.dart';
 import '../../admin_tools/services/admin_repository.dart';
 
 final asmaulHusnaProvider = FutureProvider<List<AsmaulHusna>>((ref) async {

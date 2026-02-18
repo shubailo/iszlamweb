@@ -7,7 +7,7 @@ import '../providers/mosque_provider.dart';
 import '../widgets/community_sidebar.dart';
 import '../widgets/discover_feed.dart';
 import '../widgets/mosque_feed.dart';
-import '../../auth/auth_service.dart';
+import '../../auth/services/auth_service.dart';
 import 'create_post_screen.dart';
 
 /// Reddit-style Community screen.
@@ -56,7 +56,7 @@ class MyCommunityScreen extends ConsumerWidget {
       floatingActionButton: isAdminAsync.when(
         data: (admin) => admin && selectedId != null
             ? FloatingActionButton(
-                backgroundColor: GardenPalette.emeraldTeal,
+                backgroundColor: GardenPalette.leafyGreen,
                 child: const Icon(Icons.add, color: Colors.white),
                 onPressed: () => Navigator.of(context).push(
                   MaterialPageRoute(

@@ -54,7 +54,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(gradient: GardenPalette.deepDepthGradient),
+        decoration: const BoxDecoration(gradient: GardenPalette.greenGradient),
         child: SafeArea(
           child: Column(
             children: [
