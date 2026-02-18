@@ -10,6 +10,7 @@ class AdminBook {
   final String? description;
   final String? categoryId;
   final String? fileUrl;
+  final String? epubUrl;
   final String? coverUrl;
   final dynamic metadata;
 
@@ -20,6 +21,7 @@ class AdminBook {
     this.description,
     this.categoryId,
     this.fileUrl,
+    this.epubUrl,
     this.coverUrl,
     this.metadata,
   });
@@ -31,6 +33,7 @@ class AdminBook {
         description: json['description'] as String?,
         categoryId: json['category_id'] as String?,
         fileUrl: json['file_url'] as String?,
+        epubUrl: json['epub_url'] as String?,
         coverUrl: json['cover_url'] as String?,
         metadata: json['metadata'],
       );
@@ -41,6 +44,7 @@ class AdminBook {
         'description': description,
         'category_id': categoryId,
         'file_url': fileUrl,
+        'epub_url': epubUrl,
         'cover_url': coverUrl,
         'metadata': metadata,
       };
@@ -150,4 +154,47 @@ class AdminInspiration {
         type: json['type'] as String?,
         isActive: json['is_active'] == true,
       );
+}
+
+class AdminMosque {
+  final String id;
+  final String name;
+  final String address;
+  final String city;
+  final String? description;
+  final String? imageUrl;
+  final double? latitude;
+  final double? longitude;
+
+  const AdminMosque({
+    required this.id,
+    required this.name,
+    required this.address,
+    required this.city,
+    this.description,
+    this.imageUrl,
+    this.latitude,
+    this.longitude,
+  });
+
+  factory AdminMosque.fromJson(Map<String, dynamic> json) => AdminMosque(
+        id: json['id'] as String,
+        name: json['name'] as String? ?? '',
+        address: json['address'] as String? ?? '',
+        city: json['city'] as String? ?? '',
+        description: json['description'] as String?,
+        imageUrl: json['image_url'] as String?,
+        latitude: (json['latitude'] as num?)?.toDouble(),
+        longitude: (json['longitude'] as num?)?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'address': address,
+        'city': city,
+        'description': description,
+        'image_url': imageUrl,
+        'latitude': latitude,
+        'longitude': longitude,
+      };
 }

@@ -11,6 +11,14 @@ final libraryServiceProvider = Provider<LibraryService>((ref) {
 final libraryInitProvider = FutureProvider<void>((ref) async {
   final service = ref.watch(libraryServiceProvider);
   await service.init();
+  // Trigger initial sync in background
+  service.syncBooks();
+});
+
+final libraryBooksStreamProvider = StreamProvider<List<Book>>((ref) async* {
+  await ref.watch(libraryInitProvider.future);
+  final service = ref.watch(libraryServiceProvider);
+  yield* service.booksStream;
 });
 
 final libraryBooksProvider = FutureProvider<List<Book>>((ref) async {

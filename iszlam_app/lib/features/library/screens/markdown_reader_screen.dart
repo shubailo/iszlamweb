@@ -4,6 +4,7 @@ import 'package:flutter/services.dart' show rootBundle;
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
 import '../models/library_item.dart';
+import 'package:http/http.dart' as http;
 
 class MarkdownReaderScreen extends StatefulWidget {
   final LibraryItem item;
@@ -28,8 +29,20 @@ class _MarkdownReaderScreenState extends State<MarkdownReaderScreen> {
 
   Future<void> _loadMarkdown() async {
     try {
-      final mdPath = widget.item.mediaUrl.replaceAll('.pdf', '.md');
-      final content = await rootBundle.loadString(mdPath);
+      final contentPath = widget.item.mediaUrl;
+
+      String content;
+      if (contentPath.startsWith('http')) {
+        final response = await http.get(Uri.parse(contentPath));
+        if (response.statusCode == 200) {
+          content = response.body;
+        } else {
+          throw Exception('Failed to load network file: ${response.statusCode}');
+        }
+      } else {
+        content = await rootBundle.loadString(contentPath);
+      }
+
       if (mounted) {
         setState(() {
           _markdownData = content;

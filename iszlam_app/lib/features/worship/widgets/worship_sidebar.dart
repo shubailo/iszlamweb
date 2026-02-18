@@ -38,16 +38,26 @@ class WorshipSidebar extends ConsumerWidget {
               ),
             ),
 
-            // Sanctuary (Dashboard)
+            // Sanctuary (Journey Dashboard)
             _SidebarItem(
-              icon: Icons.home_outlined,
-              label: 'Imaidők',
+              icon: Icons.auto_graph_outlined,
+              label: 'Én utam',
               isSelected: selected == WorshipView.sanctuary,
               onTap: () {
                 ref.read(worshipViewProvider.notifier).select(WorshipView.sanctuary);
                 onItemTap?.call();
               },
             ).animate().fadeIn(duration: 300.ms),
+
+            _SidebarItem(
+              icon: Icons.timer_outlined,
+              label: 'Imaidők',
+              isSelected: selected == WorshipView.prayerTimes,
+              onTap: () {
+                ref.read(worshipViewProvider.notifier).select(WorshipView.prayerTimes);
+                onItemTap?.call();
+              },
+            ).animate().fadeIn(delay: 50.ms, duration: 300.ms),
 
             const _SidebarDivider(),
 

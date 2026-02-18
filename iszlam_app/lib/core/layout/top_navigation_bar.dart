@@ -45,13 +45,6 @@ class TopNavigationBar extends StatelessWidget {
           const Spacer(),
 
           _NavButton(
-            label: H.worship,
-            icon: Icons.mosque,
-            isSelected: navigationShell.currentIndex == 0,
-            onTap: () => _goBranch(0),
-          ),
-          const SizedBox(width: 24),
-          _NavButton(
             label: H.myCommunity,
             icon: Icons.people,
             isSelected: navigationShell.currentIndex == 1,
@@ -70,6 +63,13 @@ class TopNavigationBar extends StatelessWidget {
                   : GardenPalette.nearBlack.withValues(alpha: 0.5),
             ),
             onTap: () => _goBranch(2),
+          ),
+          const SizedBox(width: 24),
+          _NavButton(
+            label: H.worship,
+            icon: Icons.mosque,
+            isSelected: navigationShell.currentIndex == 0,
+            onTap: () => _goBranch(0),
           ),
           const SizedBox(width: 24),
           _NavButton(

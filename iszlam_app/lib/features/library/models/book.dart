@@ -6,6 +6,7 @@ class Book {
   final String filePath;
   final String? coverPath;
   final String? downloadUrl;
+  final String? epubUrl;
   final String format;
   final DateTime addedAt;
   final bool isLocal;
@@ -20,6 +21,7 @@ class Book {
     required this.filePath,
     this.coverPath,
     this.downloadUrl,
+    this.epubUrl,
     required this.format,
     required this.addedAt,
     this.isLocal = true,
@@ -35,6 +37,7 @@ class Book {
       'filePath': filePath,
       'coverPath': coverPath,
       'downloadUrl': downloadUrl,
+      'epubUrl': epubUrl,
       'format': format,
       'addedAt': addedAt.toIso8601String(),
       'isLocal': isLocal,
@@ -51,6 +54,7 @@ class Book {
       filePath: json['filePath'],
       coverPath: json['coverPath'],
       downloadUrl: json['downloadUrl'],
+      epubUrl: json['epubUrl'],
       format: json['format'],
       addedAt: DateTime.parse(json['addedAt']),
       isLocal: json['isLocal'] ?? true,
@@ -64,13 +68,44 @@ class Book {
       id: json['id'],
       title: json['title'],
       author: json['author'] ?? 'Unknown',
-      filePath: '', // Remote books don't have a local path initially
+      filePath: '',
       coverPath: json['cover_url'],
       downloadUrl: json['file_url'],
-      format: 'pdf', // Assume PDF for now, or check metadata
+      epubUrl: json['epub_url'],
+      format: (json['metadata'] as Map<String, dynamic>?)?['format'] ?? 'pdf',
       addedAt: DateTime.parse(json['created_at']),
       isLocal: false,
       categoryId: json['category_id'],
+    );
+  }
+
+  Book copyWith({
+    String? id,
+    String? title,
+    String? author,
+    String? filePath,
+    String? coverPath,
+    String? downloadUrl,
+    String? epubUrl,
+    String? format,
+    DateTime? addedAt,
+    bool? isLocal,
+    bool? isFavorite,
+    String? categoryId,
+  }) {
+    return Book(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      author: author ?? this.author,
+      filePath: filePath ?? this.filePath,
+      coverPath: coverPath ?? this.coverPath,
+      downloadUrl: downloadUrl ?? this.downloadUrl,
+      epubUrl: epubUrl ?? this.epubUrl,
+      format: format ?? this.format,
+      addedAt: addedAt ?? this.addedAt,
+      isLocal: isLocal ?? this.isLocal,
+      isFavorite: isFavorite ?? this.isFavorite,
+      categoryId: categoryId ?? this.categoryId,
     );
   }
 }

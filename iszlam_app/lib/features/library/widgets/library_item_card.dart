@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../screens/book_reader_screen.dart';
+import '../screens/epub_reader_screen.dart';
 import '../screens/markdown_reader_screen.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -10,7 +12,7 @@ import '../../auth/services/auth_service.dart';
 import '../../admin_tools/screens/admin_upload_book_screen.dart';
 import '../../admin_tools/models/admin_models.dart';
 import '../../admin_tools/services/admin_repository.dart';
-import '../providers/library_filter_provider.dart';
+import 'package:iszlamweb_app/features/library/providers/library_provider.dart';
 
 class LibraryItemCard extends ConsumerWidget {
   final LibraryItem item;
@@ -37,138 +39,194 @@ class LibraryItemCard extends ConsumerWidget {
         if (item.type == LibraryItemType.audio) {
           ref.read(audioServiceProvider.notifier).playItem(item);
         } else if (item.type == LibraryItemType.book) {
+          // Priority: EPUB (flowing) > PDF (original) > Markdown (text)
+          final hasEpub = item.epubUrl != null && item.epubUrl!.isNotEmpty;
+          final isPdf = item.mediaUrl.toLowerCase().endsWith('.pdf') || 
+                        (item.metadata?.toLowerCase() == 'pdf');
+          
+          Widget reader;
+          if (hasEpub) {
+            reader = EpubReaderScreen(item: item);
+          } else if (isPdf) {
+            reader = BookReaderScreen(
+              bookId: item.id,
+              title: item.title,
+              filePath: item.mediaUrl,
+              downloadUrl: item.fileUrl,
+            );
+          } else {
+            reader = MarkdownReaderScreen(item: item);
+          }
+
           Navigator.push(
             context, 
-            MaterialPageRoute(
-              builder: (_) => MarkdownReaderScreen(item: item),
-            ),
+            MaterialPageRoute(builder: (_) => reader),
           );
         }
       },
       child: Container(
         width: width,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withAlpha(10),
-              blurRadius: 8,
-              offset: const Offset(0, 4),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        height: isSquare ? 180 : 250, // Fixed height for premium feel
+        margin: const EdgeInsets.only(bottom: 12),
+        child: Stack(
+          clipBehavior: Clip.none,
           children: [
-            // Cover Image
-            Expanded(
-              child: ClipRRect(
-                borderRadius: const BorderRadius.vertical(top: Radius.circular(12)),
-                child: Stack(
-                  fit: StackFit.expand,
-                  children: [
-                    item.imageUrl != null 
-                        ? Image.network(
-                            item.imageUrl!, 
-                            fit: BoxFit.cover,
-                             errorBuilder: (context, error, stackTrace) => _PlaceholderCover(type: item.type),
-                          )
-                        : _PlaceholderCover(type: item.type),
-                    
-                    if (item.type == LibraryItemType.audio)
-                      Center(
-                        child: Container(
-                          padding: const EdgeInsets.all(8),
+            // Cover Image Background
+            Positioned.fill(
+              bottom: 40, // Leave space for the info card overlap
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(20),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      item.imageUrl != null 
+                          ? Image.network(
+                              item.imageUrl!, 
+                              fit: BoxFit.cover,
+                               errorBuilder: (context, error, stackTrace) => _PlaceholderCover(type: item.type),
+                            )
+                          : _PlaceholderCover(type: item.type),
+                      
+                      // Dark gradient overlay
+                      if (item.type == LibraryItemType.audio || isAdmin)
+                        Container(
                           decoration: BoxDecoration(
-                            color: Colors.black.withAlpha(100),
-                            shape: BoxShape.circle,
+                            gradient: LinearGradient(
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter,
+                              colors: [
+                                Colors.black.withAlpha(80),
+                                Colors.transparent,
+                                Colors.transparent,
+                                Colors.black.withAlpha(40),
+                              ],
+                            ),
                           ),
-                          child: const Icon(Icons.play_arrow, color: Colors.white),
                         ),
-                      ),
 
-                    if (isAdmin)
-                      Positioned(
-                        top: 8,
-                        right: 8,
-                        child: Row(
-                          children: [
-                            _AdminIcon(
-                              icon: Icons.edit,
-                              color: Colors.blue,
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => AdminUploadBookScreen(
-                                      book: AdminBook(
-                                        id: item.id,
-                                        title: item.title,
-                                        author: item.author,
-                                        description: item.description,
-                                        categoryId: item.categoryId,
-                                        coverUrl: item.imageUrl,
-                                        fileUrl: item.fileUrl,
-                                        metadata: null, // item.metadata is String?, but AdminBook expects Map or null
+                      if (item.type == LibraryItemType.audio)
+                        Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(
+                              color: Colors.white.withAlpha(40),
+                              shape: BoxShape.circle,
+                              border: Border.all(color: Colors.white.withAlpha(100), width: 1),
+                            ),
+                            child: const Icon(Icons.play_arrow, color: Colors.white, size: 32),
+                          ),
+                        ),
+
+                      if (isAdmin)
+                        Positioned(
+                          top: 8,
+                          right: 8,
+                          child: Row(
+                            children: [
+                              _AdminIcon(
+                                icon: Icons.edit,
+                                color: Colors.blue,
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => AdminUploadBookScreen(
+                                        book: AdminBook(
+                                          id: item.id,
+                                          title: item.title,
+                                          author: item.author,
+                                          description: item.description,
+                                          categoryId: item.categoryId,
+                                          coverUrl: item.imageUrl,
+                                          fileUrl: item.fileUrl,
+                                          metadata: null,
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                );
-                              },
-                            ),
-                            const SizedBox(width: 8),
-                            _AdminIcon(
-                              icon: Icons.delete,
-                              color: Colors.red,
-                              onTap: () => _confirmDelete(context, ref),
-                            ),
-                          ],
+                                  );
+                                },
+                              ),
+                              const SizedBox(width: 8),
+                              _AdminIcon(
+                                icon: Icons.delete,
+                                color: Colors.red,
+                                onTap: () => _confirmDelete(context, ref),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
             
-            // Info
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                   Text(
-                    item.type == LibraryItemType.audio ? 'AUDIO' : 'KÖNYV',
-                    style: GoogleFonts.outfit(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                      color: item.type == LibraryItemType.audio ? GardenPalette.leafyGreen : GardenPalette.leafyGreen,
-                      letterSpacing: 1.2,
+            // Overlapping Info Card
+            Positioned(
+              bottom: 0,
+              left: 12,
+              right: 12,
+              child: Container(
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(30),
+                      blurRadius: 12,
+                      offset: const Offset(0, 6),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    item.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.playfairDisplay(
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold,
-                      color: GardenPalette.white,
-                      height: 1.2,
+                  ],
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      item.type == LibraryItemType.audio ? 'AUDIO' : 'KÖNYV',
+                      style: GoogleFonts.outfit(
+                        fontSize: 9,
+                        fontWeight: FontWeight.bold,
+                        color: GardenPalette.leafyGreen,
+                        letterSpacing: 1.2,
+                      ),
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                   Text(
-                    item.author,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: GoogleFonts.outfit(
-                      fontSize: 12,
-                      color: GardenPalette.white.withAlpha(150),
+                    const SizedBox(height: 4),
+                    Text(
+                      item.title,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.playfairDisplay(
+                        fontSize: 13,
+                        fontWeight: FontWeight.bold,
+                        color: GardenPalette.nearBlack,
+                        height: 1.1,
+                      ),
                     ),
-                  ),
-                ],
+                    const SizedBox(height: 4),
+                    Text(
+                      item.author,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.outfit(
+                        fontSize: 11,
+                        color: GardenPalette.charcoal,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
@@ -191,7 +249,7 @@ class LibraryItemCard extends ConsumerWidget {
           TextButton(
             onPressed: () async {
               await ref.read(adminRepositoryProvider).deleteBook(item.id);
-              ref.invalidate(libraryCatalogProvider);
+              await ref.read(libraryServiceProvider).removeBook(item.id);
               if (context.mounted) Navigator.pop(context);
             },
             child: const Text('Törlés', style: TextStyle(color: Colors.red)),

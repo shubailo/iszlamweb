@@ -13,6 +13,15 @@ final mosqueListProvider = FutureProvider<List<Mosque>>((ref) async {
   return response.map((json) => Mosque.fromJson(json)).toList();
 });
 
+final mosqueByIdProvider = FutureProvider.family<Mosque?, String>((ref, id) async {
+  final mosques = await ref.watch(mosqueListProvider.future);
+  try {
+    return mosques.firstWhere((m) => m.id == id);
+  } catch (_) {
+    return null;
+  }
+});
+
 final selectedMosqueIdProvider = NotifierProvider<SelectedMosqueIdNotifier, String?>(SelectedMosqueIdNotifier.new);
 
 class SelectedMosqueIdNotifier extends Notifier<String?> {

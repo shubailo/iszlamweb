@@ -8,6 +8,7 @@ import '../models/announcement.dart';
 import '../../admin_tools/screens/quick_post_screen.dart';
 import 'events_list_screen.dart';
 import 'groups_list_screen.dart';
+import 'mosque_map_screen.dart';
 
 import '../../auth/widgets/community_auth_guard.dart';
 
@@ -52,7 +53,17 @@ class CommunityFeedScreen extends ConsumerWidget {
               title: const Text(H.communityFeed),
               actions: [
                 IconButton(
-                  icon: const Icon(Icons.event),
+                  icon: const Icon(Icons.map_outlined),
+                  tooltip: 'Mecsetkereső',
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MosqueMapScreen()),
+                    );
+                  },
+                ),
+                IconButton(
+                  icon: const Icon(Icons.calendar_today),
                   tooltip: 'Events',
                   onPressed: () {
                     Navigator.push(

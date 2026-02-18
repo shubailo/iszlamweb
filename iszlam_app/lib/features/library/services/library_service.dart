@@ -1,11 +1,10 @@
-
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/book.dart';
 import '../models/reading_progress.dart';
 
-final libraryServiceProvider = Provider((ref) => LibraryService());
+// LibraryService is now a wrapper around Hive boxes and Supabase.
+// The provider is moved to library_provider.dart to avoid duplication.
 
 class LibraryService {
   static const String _booksBoxName = 'library_books';
@@ -36,20 +35,29 @@ class LibraryService {
   Future<void> syncBooks() async {
     try {
       final List<dynamic> data = await _supabase.from('books').select().order('title');
+      
+      // Clear or intelligently merge. For catalog, we usually overwrite with source of truth.
+      // But we must NOT lose filePath if the book is downloaded.
       for (final item in data) {
-        final book = Book.fromSupabase(item);
-        // Only update if not exists or if we want to overwrite. 
-        // For now, simpler to just overwrite metadata, keeping local filePath if user downloaded it?
-        // Actually, if we overwrite, we lose 'filePath' if we don't merge.
-        // Logic: if local exists, keep its filePath and isLocal=true (if downloaded).
-        // But here we are syncing the CATALOG.
-        // Let's just put it. The Book model has filePath='' for remote.
-        // If user downloaded it, we should have a separate logic or field 'localPath'.
-        // For Phase 2 MVP, just listing them is enough.
-        await _booksBox.put(book.id, book.toJson());
+        final onlineBook = Book.fromSupabase(item);
+        final localData = _booksBox.get(onlineBook.id);
+        
+        if (localData != null) {
+          final localBook = Book.fromJson(Map<String, dynamic>.from(localData));
+          // Preserve local file path if it exists
+          final mergedBook = onlineBook.copyWith(
+            filePath: localBook.filePath,
+            isLocal: localBook.isLocal,
+            isFavorite: localBook.isFavorite,
+          );
+          await _booksBox.put(mergedBook.id, mergedBook.toJson());
+        } else {
+          await _booksBox.put(onlineBook.id, onlineBook.toJson());
+        }
       }
     } catch (e) {
-      // debugPrint('Sync failed: $e');
+      // ignore: avoid_print
+      print('Library sync failed: $e');
     }
   }
 

@@ -12,6 +12,9 @@ class Mosque {
   final String? imageUrl;
   final CommunityPrivacyType privacyType;
   final MosqueTiming? timing;
+  final String? roomKey;
+  final double? latitude;
+  final double? longitude;
 
   const Mosque({
     required this.id,
@@ -22,6 +25,9 @@ class Mosque {
     this.imageUrl,
     this.privacyType = CommunityPrivacyType.public,
     this.timing,
+    this.roomKey,
+    this.latitude,
+    this.longitude,
   });
 
   factory Mosque.fromJson(Map<String, dynamic> json) {
@@ -37,6 +43,9 @@ class Mosque {
         orElse: () => CommunityPrivacyType.public,
       ),
       timing: json['timing'] != null ? MosqueTiming.fromJson(json['timing']) : null,
+      roomKey: json['room_key'],
+      latitude: json['latitude']?.toDouble(),
+      longitude: json['longitude']?.toDouble(),
     );
   }
 
@@ -50,6 +59,9 @@ class Mosque {
       'image_url': imageUrl,
       'privacy_type': privacyType.name,
       'timing': timing?.toJson(),
+      'room_key': roomKey,
+      'latitude': latitude,
+      'longitude': longitude,
     };
   }
 }

@@ -1,0 +1,28 @@
+﻿Analyzing iszlam_app...
+
+  error - lib\features\community\services\chat_service.dart:5:8 - Target of URI doesn't exist: '../../auth/services/encryption_service.dart'. Try creating the file referenced by the URI, or try using a URI for a file that does exist. - uri_does_not_exist
+  error - lib\features\community\services\chat_service.dart:22:40 - Undefined name 'encryptionServiceProvider'. Try correcting the name to one that is defined, or defining the name. - undefined_identifier
+  error - lib\features\community\services\chat_service.dart:49:34 - Undefined name 'encryptionServiceProvider'. Try correcting the name to one that is defined, or defining the name. - undefined_identifier
+  error - lib\features\library\widgets\library_item_card.dart:138:31 - The named parameter 'onTap' isn't defined. Try correcting the name to an existing named parameter's name, or defining a named parameter with the name 'onTap'. - undefined_named_parameter
+  error - lib\features\library\widgets\library_item_card.dart:139:29 - Expected to find ';'. - expected_token
+  error - lib\features\library\widgets\library_item_card.dart:139:30 - Expected an identifier. - missing_identifier
+  error - lib\features\library\widgets\library_item_card.dart:139:30 - Unexpected text ';'. Try removing the text. - unexpected_token
+  error - lib\features\library\widgets\library_item_card.dart:140:27 - Expected to find ')'. - expected_token
+  error - lib\features\library\widgets\library_item_card.dart:140:27 - Expected to find '}'. - expected_token
+  error - lib\features\library\widgets\library_item_card.dart:149:13 - Too many positional arguments: 0 expected, but 1 found. Try removing the extra positional arguments, or specifying the name for named arguments. - extra_positional_arguments_could_be_named
+  error - lib\features\library\widgets\library_item_card.dart:188:11 - Expected to find ')'. - expected_token
+  error - lib\features\worship\screens\sanctuary_screen.dart:77:1 - Expected a method, getter, setter or operator declaration. This appears to be incomplete code. Try removing it or completing it. - expected_executable
+warning - lib\features\admin_tools\screens\admin_add_mosque_screen.dart:7:8 - Unused import: '../../community/models/mosque.dart'. Try removing the import directive. - unused_import
+warning - lib\features\worship\screens\prayer_times_screen.dart:20:12 - The value of the field '_countdown' isn't used. Try removing the field, or using it. - unused_field
+warning - lib\features\worship\screens\sanctuary_screen.dart:14:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+warning - lib\features\worship\screens\sanctuary_screen.dart:15:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+warning - lib\features\worship\screens\sanctuary_screen.dart:17:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+warning - lib\features\worship\screens\sanctuary_screen.dart:18:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+warning - lib\features\worship\screens\sanctuary_screen.dart:19:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+warning - lib\features\worship\screens\sanctuary_screen.dart:20:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+warning - lib\features\worship\screens\sanctuary_screen.dart:21:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+warning - lib\features\worship\screens\sanctuary_screen.dart:22:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+warning - lib\features\worship\screens\sanctuary_screen.dart:23:8 - Duplicate import. Try removing all but one import of the library. - duplicate_import
+   info - lib\features\admin_tools\screens\admin_add_mosque_screen.dart:66:28 - Don't use 'BuildContext's across async gaps. Try rewriting the code to not use the 'BuildContext', or guard the use with a 'mounted' check. - use_build_context_synchronously
+
+24 issues found.

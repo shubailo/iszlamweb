@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-enum WorshipView { sanctuary, quran, duas, qibla, tasbih, names99 }
+enum WorshipView { sanctuary, prayerTimes, quran, duas, qibla, tasbih, names99 }
 
 class WorshipViewNotifier extends Notifier<WorshipView> {
   @override

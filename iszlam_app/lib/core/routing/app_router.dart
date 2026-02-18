@@ -28,7 +28,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
   final hasSeenOnboarding = ref.read(onboardingSeenProvider);
 
   return GoRouter(
-    initialLocation: hasSeenOnboarding ? '/' : '/onboarding',
+    initialLocation: hasSeenOnboarding ? '/community' : '/onboarding',
 
     redirect: (context, state) {
       final isLoggedIn = Supabase.instance.client.auth.currentUser != null;

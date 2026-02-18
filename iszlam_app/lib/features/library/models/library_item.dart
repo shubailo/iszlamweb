@@ -30,8 +30,9 @@ class LibraryItem {
   final String mediaUrl;
   final String? metadata;
   final DateTime? date;
-  final String? categoryId; // UUID or Slug
-  final String? fileUrl; // Extra field specifically for cloud file path
+  final String? categoryId;
+  final String? fileUrl;
+  final String? epubUrl;
 
   const LibraryItem({
     required this.id,
@@ -45,5 +46,6 @@ class LibraryItem {
     this.date,
     this.categoryId,
     this.fileUrl,
+    this.epubUrl,
   });
 }

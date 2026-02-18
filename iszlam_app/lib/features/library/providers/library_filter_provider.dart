@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/library_item.dart';
-import '../services/library_service.dart';
+import 'package:iszlamweb_app/features/library/providers/library_provider.dart';
 
 class LibraryFilterState {
   final String searchQuery;
@@ -81,30 +81,35 @@ final filteredLibraryItemsProvider = Provider<List<LibraryItem>>((ref) {
 });
 
 final libraryCatalogProvider = Provider<List<LibraryItem>>((ref) {
-  final libraryService = ref.watch(libraryServiceProvider);
-  final books = libraryService.getAllBooks();
-
-  final bookItems = books.map((book) {
-    return LibraryItem(
-      id: book.id,
-      title: book.title,
-      author: book.author,
-      description: 'Book added on ${book.addedAt.toString().split(' ')[0]}',
-      type: LibraryItemType.book,
-      mediaUrl: book.isLocal ? book.filePath : (book.downloadUrl ?? ''),
-      categoryId: book.categoryId, // Now using the String/UUID from Book model
-      metadata: book.format.toUpperCase(),
-      imageUrl: book.coverPath,
-    );
-  }).toList();
-
-  // Combine with mock Khutbas for now until Khutba service is ready
-  final mockKhutbas = _mockCatalog.where((i) => i.type == LibraryItemType.audio).toList();
+  final booksAsync = ref.watch(libraryBooksStreamProvider);
   
-  return [...bookItems, ...mockKhutbas];
+  return booksAsync.when(
+    data: (books) {
+      final bookItems = books.map((book) {
+        return LibraryItem(
+          id: book.id,
+          title: book.title,
+          author: book.author,
+          description: 'Book added on ${book.addedAt.toString().split(' ')[0]}',
+          type: LibraryItemType.book,
+          mediaUrl: book.isLocal ? book.filePath : (book.downloadUrl ?? ''),
+          categoryId: book.categoryId,
+          metadata: book.format.toUpperCase(),
+          imageUrl: book.coverPath,
+          fileUrl: book.downloadUrl,
+          epubUrl: book.epubUrl,
+        );
+      }).toList();
+
+      final mockKhutbas = libraryMockCatalog.where((i) => i.type == LibraryItemType.audio).toList();
+      return [...bookItems, ...mockKhutbas];
+    },
+    loading: () => [], // Show empty while loading initial sync? 
+    error: (e, s) => [],
+  );
 });
 
-const _mockCatalog = <LibraryItem>[
+const libraryMockCatalog = <LibraryItem>[
   LibraryItem(
     id: 'b1',
     title: 'Az Iszlám alapjai',

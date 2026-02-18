@@ -42,7 +42,8 @@ class AdminRepository {
     required String author,
     required String? description,
     String? categoryId,
-    required String fileUrl,
+    String? fileUrl,
+    String? epubUrl,
     required String? coverUrl,
     required Map<String, dynamic> metadata,
   }) async {
@@ -52,6 +53,7 @@ class AdminRepository {
       'description': description,
       'category_id': categoryId,
       'file_url': fileUrl,
+      'epub_url': epubUrl,
       'cover_url': coverUrl,
       'metadata': metadata,
       'created_by': _supabase.auth.currentUser?.id,
@@ -215,6 +217,25 @@ class AdminRepository {
 
   Future<void> deleteDua(String id) async {
     await _supabase.from('duas').delete().eq('id', id);
+  }
+
+  // --- Mosque Methods ---
+  
+  Future<void> createMosque(Map<String, dynamic> data) async {
+    await _supabase.from('mosques').insert(data);
+  }
+
+  Future<void> updateMosque(String id, Map<String, dynamic> data) async {
+    await _supabase.from('mosques').update(data).eq('id', id);
+  }
+
+  Future<void> deleteMosque(String id) async {
+    await _supabase.from('mosques').delete().eq('id', id);
+  }
+
+  Future<List<AdminMosque>> getMosques() async {
+    final data = await _supabase.from('mosques').select().order('name');
+    return data.map((e) => AdminMosque.fromJson(e)).toList();
   }
 }
 

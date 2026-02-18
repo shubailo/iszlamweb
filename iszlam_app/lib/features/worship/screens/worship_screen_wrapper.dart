@@ -7,6 +7,7 @@ import '../widgets/worship_sidebar.dart';
 import '../../islamic_tools/screens/asmaul_husna_screen.dart';
 import '../../islamic_tools/screens/tasbih_screen.dart';
 import 'sanctuary_screen.dart';
+import 'prayer_times_screen.dart';
 import 'azkar_categories_screen.dart';
 import '../../quran/screens/quran_screen.dart';
 import '../../islamic_tools/screens/qibla_screen.dart';
@@ -45,6 +46,8 @@ class WorshipScreenWrapper extends ConsumerWidget {
     switch (view) {
       case WorshipView.sanctuary:
         return const SanctuaryScreen();
+      case WorshipView.prayerTimes:
+        return const PrayerTimesScreen();
       case WorshipView.quran:
         return const QuranScreen();
       case WorshipView.duas:

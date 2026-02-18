@@ -8,6 +8,7 @@ import '../../../core/theme/garden_palette.dart';
 import '../../../core/extensions/snackbar_helpers.dart';
 import '../../../core/widgets/garden_input_decoration.dart';
 import '../models/admin_models.dart';
+import 'package:iszlamweb_app/features/library/providers/library_provider.dart';
 import '../services/admin_repository.dart';
 
 class AdminUploadBookScreen extends ConsumerStatefulWidget {
@@ -31,6 +32,9 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
   
   Uint8List? _bookFileBytes;
   String? _bookFileName;
+  
+  Uint8List? _epubFileBytes;
+  String? _epubFileName;
   
   Uint8List? _coverFileBytes;
   String? _coverFileName;
@@ -81,7 +85,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
   Future<void> _pickBookFile() async {
     final result = await FilePicker.platform.pickFiles(
       type: FileType.custom,
-      allowedExtensions: ['pdf', 'epub'],
+      allowedExtensions: ['pdf'],
       withData: true,
     );
 
@@ -89,6 +93,21 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
       setState(() {
         _bookFileBytes = result.files.first.bytes;
         _bookFileName = result.files.first.name;
+      });
+    }
+  }
+
+  Future<void> _pickEpubFile() async {
+    final result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: ['epub'],
+      withData: true,
+    );
+
+    if (result != null) {
+      setState(() {
+        _epubFileBytes = result.files.first.bytes;
+        _epubFileName = result.files.first.name;
       });
     }
   }
@@ -121,6 +140,7 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
       final repo = ref.read(adminRepositoryProvider);
       final timestamp = DateTime.now().millisecondsSinceEpoch;
 
+      // Upload PDF
       String? bookUrl = widget.book?.fileUrl;
       if (_bookFileBytes != null) {
         final safeBookName = '${timestamp}_${_bookFileName!.replaceAll(RegExp(r'[^a-zA-Z0-9\.]'), '_')}';
@@ -130,6 +150,23 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
           bytes: _bookFileBytes!,
           contentType: 'application/pdf',
         );
+      }
+
+      // Upload EPUB
+      String? epubUrl = widget.book?.epubUrl;
+      if (_epubFileBytes != null) {
+        final safeEpubName = '${timestamp}_${_epubFileName!.replaceAll(RegExp(r'[^a-zA-Z0-9\.]'), '_')}';
+        epubUrl = await repo.uploadFile(
+          bucket: 'library_files',
+          path: safeEpubName,
+          bytes: _epubFileBytes!,
+          contentType: 'application/epub+zip',
+        );
+      }
+
+      // At least one file format is required
+      if ((bookUrl == null || bookUrl.isEmpty) && (epubUrl == null || epubUrl.isEmpty)) {
+        throw Exception('At least a PDF or EPUB file is required.');
       }
 
       String? coverUrl = widget.book?.coverUrl;
@@ -147,12 +184,13 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
         'title': _titleController.text,
         'author': _authorController.text,
         'description': _descController.text,
-        'category_id': _selectedCategoryId, // Now nullable
+        'category_id': _selectedCategoryId,
         'file_url': bookUrl,
+        'epub_url': epubUrl,
         'cover_url': coverUrl,
         'metadata': {
           'pages': _pagesController.text,
-          'format': _bookFileName != null ? _bookFileName!.split('.').last : ((widget.book?.metadata as Map<String, dynamic>?)?['format'] ?? 'pdf'),
+          'format': epubUrl != null ? 'epub' : 'pdf',
         },
       };
 
@@ -164,7 +202,8 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
           author: bookData['author'] as String,
           description: bookData['description'] as String?,
           categoryId: bookData['category_id'] as String?,
-          fileUrl: bookData['file_url'] as String,
+          fileUrl: bookData['file_url'] as String?,
+          epubUrl: bookData['epub_url'] as String?,
           coverUrl: bookData['cover_url'] as String?,
           metadata: bookData['metadata'] as Map<String, dynamic>,
         );
@@ -173,6 +212,8 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
       if (mounted) {
         context.showSuccess(widget.book != null ? 'Book updated!' : 'Book uploaded!');
         ref.invalidate(adminBooksProvider);
+        // Explicitly trigger library sync so it shows up in the user catalog immediately
+        ref.read(libraryServiceProvider).syncBooks();
         context.pop();
       }
     } catch (e) {
@@ -257,10 +298,17 @@ class _AdminUploadBookScreenState extends ConsumerState<AdminUploadBookScreen> {
 
               // File Pickers
               _FilePickerCard(
-                label: 'Book File (PDF/EPUB)',
+                label: 'PDF File',
                 fileName: _bookFileName,
                 onPick: _pickBookFile,
-                icon: Icons.upload_file,
+                icon: Icons.picture_as_pdf,
+              ),
+              const SizedBox(height: 12),
+              _FilePickerCard(
+                label: 'EPUB File (Flowing Reader)',
+                fileName: _epubFileName,
+                onPick: _pickEpubFile,
+                icon: Icons.auto_stories,
               ),
               const SizedBox(height: 12),
               _FilePickerCard(

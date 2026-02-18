@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/group_provider.dart';
 import '../models/mosque_group.dart';
 import '../models/mosque.dart';
+import 'group_chat_screen.dart';
+import '../providers/mosque_provider.dart';
 import '../../../core/theme/garden_palette.dart';
 
 class GroupsListScreen extends ConsumerWidget {
@@ -91,17 +93,42 @@ class GroupCard extends StatelessWidget {
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(fontStyle: FontStyle.italic),
                 ),
                 const Spacer(),
-                FilledButton.tonal(
-                  onPressed: () {
-                    // STUB: Join Logic
+                Consumer(
+                  builder: (context, ref, child) {
+                    final mosqueAsync = ref.watch(mosqueByIdProvider(group.mosqueId));
+                    return mosqueAsync.maybeWhen(
+                      data: (mosque) => _ChatButton(group: group, roomKey: mosque?.roomKey),
+                      orElse: () => _ChatButton(group: group, roomKey: null),
+                    );
                   },
-                  child: const Text('Join'),
                 ),
               ],
             ),
           ],
         ),
       ),
+    );
+  }
+}
+
+class _ChatButton extends StatelessWidget {
+  final MosqueGroup group;
+  final String? roomKey;
+
+  const _ChatButton({required this.group, this.roomKey});
+
+  @override
+  Widget build(BuildContext context) {
+    return FilledButton.tonal(
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => GroupChatScreen(group: group, roomKey: roomKey),
+          ),
+        );
+      },
+      child: const Text('Üzenet'),
     );
   }
 }
