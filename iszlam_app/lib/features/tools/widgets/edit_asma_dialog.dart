@@ -129,7 +129,7 @@ class _EditAsmaDialogState extends ConsumerState<EditAsmaDialog> {
                         controller: _arabicController,
                         label: 'Arabul',
                         textDirection: TextDirection.rtl,
-                        style: GoogleFonts.amiri(fontSize: 20),
+                        style: GoogleFonts.lateef(fontSize: 28),
                         validator: (v) => v!.isEmpty ? 'Kötelező' : null,
                       ),
                     ),

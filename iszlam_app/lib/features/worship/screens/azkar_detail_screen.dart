@@ -202,10 +202,9 @@ class _AzkarPageViewState extends ConsumerState<_AzkarPageView> {
                               children: [
                                   Text(
                                     item.vocalizedText ?? item.arabicText,
-                                    style: const TextStyle(
-                                      fontSize: 24,
-                                      fontFamily: 'Hafs',
-                                      height: 2.0,
+                                    style: GoogleFonts.lateef(
+                                      fontSize: 32,
+                                      height: 1.4,
                                       color: GardenPalette.nearBlack,
                                     ),
                                     textAlign: TextAlign.center,

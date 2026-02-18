@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
-
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/theme/garden_palette.dart';
+import 'package:iszlamweb_app/features/community/models/mosque.dart';
 import '../providers/mosque_provider.dart';
 import '../providers/group_provider.dart';
+import 'package:iszlamweb_app/features/auth/auth_service.dart';
+import 'create_community_dialog.dart';
+import 'create_group_dialog.dart';
 
 /// Reddit-style sidebar listing joined communities.
 /// Used as `Scaffold.drawer` on mobile, permanent panel on desktop.
@@ -18,6 +21,7 @@ class CommunitySidebar extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedId = ref.watch(selectedMosqueIdProvider);
     final mosquesAsync = ref.watch(mosqueListProvider);
+    final isAdmin = ref.watch(isAdminProvider).value ?? false;
 
     return Container(
       width: 260,
@@ -61,15 +65,33 @@ class CommunitySidebar extends ConsumerWidget {
 
                     // Mosques section
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 6),
-                      child: Text(
-                        'MECSETEK',
-                        style: GoogleFonts.outfit(
-                          fontSize: 10,
-                          fontWeight: FontWeight.w800,
-                          letterSpacing: 1.5,
-                          color: GardenPalette.darkGrey,
-                        ),
+                      padding: const EdgeInsets.fromLTRB(20, 12, 8, 6),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'MECSETEK',
+                            style: GoogleFonts.outfit(
+                              fontSize: 10,
+                              fontWeight: FontWeight.w800,
+                              letterSpacing: 1.5,
+                              color: GardenPalette.darkGrey,
+                            ),
+                          ),
+                          if (isAdmin)
+                            IconButton(
+                              icon: const Icon(Icons.add_circle_outline, size: 16),
+                              color: GardenPalette.emeraldTeal,
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (_) => const CreateCommunityDialog(),
+                                );
+                              },
+                            ),
+                        ],
                       ),
                     ),
 
@@ -117,15 +139,33 @@ class CommunitySidebar extends ConsumerWidget {
                     if (selectedId != null) ...[
                       const _SidebarDivider(),
                       Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 12, 20, 6),
-                        child: Text(
-                          'CSOPORTOK',
-                          style: GoogleFonts.outfit(
-                            fontSize: 10,
-                            fontWeight: FontWeight.w800,
-                            letterSpacing: 1.5,
-                            color: GardenPalette.darkGrey,
-                          ),
+                        padding: const EdgeInsets.fromLTRB(20, 12, 8, 6),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'CSOPORTOK',
+                              style: GoogleFonts.outfit(
+                                fontSize: 10,
+                                fontWeight: FontWeight.w800,
+                                letterSpacing: 1.5,
+                                color: GardenPalette.darkGrey,
+                              ),
+                            ),
+                            if (isAdmin)
+                              IconButton(
+                                icon: const Icon(Icons.add_circle_outline, size: 16),
+                                color: GardenPalette.emeraldTeal,
+                                padding: EdgeInsets.zero,
+                                constraints: const BoxConstraints(),
+                                onPressed: () {
+                                  showDialog(
+                                    context: context,
+                                    builder: (_) => CreateGroupDialog(mosqueId: selectedId),
+                                  );
+                                },
+                              ),
+                          ],
                         ),
                       ),
                       Consumer(
@@ -136,7 +176,7 @@ class CommunitySidebar extends ConsumerWidget {
                             data: (groups) => Column(
                               children: groups
                                   .map((g) => _SidebarItem(
-                                        icon: g.isPrivate
+                                        icon: g.privacyType == CommunityPrivacyType.private
                                             ? Icons.lock_outline
                                             : Icons.group_outlined,
                                         label: g.name,

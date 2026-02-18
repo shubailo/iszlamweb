@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/group_provider.dart';
 import '../models/mosque_group.dart';
+import '../models/mosque.dart';
+import '../../../core/theme/garden_palette.dart';
 
 class GroupsListScreen extends ConsumerWidget {
   final String mosqueId;
@@ -72,8 +74,9 @@ class GroupCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (group.isPrivate)
-                  const Icon(Icons.lock_outline, size: 16, color: Colors.grey),
+                const Spacer(),
+                if (group.privacyType == CommunityPrivacyType.private)
+                  const Icon(Icons.lock, size: 16, color: GardenPalette.grey),
               ],
             ),
             const SizedBox(height: 12),

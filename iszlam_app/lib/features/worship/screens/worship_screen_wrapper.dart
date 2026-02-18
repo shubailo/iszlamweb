@@ -21,6 +21,8 @@ class WorshipScreenWrapper extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isDesktop = MediaQuery.of(context).size.width > 800;
     final selectedView = ref.watch(worshipViewProvider);
+    // Mobile & Desktop: show the selected view content
+    final content = _buildContent(selectedView, context, ref);
 
     if (isDesktop) {
       return Scaffold(
@@ -29,14 +31,14 @@ class WorshipScreenWrapper extends ConsumerWidget {
           children: [
             const WorshipSidebar(),
             Container(width: 1, color: GardenPalette.lightGrey),
-            Expanded(child: _buildContent(selectedView, context, ref)),
+            Expanded(child: content),
           ],
         ),
       );
     }
 
-    // Mobile: just show the SanctuaryScreen (tools navigate via push)
-    return const SanctuaryScreen();
+    // Mobile: return the content (which should handle its own Scaffold/Drawer)
+    return content;
   }
 
   Widget _buildContent(WorshipView view, BuildContext context, WidgetRef ref) {

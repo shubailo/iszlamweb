@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../../../core/theme/garden_palette.dart';
+import '../../worship/widgets/worship_sidebar.dart';
 
 class TasbihScreen extends StatefulWidget {
   const TasbihScreen({super.key});
@@ -98,8 +99,11 @@ class _TasbihScreenState extends State<TasbihScreen>
   Widget build(BuildContext context) {
     final progress = _goal > 0 ? _count / _goal : 0.0;
 
+    final isDesktop = MediaQuery.of(context).size.width > 800;
+
     return Scaffold(
       backgroundColor: GardenPalette.white,
+      drawer: !isDesktop ? const WorshipSidebar() : null,
       body: SafeArea(
         child: Column(
           children: [
@@ -109,7 +113,15 @@ class _TasbihScreenState extends State<TasbihScreen>
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const SizedBox(width: 48), // Spacer to center the title
+                  if (!isDesktop)
+                    Builder(
+                      builder: (context) => IconButton(
+                        icon: const Icon(Icons.menu, color: GardenPalette.leafyGreen),
+                        onPressed: () => Scaffold.of(context).openDrawer(),
+                      ),
+                    )
+                  else
+                    const SizedBox(width: 48), // Spacer to center the title
                   Text(
                     'TASBIH',
                     style: GoogleFonts.playfairDisplay(
@@ -164,8 +176,8 @@ class _TasbihScreenState extends State<TasbihScreen>
                   children: [
                     Text(
                       _dhikrList[_selectedDhikr],
-                      style: GoogleFonts.amiri(
-                        fontSize: 36,
+                      style: GoogleFonts.lateef(
+                        fontSize: 48,
                         color: GardenPalette.leafyGreen,
                         fontWeight: FontWeight.bold,
                       ),

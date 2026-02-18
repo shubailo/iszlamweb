@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
 import '../providers/quran_provider.dart';
 import '../models/ayah.dart';
@@ -119,14 +120,13 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
           color: GardenPalette.gildedGold.withValues(alpha: 0.2),
         ),
       ),
-      child: const Center(
+      child: Center(
         child: Text(
           'بِسۡمِ ٱللَّهِ ٱلرَّحۡمَٰنِ ٱلرَّحِيمِ',
-          style: TextStyle(
+          style: GoogleFonts.lateef(
             color: GardenPalette.gildedGold,
-            fontSize: 26,
-            fontFamily: 'Hafs',
-            height: 2.0,
+            fontSize: 36,
+            height: 1.4,
           ),
           textDirection: TextDirection.rtl,
         ),
@@ -175,11 +175,10 @@ class _SurahDetailScreenState extends ConsumerState<SurahDetailScreen> {
           // Arabic text
           Text(
             ayah.text,
-            style: const TextStyle(
+            style: GoogleFonts.lateef(
               color: GardenPalette.ivory,
-              fontSize: 24,
-              fontFamily: 'Hafs',
-              height: 2.2,
+              fontSize: 32,
+              height: 1.5,
             ),
             textDirection: TextDirection.rtl,
             textAlign: TextAlign.right,

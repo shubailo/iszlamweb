@@ -12,6 +12,8 @@ import '../providers/event_provider.dart';
 import '../providers/community_provider.dart';
 import '../screens/post_detail_screen.dart';
 import 'community_post_card.dart';
+import 'package:iszlamweb_app/features/auth/auth_service.dart';
+import 'create_post_bar.dart';
 
 class MosqueFeed extends ConsumerWidget {
   final String mosqueId;
@@ -22,9 +24,14 @@ class MosqueFeed extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final communityPostsAsync = ref.watch(communityPostsProvider(mosqueId));
     final eventsAsync = ref.watch(mosqueEventsProvider(mosqueId));
+    final isAdmin = ref.watch(isAdminProvider).value ?? false;
 
     return SliverList(
       delegate: SliverChildListDelegate([
+        // Admin: Create Post Bar
+        if (isAdmin) 
+          CreatePostBar(mosqueId: mosqueId),
+        
         // Events for this mosque
         const GardenSectionHeader(
           label: H.events,

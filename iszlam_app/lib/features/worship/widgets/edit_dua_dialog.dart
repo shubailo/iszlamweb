@@ -119,7 +119,7 @@ class _EditDuaDialogState extends ConsumerState<EditDuaDialog> {
                   label: 'Arab szöveg',
                   maxLines: 3,
                   textDirection: TextDirection.rtl,
-                  style: GoogleFonts.amiri(fontSize: 18),
+                  style: GoogleFonts.lateef(fontSize: 28),
                   validator: (v) => v!.isEmpty ? 'Kötelező' : null,
                 ),
                 _buildTextField(
@@ -127,7 +127,7 @@ class _EditDuaDialogState extends ConsumerState<EditDuaDialog> {
                   label: 'Arab szöveg (Vokalizált)',
                   maxLines: 3,
                   textDirection: TextDirection.rtl,
-                  style: GoogleFonts.amiri(fontSize: 18),
+                  style: GoogleFonts.lateef(fontSize: 28),
                 ),
                 _buildTextField(
                   controller: _translationController,

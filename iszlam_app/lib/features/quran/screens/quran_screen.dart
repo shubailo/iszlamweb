@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../core/theme/garden_palette.dart';
 import '../providers/quran_provider.dart';
 import '../models/surah.dart';
+import '../../worship/widgets/worship_sidebar.dart';
 
 class QuranScreen extends ConsumerStatefulWidget {
   const QuranScreen({super.key});
@@ -23,6 +24,7 @@ class _QuranScreenState extends ConsumerState<QuranScreen> {
 
     return Scaffold(
       backgroundColor: GardenPalette.white,
+      drawer: !isDesktop ? const WorshipSidebar() : null,
       body: CustomScrollView(
         slivers: [
           // Light header with title + search
@@ -35,12 +37,13 @@ class _QuranScreenState extends ConsumerState<QuranScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     if (!isDesktop) ...[
-                      // Mobile: show back button + title
                       Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back, color: GardenPalette.nearBlack),
-                            onPressed: () => context.pop(),
+                          Builder(
+                            builder: (context) => IconButton(
+                              icon: const Icon(Icons.menu, color: GardenPalette.nearBlack),
+                              onPressed: () => Scaffold.of(context).openDrawer(),
+                            ),
                           ),
                           const SizedBox(width: 8),
                           Text(

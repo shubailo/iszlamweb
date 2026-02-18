@@ -1,3 +1,5 @@
+import 'mosque.dart';
+
 class MosqueGroup {
   final String id;
   final String mosqueId;
@@ -6,7 +8,9 @@ class MosqueGroup {
   final String leaderName;
   final String meetingTime;
   final String? imageUrl;
-  final bool isPrivate;
+  final CommunityPrivacyType privacyType;
+  final DateTime createdAt;
+  final DateTime updatedAt;
 
   const MosqueGroup({
     required this.id,
@@ -16,7 +20,9 @@ class MosqueGroup {
     required this.leaderName,
     required this.meetingTime,
     this.imageUrl,
-    this.isPrivate = false,
+    this.privacyType = CommunityPrivacyType.public,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
   factory MosqueGroup.fromJson(Map<String, dynamic> json) {
@@ -28,7 +34,16 @@ class MosqueGroup {
       leaderName: json['leader_name'],
       meetingTime: json['meeting_time'],
       imageUrl: json['image_url'],
-      isPrivate: json['is_private'] ?? false,
+      privacyType: CommunityPrivacyType.values.firstWhere(
+        (e) => e.name == (json['privacy_type'] ?? 'public'),
+        orElse: () => CommunityPrivacyType.public,
+      ),
+      createdAt: json['created_at'] != null 
+          ? DateTime.parse(json['created_at']) 
+          : DateTime.now(),
+      updatedAt: json['updated_at'] != null 
+          ? DateTime.parse(json['updated_at']) 
+          : DateTime.now(),
     );
   }
 
@@ -41,7 +56,9 @@ class MosqueGroup {
       'leader_name': leaderName,
       'meeting_time': meetingTime,
       'image_url': imageUrl,
-      'is_private': isPrivate,
+      'privacy_type': privacyType.name,
+      'created_at': createdAt.toIso8601String(),
+      'updated_at': updatedAt.toIso8601String(),
     };
   }
 }

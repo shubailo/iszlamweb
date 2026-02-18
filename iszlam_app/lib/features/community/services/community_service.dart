@@ -3,6 +3,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/community_post.dart';
 import '../models/community_comment.dart';
+import '../models/mosque.dart';
+import '../models/mosque_group.dart';
 import '../models/community_vote.dart';
 
 final communityServiceProvider = Provider((ref) => CommunityService());
@@ -21,8 +23,58 @@ class CommunityService {
     return response.map((json) => CommunityPost.fromJson(json)).toList();
   }
 
+
   Future<void> createPost(CommunityPost post) async {
     await _supabase.from('community_posts').insert(post.toJson());
+  }
+
+  // Admin: Communities (Mosques)
+  Future<void> createMosque(Mosque mosque) async {
+    await _supabase.from('mosques').insert(mosque.toJson());
+  }
+
+  Future<void> updateMosque(Mosque mosque) async {
+    await _supabase.from('mosques').update(mosque.toJson()).eq('id', mosque.id);
+  }
+
+  // Admin: Groups
+  Future<List<MosqueGroup>> getMosqueGroups(String mosqueId) async {
+    final List<dynamic> response = await _supabase
+        .from('mosque_groups')
+        .select()
+        .eq('mosque_id', mosqueId)
+        .order('name', ascending: true);
+    
+    return response.map((json) => MosqueGroup.fromJson(json)).toList();
+  }
+
+  Future<void> createGroup(MosqueGroup group) async {
+    await _supabase.from('mosque_groups').insert(group.toJson());
+  }
+
+  Future<void> updateGroup(MosqueGroup group) async {
+    await _supabase.from('mosque_groups').update(group.toJson()).eq('id', group.id);
+  }
+
+  // Polls
+  Future<void> votePoll(String postId, int optionIndex) async {
+    final userId = _supabase.auth.currentUser?.id;
+    if (userId == null) throw Exception('User not authenticated');
+
+    // Fetch current post to get poll state
+    final response = await _supabase
+        .from('community_posts')
+        .select('poll_votes')
+        .eq('id', postId)
+        .single();
+    
+    Map<String, dynamic> pollVotes = response['poll_votes'] ?? {};
+    int currentCount = pollVotes[optionIndex.toString()] ?? 0;
+    pollVotes[optionIndex.toString()] = currentCount + 1;
+
+    await _supabase.from('community_posts').update({
+      'poll_votes': pollVotes,
+    }).eq('id', postId);
   }
 
   // Voting

@@ -8,6 +8,7 @@ import '../providers/duas_provider.dart';
 import '../widgets/edit_dua_category_dialog.dart';
 import 'azkar_detail_screen.dart';
 import '../../admin_tools/services/admin_repository.dart';
+import '../../worship/widgets/worship_sidebar.dart';
 
 class AzkarCategoriesScreen extends ConsumerWidget {
   const AzkarCategoriesScreen({super.key});
@@ -23,6 +24,7 @@ class AzkarCategoriesScreen extends ConsumerWidget {
 
     return Scaffold(
       backgroundColor: GardenPalette.white,
+      drawer: !isDesktop ? const WorshipSidebar() : null,
       body: CustomScrollView(
         slivers: [
           // Header
@@ -38,9 +40,11 @@ class AzkarCategoriesScreen extends ConsumerWidget {
                     if (!isDesktop)
                       Row(
                         children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back, color: GardenPalette.nearBlack),
-                            onPressed: () => Navigator.of(context).pop(),
+                          Builder(
+                            builder: (context) => IconButton(
+                              icon: const Icon(Icons.menu, color: GardenPalette.nearBlack),
+                              onPressed: () => Scaffold.of(context).openDrawer(),
+                            ),
                           ),
                           const SizedBox(width: 8),
                           Text(
