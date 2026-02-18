@@ -143,7 +143,83 @@ class AdminRepository {
   Future<void> toggleAdminStatus(String userId, bool isAdmin) async {
     await _supabase.from('profiles').update({'is_admin': isAdmin}).eq('id', userId);
   }
+
+  // --- Inspiration ---
+
+  Future<List<Map<String, dynamic>>> getInspirations() async {
+    final data = await _supabase.from('daily_inspiration').select().order('created_at', ascending: false);
+    return List<Map<String, dynamic>>.from(data);
+  }
+
+  Future<void> createInspiration(Map<String, dynamic> data) async {
+    await _supabase.from('daily_inspiration').insert(data);
+  }
+
+  Future<void> updateInspiration(String id, Map<String, dynamic> data) async {
+    await _supabase.from('daily_inspiration').update(data).eq('id', id);
+  }
+
+  Future<void> deleteInspiration(String id) async {
+    await _supabase.from('daily_inspiration').delete().eq('id', id);
+  }
+
+  // --- Asmaul Husna Methods ---
+  Future<List<Map<String, dynamic>>> getAsmaulHusna() async {
+    final response = await _supabase.from('asmaul_husna').select().order('number');
+    return List<Map<String, dynamic>>.from(response);
+  }
+
+  Future<void> updateAsma(String id, Map<String, dynamic> data) async {
+    await _supabase.from('asmaul_husna').update(data).eq('id', id);
+  }
+
+  Future<void> createAsma(Map<String, dynamic> data) async {
+    await _supabase.from('asmaul_husna').insert(data);
+  }
+
+  Future<void> deleteAsma(String id) async {
+    await _supabase.from('asmaul_husna').delete().eq('id', id);
+  }
+
+  // --- Dua Methods ---
+  Future<List<Map<String, dynamic>>> getDuaCategories() async {
+    final response = await _supabase.from('dua_categories').select().order('name_hu');
+    return List<Map<String, dynamic>>.from(response);
+  }
+
+  Future<void> createDuaCategory(Map<String, dynamic> data) async {
+    await _supabase.from('dua_categories').insert(data);
+  }
+
+  Future<void> updateDuaCategory(String id, Map<String, dynamic> data) async {
+    await _supabase.from('dua_categories').update(data).eq('id', id);
+  }
+
+  Future<void> deleteDuaCategory(String id) async {
+    await _supabase.from('dua_categories').delete().eq('id', id);
+  }
+
+  Future<List<Map<String, dynamic>>> getDuas(String categoryId) async {
+    final response = await _supabase.from('duas').select().eq('category_id', categoryId).order('created_at');
+    return List<Map<String, dynamic>>.from(response);
+  }
+
+  Future<void> createDua(Map<String, dynamic> data) async {
+    await _supabase.from('duas').insert(data);
+  }
+
+  Future<void> updateDua(String id, Map<String, dynamic> data) async {
+    await _supabase.from('duas').update(data).eq('id', id);
+  }
+
+  Future<void> deleteDua(String id) async {
+    await _supabase.from('duas').delete().eq('id', id);
+  }
 }
+
+final inspirationsProvider = FutureProvider((ref) async {
+  return ref.watch(adminRepositoryProvider).getInspirations();
+});
 
 final usersProvider = FutureProvider((ref) async {
   return ref.watch(adminRepositoryProvider).getUsers();

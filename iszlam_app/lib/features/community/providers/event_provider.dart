@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../models/mosque_event.dart';
+import '../models/announcement.dart';
 
 final mosqueEventsProvider = FutureProvider.family<List<MosqueEvent>, String>((ref, mosqueId) async {
   // Simulate network delay
@@ -39,37 +40,23 @@ final mosqueEventsProvider = FutureProvider.family<List<MosqueEvent>, String>((r
   ];
 });
 
-final announcementsProvider = FutureProvider.family<List<MockAnnouncement>, String>((ref, mosqueId) async {
+final announcementsProvider = FutureProvider.family<List<Announcement>, String>((ref, mosqueId) async {
   await Future.delayed(const Duration(milliseconds: 600));
   return [
-    MockAnnouncement(
+    Announcement(
       id: '1',
+      mosqueId: mosqueId,
       title: 'Ramadán felkészülés',
       content: 'Holnap este közös előadás a Ramadánra való felkészülésről. Minden érdeklődőt szeretettel várunk!',
       createdAt: DateTime.now().subtract(const Duration(days: 1)),
       audioUrl: 'https://example.com/audio.mp3',
     ),
-     MockAnnouncement(
+    Announcement(
       id: '2',
+      mosqueId: mosqueId,
       title: 'Adománygyűjtés',
       content: 'A mecset felújítására adományokat gyűjtünk. Kérjük, támogassa közösségünket lehetőségeihez mérten.',
       createdAt: DateTime.now().subtract(const Duration(days: 3)),
     ),
   ];
 });
-
-class MockAnnouncement {
-  final String id;
-  final String title;
-  final String content;
-  final DateTime createdAt;
-  final String? audioUrl;
-
-  MockAnnouncement({
-    required this.id,
-    required this.title,
-    required this.content,
-    required this.createdAt,
-    this.audioUrl,
-  });
-}

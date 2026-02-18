@@ -7,6 +7,8 @@ import '../providers/mosque_provider.dart';
 import '../widgets/community_sidebar.dart';
 import '../widgets/discover_feed.dart';
 import '../widgets/mosque_feed.dart';
+import '../../auth/auth_service.dart';
+import 'create_post_screen.dart';
 
 /// Reddit-style Community screen.
 /// Mobile: hamburger → drawer sidebar.
@@ -44,10 +46,27 @@ class MyCommunityScreen extends ConsumerWidget {
       );
     }
 
+    final isAdminAsync = ref.watch(isAdminProvider);
+
     return Scaffold(
       backgroundColor: GardenPalette.white,
       drawer: CommunitySidebar(
         onItemTap: () => Navigator.of(context).pop(),
+      ),
+      floatingActionButton: isAdminAsync.when(
+        data: (admin) => admin && selectedId != null
+            ? FloatingActionButton(
+                backgroundColor: GardenPalette.emeraldTeal,
+                child: const Icon(Icons.add, color: Colors.white),
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => CreatePostScreen(mosqueId: selectedId),
+                  ),
+                ),
+              )
+            : null,
+        loading: () => null,
+        error: (_, _) => null,
       ),
       body: _FeedArea(title: title, showMenuButton: true),
     );

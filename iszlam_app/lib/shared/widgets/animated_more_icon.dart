@@ -26,27 +26,34 @@ class _AnimatedMoreIconState extends State<AnimatedMoreIcon>
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 800),
     );
 
     _dotAnimations = List.generate(3, (index) {
-      final start = index * 0.2;
-      final end = start + 0.6;
+      // Create a sequenced bounce that feels like Mihon's anim_more_enter
+      final start = index * 0.15;
+      final end = (start + 0.5).clamp(0.0, 1.0);
+      
       return TweenSequence<double>([
         TweenSequenceItem(
-          tween: Tween<double>(begin: 0.0, end: -4.0)
-              .chain(CurveTween(curve: Curves.easeOut)),
-          weight: 50.0,
+          tween: Tween<double>(begin: 0.0, end: -6.0)
+              .chain(CurveTween(curve: Curves.easeOutCubic)),
+          weight: 40.0,
         ),
         TweenSequenceItem(
-          tween: Tween<double>(begin: -4.0, end: 0.0)
-              .chain(CurveTween(curve: Curves.easeIn)),
-          weight: 50.0,
+          tween: Tween<double>(begin: -6.0, end: 1.0)
+              .chain(CurveTween(curve: Curves.easeInCubic)),
+          weight: 40.0,
+        ),
+        TweenSequenceItem(
+          tween: Tween<double>(begin: 1.0, end: 0.0)
+              .chain(CurveTween(curve: Curves.easeOut)),
+          weight: 20.0,
         ),
       ]).animate(
         CurvedAnimation(
           parent: _controller,
-          curve: Interval(start.clamp(0.0, 1.0), end.clamp(0.0, 1.0)),
+          curve: Interval(start, end, curve: Curves.linear),
         ),
       );
     });
@@ -93,7 +100,7 @@ class _AnimatedMoreIconState extends State<AnimatedMoreIcon>
                 child: Container(
                   width: dotSize,
                   height: dotSize,
-                  margin: const EdgeInsets.symmetric(horizontal: 1.5),
+                  margin: const EdgeInsets.symmetric(horizontal: 1.0),
                   decoration: BoxDecoration(
                     color: color,
                     shape: BoxShape.circle,

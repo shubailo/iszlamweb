@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../models/daily_content.dart';
 
 // --- Mood Provider ---
@@ -12,21 +13,30 @@ class MoodNotifier extends Notifier<String?> {
 
 final moodProvider = NotifierProvider<MoodNotifier, String?>(MoodNotifier.new);
 
-// --- Daily Content Provider ---
-// Fetches the main inspiration content for the home page.
-// Currently returns mock data, but can be connected to Supabase later.
-
 final dailyContentProvider = FutureProvider<DailyContent>((ref) async {
-  // Simulate network delay
-  await Future.delayed(const Duration(milliseconds: 500));
+  final supabase = Supabase.instance.client;
+  
+  try {
+    final response = await supabase
+        .from('daily_inspiration')
+        .select()
+        .eq('is_active', true)
+        .order('created_at', ascending: false)
+        .limit(1)
+        .maybeSingle();
 
-  // Mock Data: Rotation logic could be added here later
-  return const DailyContent(
-    id: '1',
-    type: ContentType.quran,
-    title: 'Surah Al-Inshirah (94:5-6)',
-    body: 'For indeed, with hardship [will be] ease. Indeed, with hardship [will be] ease.',
-    source: 'The Holy Quran',
-    imageUrl: null, // Placeholder to avoid asset errors
-  );
+    if (response == null) {
+      return const DailyContent(
+        id: 'fallback',
+        type: ContentType.quran,
+        title: 'Surah Al-Inshirah (94:5-6)',
+        body: 'For indeed, with hardship [will be] ease. Indeed, with hardship [will be] ease.',
+        source: 'The Holy Quran',
+      );
+    }
+
+    return DailyContent.fromJson(response);
+  } catch (e) {
+    rethrow;
+  }
 });

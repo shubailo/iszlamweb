@@ -6,13 +6,16 @@ import '../../../core/theme/garden_palette.dart';
 import '../providers/home_providers.dart';
 import 'live_prayer_countdown.dart';
 
+import 'package:hijri/hijri_calendar.dart';
+
 class DailyWisdomHero extends ConsumerWidget {
   const DailyWisdomHero({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final dailyContentAsync = ref.watch(dailyContentProvider);
-
+    final hijriDate = HijriCalendar.now();
+    final hijriString = "MF ${hijriDate.hYear}. ${hijriDate.getLongMonthName().toUpperCase()} ${hijriDate.hDay}.";
 
     return Container(
       width: double.infinity,
@@ -35,7 +38,7 @@ class DailyWisdomHero extends ConsumerWidget {
                    const Icon(Icons.calendar_month, color: GardenPalette.ivory, size: 14),
                    const SizedBox(width: 8),
                    Text(
-                     "MF 1447. SABÁN 27.", 
+                     hijriString, 
                      style: GoogleFonts.outfit(
                        color: GardenPalette.ivory,
                        fontSize: 11,

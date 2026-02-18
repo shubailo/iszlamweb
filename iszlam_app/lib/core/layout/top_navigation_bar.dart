@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import '../theme/garden_palette.dart';
 import '../localization/hungarian_strings.dart';
+import '../../shared/widgets/animated_library_icon.dart';
+import '../../shared/widgets/animated_more_icon.dart';
 
 class TopNavigationBar extends StatelessWidget {
   final StatefulNavigationShell navigationShell;
@@ -60,6 +62,13 @@ class TopNavigationBar extends StatelessWidget {
             label: H.library,
             icon: Icons.local_library,
             isSelected: navigationShell.currentIndex == 2,
+            iconWidget: AnimatedLibraryIcon(
+              isSelected: navigationShell.currentIndex == 2,
+              size: 20,
+              color: navigationShell.currentIndex == 2
+                  ? GardenPalette.emeraldTeal
+                  : GardenPalette.ivory.withValues(alpha: 0.5),
+            ),
             onTap: () => _goBranch(2),
           ),
           const SizedBox(width: 24),
@@ -67,6 +76,13 @@ class TopNavigationBar extends StatelessWidget {
             label: H.more,
             icon: Icons.menu,
             isSelected: navigationShell.currentIndex == 3,
+            iconWidget: AnimatedMoreIcon(
+              isSelected: navigationShell.currentIndex == 3,
+              size: 20,
+              color: navigationShell.currentIndex == 3
+                  ? GardenPalette.emeraldTeal
+                  : GardenPalette.ivory.withValues(alpha: 0.5),
+            ),
             onTap: () => _goBranch(3),
           ),
         ],
@@ -80,12 +96,14 @@ class _NavButton extends StatelessWidget {
   final IconData icon;
   final bool isSelected;
   final VoidCallback onTap;
+  final Widget? iconWidget;
 
   const _NavButton({
     required this.label,
     required this.icon,
     required this.isSelected,
     required this.onTap,
+    this.iconWidget,
   });
 
   @override
@@ -103,7 +121,7 @@ class _NavButton extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Icon(
+            iconWidget ?? Icon(
               icon,
               size: 18,
               color: isSelected

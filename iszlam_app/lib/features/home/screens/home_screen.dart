@@ -4,7 +4,6 @@ import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/localization/hungarian_strings.dart';
 import '../../../core/theme/garden_palette.dart';
 import '../widgets/daily_wisdom_hero.dart';
-import '../widgets/quick_tools_row.dart';
 import '../widgets/bento_grid.dart';
 import '../widgets/trending_section.dart';
 import '../../auth/auth_service.dart';
@@ -89,11 +88,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   .fadeIn(duration: 800.ms)
                   .slideY(begin: 0.1, end: 0, curve: Curves.easeOutCubic),
                 
-                // 1.5 Quick Tools Row (Mi-raj style)
-                const QuickToolsRow()
-                  .animate()
-                  .fadeIn(delay: 100.ms, duration: 800.ms)
-                  .slideY(begin: 0.1, end: 0, curve: Curves.easeOutCubic),
                 
                 // 2. Main Content Wrapper
                 Container(

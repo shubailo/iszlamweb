@@ -2,25 +2,30 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
-import '../models/azkar_category.dart';
-import '../models/azkar_item.dart';
-import '../providers/azkar_provider.dart';
+import '../../auth/auth_service.dart';
+import '../models/dua.dart';
+import '../providers/duas_provider.dart';
+import '../widgets/edit_dua_dialog.dart';
+import '../../admin_tools/services/admin_repository.dart';
 
 class AzkarDetailScreen extends ConsumerWidget {
-  final AzkarCategory category;
+  final DuaCategory category;
 
   const AzkarDetailScreen({super.key, required this.category});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final itemsAsync =
-        ref.watch(categorySupplicationsProvider(category.supplicationIds));
+    final itemsAsync = ref.watch(categoryDuasProvider(category.id));
+    final isAdmin = ref.watch(isAdminProvider).maybeWhen(
+      data: (v) => v,
+      orElse: () => false,
+    );
 
     return Scaffold(
       backgroundColor: GardenPalette.white,
       appBar: AppBar(
         title: Text(
-          category.nameHu ?? 'Könyörgések',
+          category.nameHu,
           style: GoogleFonts.playfairDisplay(
             fontWeight: FontWeight.w700,
             color: GardenPalette.nearBlack,
@@ -33,7 +38,7 @@ class AzkarDetailScreen extends ConsumerWidget {
         iconTheme: const IconThemeData(color: GardenPalette.nearBlack),
       ),
       body: itemsAsync.when(
-        data: (items) => _AzkarPageView(items: items),
+        data: (items) => _AzkarPageView(items: items, isAdmin: isAdmin, categoryId: category.id),
         loading: () => const Center(
             child: CircularProgressIndicator(color: GardenPalette.leafyGreen)),
         error: (err, stack) => Center(
@@ -44,15 +49,22 @@ class AzkarDetailScreen extends ConsumerWidget {
   }
 }
 
-class _AzkarPageView extends StatefulWidget {
-  final List<AzkarItem> items;
-  const _AzkarPageView({required this.items});
+class _AzkarPageView extends ConsumerStatefulWidget {
+  final List<Dua> items;
+  final bool isAdmin;
+  final String categoryId;
+
+  const _AzkarPageView({
+    required this.items, 
+    required this.isAdmin,
+    required this.categoryId,
+  });
 
   @override
-  State<_AzkarPageView> createState() => _AzkarPageViewState();
+  ConsumerState<_AzkarPageView> createState() => _AzkarPageViewState();
 }
 
-class _AzkarPageViewState extends State<_AzkarPageView> {
+class _AzkarPageViewState extends ConsumerState<_AzkarPageView> {
   late PageController _pageController;
   late List<int> _remainingCounts;
   int _currentPage = 0;
@@ -99,19 +111,22 @@ class _AzkarPageViewState extends State<_AzkarPageView> {
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 0),
           child: Row(
-            children: List.generate(widget.items.length, (i) {
-              final done = _remainingCounts[i] == 0;
+            children: List.generate(widget.items.length + (widget.isAdmin ? 1 : 0), (i) {
+              final isAddPage = i == widget.items.length;
+              final done = !isAddPage && _remainingCounts[i] == 0;
               final active = i == _currentPage;
               return Expanded(
                 child: Container(
                   height: 3,
                   margin: const EdgeInsets.symmetric(horizontal: 2),
                   decoration: BoxDecoration(
-                    color: done
-                        ? GardenPalette.leafyGreen
-                        : active
-                            ? GardenPalette.nearBlack.withValues(alpha: 0.6)
-                            : GardenPalette.lightGrey,
+                    color: isAddPage
+                        ? (active ? GardenPalette.leafyGreen : GardenPalette.lightGrey)
+                        : (done
+                            ? GardenPalette.leafyGreen
+                            : active
+                                ? GardenPalette.nearBlack.withValues(alpha: 0.6)
+                                : GardenPalette.lightGrey),
                     borderRadius: BorderRadius.circular(2),
                   ),
                 ),
@@ -124,9 +139,12 @@ class _AzkarPageViewState extends State<_AzkarPageView> {
         Expanded(
           child: PageView.builder(
             controller: _pageController,
-            itemCount: widget.items.length,
+            itemCount: widget.items.length + (widget.isAdmin ? 1 : 0),
             onPageChanged: (i) => setState(() => _currentPage = i),
             itemBuilder: (context, index) {
+              if (widget.isAdmin && index == widget.items.length) {
+                return _buildAdminAddDua(context);
+              }
               final item = widget.items[index];
               final remaining = _remainingCounts[index];
               final total = item.repeatCount;
@@ -144,14 +162,36 @@ class _AzkarPageViewState extends State<_AzkarPageView> {
                     padding: const EdgeInsets.all(24),
                     child: Column(
                       children: [
-                        // Page indicator
-                        Text(
-                          '${index + 1} / ${widget.items.length}',
-                          style: GoogleFonts.outfit(
-                            fontSize: 12,
-                            color: GardenPalette.darkGrey,
-                            fontWeight: FontWeight.w600,
-                          ),
+                        // Page indicator + Admin actions
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const SizedBox(width: 48), // Spacer to balance admin icons
+                            Text(
+                              '${index + 1} / ${widget.items.length}',
+                              style: GoogleFonts.outfit(
+                                fontSize: 12,
+                                color: GardenPalette.darkGrey,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            if (widget.isAdmin)
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  IconButton(
+                                    icon: const Icon(Icons.edit_outlined, color: Colors.blue, size: 20),
+                                    onPressed: () => _showEditDuaDialog(context, item),
+                                  ),
+                                  IconButton(
+                                    icon: const Icon(Icons.delete_outline, color: Colors.red, size: 20),
+                                    onPressed: () => _confirmDeleteDua(context, item),
+                                  ),
+                                ],
+                              )
+                            else
+                              const SizedBox(width: 48),
+                          ],
                         ),
                         const SizedBox(height: 16),
 
@@ -160,36 +200,36 @@ class _AzkarPageViewState extends State<_AzkarPageView> {
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
-                                Text(
-                                  item.vocalizedText,
-                                  style: const TextStyle(
-                                    fontSize: 24,
-                                    fontFamily: 'Hafs',
-                                    height: 2.0,
-                                    color: GardenPalette.nearBlack,
-                                  ),
-                                  textAlign: TextAlign.center,
-                                  textDirection: TextDirection.rtl,
-                                ),
-                                if (item.reference.isNotEmpty) ...[
-                                  const SizedBox(height: 16),
-                                  Divider(color: GardenPalette.lightGrey),
-                                  const SizedBox(height: 8),
                                   Text(
-                                    item.reference,
-                                    style: GoogleFonts.outfit(
-                                      fontSize: 12,
-                                      color: GardenPalette.darkGrey,
-                                      fontStyle: FontStyle.italic,
+                                    item.vocalizedText ?? item.arabicText,
+                                    style: const TextStyle(
+                                      fontSize: 24,
+                                      fontFamily: 'Hafs',
+                                      height: 2.0,
+                                      color: GardenPalette.nearBlack,
                                     ),
                                     textAlign: TextAlign.center,
                                     textDirection: TextDirection.rtl,
                                   ),
-                                ],
-                                if (item.translation != null) ...[
-                                  const SizedBox(height: 16),
-                                  Text(
-                                    item.translation!,
+                                  if (item.reference != null && item.reference!.isNotEmpty) ...[
+                                    const SizedBox(height: 16),
+                                    Divider(color: GardenPalette.lightGrey),
+                                    const SizedBox(height: 8),
+                                    Text(
+                                      item.reference!,
+                                      style: GoogleFonts.outfit(
+                                        fontSize: 12,
+                                        color: GardenPalette.darkGrey,
+                                        fontStyle: FontStyle.italic,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                      textDirection: TextDirection.rtl,
+                                    ),
+                                  ],
+                                  if (item.translationHu != null) ...[
+                                    const SizedBox(height: 16),
+                                    Text(
+                                      item.translationHu!,
                                     style: GoogleFonts.outfit(
                                       fontSize: 14,
                                       color: GardenPalette.charcoal,
@@ -274,4 +314,74 @@ class _AzkarPageViewState extends State<_AzkarPageView> {
       ],
     );
   }
+  Widget _buildAdminAddDua(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 8, 16, 20),
+      child: Card(
+        color: GardenPalette.offWhite,
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+          side: BorderSide(color: GardenPalette.lightGrey, width: 2),
+        ),
+        child: InkWell(
+          onTap: () => _showEditDuaDialog(context),
+          borderRadius: BorderRadius.circular(20),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.add_circle_outline, color: GardenPalette.leafyGreen, size: 64),
+              const SizedBox(height: 16),
+              Text(
+                'ÚJ DUA HOZZÁADÁSA',
+                style: GoogleFonts.outfit(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: GardenPalette.leafyGreen,
+                  letterSpacing: 2,
+                ),
+              ),
+              const SizedBox(height: 8),
+              Text(
+                'Ehhez a kategóriához',
+                style: GoogleFonts.outfit(
+                  fontSize: 14,
+                  color: GardenPalette.darkGrey,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showEditDuaDialog(BuildContext context, [Dua? item]) {
+    showDialog(
+      context: context,
+      builder: (context) => EditDuaDialog(dua: item, categoryId: widget.categoryId),
+    );
+  }
+
+  void _confirmDeleteDua(BuildContext context, Dua item) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Dua törlése'),
+        content: Text('Biztosan törölni szeretnéd a(z) "${item.titleHu}" duát?'),
+        actions: [
+          TextButton(onPressed: () => Navigator.pop(context), child: const Text('Mégse')),
+          TextButton(
+            onPressed: () async {
+              await ref.read(adminRepositoryProvider).deleteDua(item.id);
+              ref.invalidate(categoryDuasProvider(widget.categoryId));
+              if (context.mounted) Navigator.pop(context);
+            },
+            child: const Text('Törlés', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+  }
 }
+

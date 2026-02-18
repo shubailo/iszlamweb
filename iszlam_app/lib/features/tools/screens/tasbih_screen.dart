@@ -47,7 +47,7 @@ class _TasbihScreenState extends State<TasbihScreen>
       duration: const Duration(milliseconds: 150),
       vsync: this,
     );
-    _pulseAnimation = Tween<double>(begin: 1.0, end: 0.92).animate(
+    _pulseAnimation = Tween<double>(begin: 1.0, end: 0.95).animate(
       CurvedAnimation(parent: _pulseController, curve: Curves.easeInOut),
     );
     _loadData();
@@ -100,81 +100,96 @@ class _TasbihScreenState extends State<TasbihScreen>
 
     return Scaffold(
       backgroundColor: GardenPalette.white,
-      appBar: AppBar(
-        title: Text('Tasbih', style: GoogleFonts.playfairDisplay(color: GardenPalette.leafyGreen)),
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        iconTheme: const IconThemeData(color: GardenPalette.nearBlack),
-        actions: [
-          PopupMenuButton<int>(
-            icon: const Icon(Icons.flag_outlined, color: GardenPalette.leafyGreen),
-            onSelected: (val) => setState(() { _goal = val; _count = 0; _saveData(); }),
-            itemBuilder: (_) => _presetGoals.map((g) =>
-              PopupMenuItem(value: g, child: Text('Cél: $g')),
-            ).toList(),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh, color: GardenPalette.nearBlack),
-            onPressed: _reset,
-            tooltip: 'Visszaállítás',
-          ),
-        ],
-      ),
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 24),
-            // Dhikr text
+            // Custom App Bar (Garden Style)
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Column(
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  const SizedBox(width: 48), // Spacer to center the title
                   Text(
-                    _dhikrList[_selectedDhikr],
-                    style: GoogleFonts.amiri(
-                      fontSize: 36,
-                      color: GardenPalette.nearBlack,
-                      fontWeight: FontWeight.bold,
+                    'TASBIH',
+                    style: GoogleFonts.playfairDisplay(
+                      color: GardenPalette.leafyGreen,
+                      fontWeight: FontWeight.w900,
+                      letterSpacing: 2,
+                      fontSize: 18,
                     ),
-                    textAlign: TextAlign.center,
-                    textDirection: TextDirection.rtl,
                   ),
-                  const SizedBox(height: 8),
-                  Text(
-                    _dhikrTranslations[_selectedDhikr],
-                    style: GoogleFonts.outfit(
-                      fontSize: 14,
-                      color: GardenPalette.darkGrey,
-                    ),
-                    textAlign: TextAlign.center,
+                  Row(
+                    children: [
+                      PopupMenuButton<int>(
+                        icon: const Icon(Icons.flag_outlined, color: GardenPalette.leafyGreen),
+                        onSelected: (val) => setState(() { _goal = val; _count = 0; _saveData(); }),
+                        itemBuilder: (_) => _presetGoals.map((g) =>
+                          PopupMenuItem(value: g, child: Text('Cél: $g', style: GoogleFonts.outfit())),
+                        ).toList(),
+                        color: GardenPalette.white,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.refresh, color: GardenPalette.leafyGreen),
+                        onPressed: _reset,
+                        tooltip: 'Visszaállítás',
+                      ),
+                    ],
                   ),
                 ],
               ),
             ),
-            const SizedBox(height: 24),
-            // Dhikr selector dots
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(_dhikrList.length, (i) =>
-                GestureDetector(
-                  onTap: () => setState(() { _selectedDhikr = i; _count = 0; }),
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 200),
-                    margin: const EdgeInsets.symmetric(horizontal: 4),
-                    width: i == _selectedDhikr ? 12 : 8,
-                    height: i == _selectedDhikr ? 12 : 8,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: i == _selectedDhikr
-                          ? GardenPalette.leafyGreen
-                          : GardenPalette.lightGrey,
+
+            const SizedBox(height: 32),
+
+            // Dhikr Section (Clean Card)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              child: Container(
+                padding: const EdgeInsets.all(24),
+                decoration: BoxDecoration(
+                  color: GardenPalette.offWhite,
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: GardenPalette.lightGrey),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withAlpha(5),
+                      blurRadius: 10,
+                      offset: const Offset(0, 4),
                     ),
-                  ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    Text(
+                      _dhikrList[_selectedDhikr],
+                      style: GoogleFonts.amiri(
+                        fontSize: 36,
+                        color: GardenPalette.leafyGreen,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textAlign: TextAlign.center,
+                      textDirection: TextDirection.rtl,
+                    ),
+                    const SizedBox(height: 12),
+                    Text(
+                      _dhikrTranslations[_selectedDhikr],
+                      style: GoogleFonts.outfit(
+                        fontSize: 14,
+                        color: GardenPalette.charcoal,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
               ),
             ),
+
             const Spacer(),
-            // Counter circle
+
+            // Counter Button (Modern Minimal)
             GestureDetector(
               onTap: _increment,
               child: AnimatedBuilder(
@@ -184,54 +199,60 @@ class _TasbihScreenState extends State<TasbihScreen>
                   child: child,
                 ),
                 child: Container(
-                  width: 220,
-                  height: 220,
+                  width: 280,
+                  height: 280,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    gradient: const LinearGradient(
-                      colors: [GardenPalette.deepGreen, GardenPalette.leafyGreen],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                    color: GardenPalette.white,
+                    border: Border.all(color: GardenPalette.lightGrey, width: 1.5),
                     boxShadow: [
                       BoxShadow(
-                        color: GardenPalette.leafyGreen.withValues(alpha: 0.3),
-                        blurRadius: 30,
-                        spreadRadius: 2,
+                        color: GardenPalette.leafyGreen.withAlpha(15),
+                        blurRadius: 40,
+                        spreadRadius: 5,
                       ),
                     ],
                   ),
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      // Progress ring
+                      // Progress Ring
                       SizedBox(
-                        width: 200,
-                        height: 200,
+                        width: 250,
+                        height: 250,
                         child: CircularProgressIndicator(
                           value: progress,
                           strokeWidth: 4,
-                          backgroundColor: Colors.white.withAlpha(40),
-                          valueColor: const AlwaysStoppedAnimation(Colors.white),
+                          backgroundColor: GardenPalette.lightGrey.withValues(alpha: 0.5),
+                          valueColor: const AlwaysStoppedAnimation(GardenPalette.leafyGreen),
                         ),
                       ),
-                      // Count display
+                      // Count
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             '$_count',
-                            style: GoogleFonts.playfairDisplay(
-                              fontSize: 56,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
+                            style: GoogleFonts.outfit(
+                              fontSize: 90,
+                              fontWeight: FontWeight.w900,
+                              color: GardenPalette.nearBlack,
                             ),
                           ),
-                          Text(
-                            '/ $_goal',
-                            style: GoogleFonts.outfit(
-                              fontSize: 16,
-                              color: Colors.white.withAlpha(180),
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                            decoration: BoxDecoration(
+                              color: GardenPalette.leafyGreen.withAlpha(20),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Text(
+                              'CÉL: $_goal',
+                              style: GoogleFonts.outfit(
+                                fontSize: 12,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1.5,
+                                color: GardenPalette.leafyGreen,
+                              ),
                             ),
                           ),
                         ],
@@ -241,42 +262,42 @@ class _TasbihScreenState extends State<TasbihScreen>
                 ),
               ),
             ),
-            const SizedBox(height: 16),
-            Text(
-              'Érintsd meg a számláláshoz',
-              style: GoogleFonts.outfit(
-                fontSize: 13,
-                color: GardenPalette.darkGrey,
-              ),
-            ),
+
             const Spacer(),
-            // Total counter and goal info
-            Container(
-              margin: const EdgeInsets.all(24),
-              padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
-              decoration: BoxDecoration(
-                color: GardenPalette.offWhite,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: GardenPalette.lightGrey),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Összes számolás', style: GoogleFonts.outfit(fontSize: 12, color: GardenPalette.darkGrey)),
-                      Text('$_totalCount', style: GoogleFonts.playfairDisplay(fontSize: 20, color: GardenPalette.leafyGreen, fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text('Cél', style: GoogleFonts.outfit(fontSize: 12, color: GardenPalette.darkGrey)),
-                      Text('$_goal', style: GoogleFonts.playfairDisplay(fontSize: 20, color: GardenPalette.nearBlack, fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                ],
+
+            // Total Counter Footer
+            Padding(
+              padding: const EdgeInsets.all(32),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                decoration: BoxDecoration(
+                  color: GardenPalette.offWhite,
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: GardenPalette.lightGrey),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      'ÖSSZES SZÁMOLÁS:',
+                      style: GoogleFonts.outfit(
+                        fontSize: 10,
+                        fontWeight: FontWeight.w900,
+                        letterSpacing: 1,
+                        color: GardenPalette.darkGrey,
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    Text(
+                      '$_totalCount',
+                      style: GoogleFonts.outfit(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w800,
+                        color: GardenPalette.leafyGreen,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

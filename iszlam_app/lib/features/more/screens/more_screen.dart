@@ -130,12 +130,23 @@ class MoreScreen extends ConsumerWidget {
                   if (isLoggedIn)
                     ref.watch(isAdminProvider).when(
                           data: (isAdmin) => isAdmin
-                              ? _MoreTile(
-                                  icon: Icons.people,
-                                  title: 'Felhasználók kezelése',
-                                  subtitle: 'Adminisztrátori rangok kezelése',
-                                  color: GardenPalette.gildedGold,
-                                  onTap: () => context.push('/admin/users'),
+                              ? Column(
+                                  children: [
+                                    _MoreTile(
+                                      icon: Icons.people,
+                                      title: 'Felhasználók kezelése',
+                                      subtitle: 'Adminisztrátori rangok kezelése',
+                                      color: GardenPalette.gildedGold,
+                                      onTap: () => context.push('/admin/users'),
+                                    ),
+                                    _MoreTile(
+                                      icon: Icons.lightbulb_outline,
+                                      title: 'Napi inspiráció',
+                                      subtitle: 'Hadísz és Korán idézetek kezelése',
+                                      color: GardenPalette.emeraldTeal,
+                                      onTap: () => context.push('/admin/inspiration'),
+                                    ),
+                                  ],
                                 )
                               : const SizedBox.shrink(),
                           loading: () => const SizedBox.shrink(),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../providers/mosque_provider.dart';
+import '../providers/event_provider.dart';
 import '../models/announcement.dart';
 import '../../admin_tools/screens/quick_post_screen.dart';
 import 'events_list_screen.dart';

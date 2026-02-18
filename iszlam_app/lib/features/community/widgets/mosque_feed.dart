@@ -9,6 +9,9 @@ import '../../../core/widgets/garden_empty_state.dart';
 import '../../../core/localization/hungarian_strings.dart'; // Import H
 
 import '../providers/event_provider.dart';
+import '../providers/community_provider.dart';
+import '../screens/post_detail_screen.dart';
+import 'community_post_card.dart';
 
 class MosqueFeed extends ConsumerWidget {
   final String mosqueId;
@@ -17,7 +20,7 @@ class MosqueFeed extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final announcementsAsync = ref.watch(announcementsProvider(mosqueId));
+    final communityPostsAsync = ref.watch(communityPostsProvider(mosqueId));
     final eventsAsync = ref.watch(mosqueEventsProvider(mosqueId));
 
     return SliverList(
@@ -79,14 +82,14 @@ class MosqueFeed extends ConsumerWidget {
         ),
         const SizedBox(height: 24),
 
-        // Announcements
+        // Community Posts (New)
         const GardenSectionHeader(
           label: H.feed,
           icon: Icons.campaign,
         ),
-        announcementsAsync.when(
-          data: (announcements) {
-             if (announcements.isEmpty) {
+        communityPostsAsync.when(
+          data: (posts) {
+            if (posts.isEmpty) {
               return const Padding(
                 padding: EdgeInsets.symmetric(horizontal: 16),
                 child: GardenEmptyState(
@@ -99,85 +102,15 @@ class MosqueFeed extends ConsumerWidget {
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               padding: const EdgeInsets.symmetric(horizontal: 16),
-              itemCount: announcements.length,
+              itemCount: posts.length,
               itemBuilder: (context, index) {
-                final a = announcements[index];
-                return GardenCard(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Container(
-                            width: 32,
-                            height: 32,
-                            decoration: BoxDecoration(
-                              color: GardenPalette.emeraldTeal
-                                  .withValues(alpha: 0.12),
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: const Icon(Icons.mosque,
-                                size: 14, color: GardenPalette.emeraldTeal),
-                          ),
-                          const SizedBox(width: 10),
-                          Expanded(
-                            child: Text(
-                              a.title,
-                              style: GoogleFonts.outfit(
-                                fontWeight: FontWeight.w700,
-                                fontSize: 15,
-                                color: GardenPalette.nearBlack,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 10),
-                      Text(
-                        a.content,
-                        style: GoogleFonts.outfit(
-                          fontSize: 13,
-                          height: 1.5,
-                          color: GardenPalette.darkGrey,
-                        ),
-                      ),
-                      if (a.audioUrl != null) ...[
-                        const SizedBox(height: 10),
-                        Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 12, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: GardenPalette.emeraldTeal
-                                .withValues(alpha: 0.08),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const Icon(Icons.play_circle_fill,
-                                  color: GardenPalette.emeraldTeal, size: 18),
-                              const SizedBox(width: 8),
-                              Text(
-                                H.listenAudio,
-                                style: GoogleFonts.outfit(
-                                  color: GardenPalette.emeraldTeal,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 12,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                      const SizedBox(height: 8),
-                      Text(
-                        a.createdAt.toString().split(' ')[0],
-                        style: GoogleFonts.outfit(
-                          fontSize: 11,
-                          color: GardenPalette.darkGrey,
-                        ),
-                      ),
-                    ],
+                final post = posts[index];
+                return CommunityPostCard(
+                  post: post,
+                  onTap: () => Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (_) => PostDetailScreen(post: post),
+                    ),
                   ),
                 );
               },
@@ -186,15 +119,14 @@ class MosqueFeed extends ConsumerWidget {
           loading: () => const SizedBox(
             height: 200,
             child: Center(
-                child: CircularProgressIndicator(
-                    color: GardenPalette.emeraldTeal)),
+              child: CircularProgressIndicator(color: GardenPalette.emeraldTeal),
+            ),
           ),
           error: (e, _) => Padding(
             padding: const EdgeInsets.all(16.0),
             child: Center(
-                child: Text('Hiba: $e',
-                    style:
-                        const TextStyle(color: GardenPalette.warningRed))),
+              child: Text('Error: $e', style: const TextStyle(color: GardenPalette.warningRed)),
+            ),
           ),
         ),
       ]),

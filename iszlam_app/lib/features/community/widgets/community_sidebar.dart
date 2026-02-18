@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 import 'package:flutter_animate/flutter_animate.dart';
 import '../../../core/theme/garden_palette.dart';
 import '../providers/mosque_provider.dart';
@@ -25,128 +26,136 @@ class CommunitySidebar extends ConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
-              child: Text(
-                'KÖZÖSSÉGEIM',
-                style: GoogleFonts.outfit(
-                  fontSize: 11,
-                  fontWeight: FontWeight.w900,
-                  letterSpacing: 2,
-                  color: GardenPalette.leafyGreen,
-                ),
-              ),
-            ),
-
-            // "All" option
-            _SidebarItem(
-              icon: Icons.home_outlined,
-              label: 'Összes',
-              isSelected: selectedId == null,
-              onTap: () {
-                ref.read(selectedMosqueIdProvider.notifier).update(null);
-                onItemTap?.call();
-              },
-            ).animate().fadeIn(duration: 300.ms),
-
-            const _SidebarDivider(),
-
-            // Mosques section
-            Padding(
-              padding: const EdgeInsets.fromLTRB(20, 12, 20, 6),
-              child: Text(
-                'MECSETEK',
-                style: GoogleFonts.outfit(
-                  fontSize: 10,
-                  fontWeight: FontWeight.w800,
-                  letterSpacing: 1.5,
-                  color: GardenPalette.darkGrey,
-                ),
-              ),
-            ),
-
-            // Mosque list
-            mosquesAsync.when(
-              data: (mosques) => Column(
-                children: mosques
-                    .asMap()
-                    .entries
-                    .map((e) => _SidebarItem(
-                          icon: Icons.mosque_outlined,
-                          label: e.value.name,
-                          isSelected: selectedId == e.value.id,
-                          onTap: () {
-                            ref
-                                .read(selectedMosqueIdProvider.notifier)
-                                .update(e.value.id);
-                            onItemTap?.call();
-                          },
-                        )
-                            .animate()
-                            .fadeIn(
-                                delay: (e.key * 60).ms,
-                                duration: 300.ms)
-                            .slideX(begin: -0.08, end: 0))
-                    .toList(),
-              ),
-              loading: () => Padding(
-                padding: const EdgeInsets.all(20),
-                child: LinearProgressIndicator(
-                  backgroundColor: GardenPalette.lightGrey,
-                  color: GardenPalette.leafyGreen,
-                  minHeight: 2,
-                ),
-              ),
-              error: (e, _) => Padding(
-                padding: const EdgeInsets.all(16),
-                child: Text('Hiba',
-                    style: TextStyle(
-                        color: GardenPalette.errorRed, fontSize: 12)),
-              ),
-            ),
-
-            // Groups section (show for selected mosque)
-            if (selectedId != null) ...[
-              const _SidebarDivider(),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(20, 12, 20, 6),
-                child: Text(
-                  'CSOPORTOK',
-                  style: GoogleFonts.outfit(
-                    fontSize: 10,
-                    fontWeight: FontWeight.w800,
-                    letterSpacing: 1.5,
-                    color: GardenPalette.darkGrey,
-                  ),
-                ),
-              ),
-              Consumer(
-                builder: (context, ref, _) {
-                  final groupsAsync =
-                      ref.watch(mosqueGroupsProvider(selectedId));
-                  return groupsAsync.when(
-                    data: (groups) => Column(
-                      children: groups
-                          .map((g) => _SidebarItem(
-                                icon: g.isPrivate
-                                    ? Icons.lock_outline
-                                    : Icons.group_outlined,
-                                label: g.name,
-                                subtitle: g.meetingTime,
-                                isSelected: false,
-                                onTap: () => onItemTap?.call(),
-                              ))
-                          .toList(),
+            Expanded(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Header
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 8),
+                      child: Text(
+                        'KÖZÖSSÉGEIM',
+                        style: GoogleFonts.outfit(
+                          fontSize: 11,
+                          fontWeight: FontWeight.w900,
+                          letterSpacing: 2,
+                          color: GardenPalette.leafyGreen,
+                        ),
+                      ),
                     ),
-                    loading: () => const SizedBox.shrink(),
-                    error: (e, _) => const SizedBox.shrink(),
-                  );
-                },
-              ),
-            ],
 
-            const Spacer(),
+                    // "All" option
+                    _SidebarItem(
+                      icon: Icons.home_outlined,
+                      label: 'Összes',
+                      isSelected: selectedId == null,
+                      onTap: () {
+                        ref.read(selectedMosqueIdProvider.notifier).update(null);
+                        onItemTap?.call();
+                      },
+                    ).animate().fadeIn(duration: 300.ms),
+
+                    const _SidebarDivider(),
+
+                    // Mosques section
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 12, 20, 6),
+                      child: Text(
+                        'MECSETEK',
+                        style: GoogleFonts.outfit(
+                          fontSize: 10,
+                          fontWeight: FontWeight.w800,
+                          letterSpacing: 1.5,
+                          color: GardenPalette.darkGrey,
+                        ),
+                      ),
+                    ),
+
+                    // Mosque list
+                    mosquesAsync.when(
+                      data: (mosques) => Column(
+                        children: mosques
+                            .asMap()
+                            .entries
+                            .map((e) => _SidebarItem(
+                                  icon: Icons.mosque_outlined,
+                                  label: e.value.name,
+                                  isSelected: selectedId == e.value.id,
+                                  onTap: () {
+                                    ref
+                                        .read(selectedMosqueIdProvider.notifier)
+                                        .update(e.value.id);
+                                    onItemTap?.call();
+                                  },
+                                )
+                                    .animate()
+                                    .fadeIn(
+                                        delay: (e.key * 60).ms,
+                                        duration: 300.ms)
+                                    .slideX(begin: -0.08, end: 0))
+                            .toList(),
+                      ),
+                      loading: () => Padding(
+                        padding: const EdgeInsets.all(20),
+                        child: LinearProgressIndicator(
+                          backgroundColor: GardenPalette.lightGrey,
+                          color: GardenPalette.leafyGreen,
+                          minHeight: 2,
+                        ),
+                      ),
+                      error: (e, _) => Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Text('Hiba',
+                            style: TextStyle(
+                                color: GardenPalette.errorRed, fontSize: 12)),
+                      ),
+                    ),
+
+                    // Groups section (show for selected mosque)
+                    if (selectedId != null) ...[
+                      const _SidebarDivider(),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 12, 20, 6),
+                        child: Text(
+                          'CSOPORTOK',
+                          style: GoogleFonts.outfit(
+                            fontSize: 10,
+                            fontWeight: FontWeight.w800,
+                            letterSpacing: 1.5,
+                            color: GardenPalette.darkGrey,
+                          ),
+                        ),
+                      ),
+                      Consumer(
+                        builder: (context, ref, _) {
+                          final groupsAsync =
+                              ref.watch(mosqueGroupsProvider(selectedId));
+                          return groupsAsync.when(
+                            data: (groups) => Column(
+                              children: groups
+                                  .map((g) => _SidebarItem(
+                                        icon: g.isPrivate
+                                            ? Icons.lock_outline
+                                            : Icons.group_outlined,
+                                        label: g.name,
+                                        subtitle: g.meetingTime,
+                                        isSelected: false,
+                                        onTap: () => onItemTap?.call(),
+                                      ))
+                                  .toList(),
+                            ),
+                            loading: () => const SizedBox.shrink(),
+                            error: (e, _) => const SizedBox.shrink(),
+                          );
+                        },
+                      ),
+                    ],
+                  ],
+                ),
+              ),
+            ),
 
             // Discover button
             Padding(

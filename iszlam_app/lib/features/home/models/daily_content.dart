@@ -21,4 +21,26 @@ class DailyContent {
     required this.source,
     this.imageUrl,
   });
+
+  factory DailyContent.fromJson(Map<String, dynamic> json) {
+    return DailyContent(
+      id: json['id'],
+      type: ContentType.values.byName(json['type']),
+      title: json['title'],
+      body: json['body'],
+      source: json['source'],
+      imageUrl: json['image_url'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'type': type.name,
+      'title': title,
+      'body': body,
+      'source': source,
+      'image_url': imageUrl,
+    };
+  }
 }

@@ -2,15 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../core/theme/garden_palette.dart';
-import '../providers/azkar_provider.dart';
+import '../../auth/auth_service.dart';
+import '../models/dua.dart';
+import '../providers/duas_provider.dart';
+import '../widgets/edit_dua_category_dialog.dart';
 import 'azkar_detail_screen.dart';
+import '../../admin_tools/services/admin_repository.dart';
 
 class AzkarCategoriesScreen extends ConsumerWidget {
   const AzkarCategoriesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final categoriesAsync = ref.watch(azkarCategoriesProvider);
+    final categoriesAsync = ref.watch(duaCategoriesProvider);
+    final isAdmin = ref.watch(isAdminProvider).maybeWhen(
+      data: (v) => v,
+      orElse: () => false,
+    );
     final isDesktop = MediaQuery.of(context).size.width > 800;
 
     return Scaffold(
@@ -66,9 +74,13 @@ class AzkarCategoriesScreen extends ConsumerWidget {
             data: (categories) => SliverList(
               delegate: SliverChildBuilderDelegate(
                 (context, index) {
+                  if (isAdmin && index == categories.length) {
+                    return _buildAdminAddCard(context);
+                  }
                   final category = categories[index];
                   return _CategoryCard(
-                    name: category.nameHu ?? category.name,
+                    name: category.nameHu,
+                    isAdmin: isAdmin,
                     onTap: () {
                       Navigator.push(
                         context,
@@ -77,9 +89,11 @@ class AzkarCategoriesScreen extends ConsumerWidget {
                         ),
                       );
                     },
+                    onEdit: () => _showEditCategoryDialog(context, category),
+                    onDelete: () => _confirmDeleteCategory(context, ref, category),
                   );
                 },
-                childCount: categories.length,
+                childCount: categories.length + (isAdmin ? 1 : 0),
               ),
             ),
             loading: () => const SliverFillRemaining(
@@ -101,8 +115,17 @@ class AzkarCategoriesScreen extends ConsumerWidget {
 class _CategoryCard extends StatelessWidget {
   final String name;
   final VoidCallback onTap;
+  final bool isAdmin;
+  final VoidCallback? onEdit;
+  final VoidCallback? onDelete;
 
-  const _CategoryCard({required this.name, required this.onTap});
+  const _CategoryCard({
+    required this.name, 
+    required this.onTap,
+    this.isAdmin = false,
+    this.onEdit,
+    this.onDelete,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -142,8 +165,22 @@ class _CategoryCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Icon(Icons.arrow_forward_ios,
-                    color: GardenPalette.grey, size: 14),
+                if (isAdmin)
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.edit_outlined, color: Colors.blue, size: 20),
+                        onPressed: onEdit,
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.delete_outline, color: Colors.red, size: 20),
+                        onPressed: onDelete,
+                      ),
+                    ],
+                  )
+                else
+                  Icon(Icons.arrow_forward_ios, color: GardenPalette.grey, size: 14),
               ],
             ),
           ),
@@ -151,4 +188,65 @@ class _CategoryCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Widget _buildAdminAddCard(BuildContext context) {
+  return Padding(
+    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    child: InkWell(
+      onTap: () => _showEditCategoryDialog(context),
+      borderRadius: BorderRadius.circular(14),
+      child: Container(
+        padding: const EdgeInsets.all(16),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: GardenPalette.leafyGreen.withAlpha(50), width: 2),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Icon(Icons.add_circle_outline, color: GardenPalette.leafyGreen),
+            const SizedBox(width: 8),
+            Text(
+              'ÚJ KATEGÓRIA',
+              style: GoogleFonts.outfit(
+                fontWeight: FontWeight.bold,
+                color: GardenPalette.leafyGreen,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+}
+
+void _showEditCategoryDialog(BuildContext context, [DuaCategory? category]) {
+  showDialog(
+    context: context,
+    builder: (context) => EditDuaCategoryDialog(category: category),
+  );
+}
+
+void _confirmDeleteCategory(BuildContext context, WidgetRef ref, DuaCategory category) {
+  showDialog(
+    context: context,
+    builder: (context) => AlertDialog(
+      title: const Text('Kategória törlése'),
+      content: Text('Biztosan törölni szeretnéd a(z) "${category.nameHu}" kategóriát és az összes hozzá tartozó duát?'),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(context), child: const Text('Mégse')),
+        TextButton(
+          onPressed: () async {
+            await ref.read(adminRepositoryProvider).deleteDuaCategory(category.id);
+            ref.invalidate(duaCategoriesProvider);
+            if (context.mounted) Navigator.pop(context);
+          },
+          child: const Text('Törlés', style: TextStyle(color: Colors.red)),
+        ),
+      ],
+    ),
+  );
 }

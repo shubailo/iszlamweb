@@ -58,12 +58,13 @@ class SanctuaryHero extends StatelessWidget {
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  IconButton(
-                    icon: const Icon(Icons.menu, color: Colors.white),
-                    padding: EdgeInsets.zero,
-                    constraints: const BoxConstraints(),
-                    onPressed: () => Scaffold.of(context).openDrawer(),
-                  ),
+                  if (MediaQuery.of(context).size.width <= 800)
+                    IconButton(
+                      icon: const Icon(Icons.menu, color: Colors.white),
+                      padding: EdgeInsets.zero,
+                      constraints: const BoxConstraints(),
+                      onPressed: () => Scaffold.of(context).openDrawer(),
+                    ),
                   const Spacer(),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.end,

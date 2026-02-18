@@ -17,6 +17,7 @@ import '../../features/onboarding/screens/onboarding_screen.dart';
 import '../../features/quran/screens/quran_screen.dart';
 import '../../features/quran/screens/surah_detail_screen.dart';
 import '../../features/admin_tools/screens/admin_users_screen.dart';
+import '../../features/admin_tools/screens/admin_inspiration_screen.dart';
 import '../../features/auth/auth_service.dart';
 
 // Provider to determine if user has seen onboarding
@@ -122,6 +123,10 @@ final goRouterProvider = Provider<GoRouter>((ref) {
           GoRoute(
             path: 'users',
             builder: (context, state) => const AdminUsersScreen(),
+          ),
+          GoRoute(
+            path: 'inspiration',
+            builder: (context, state) => const AdminInspirationScreen(),
           ),
         ],
       ),
